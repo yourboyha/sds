@@ -51,7 +51,14 @@ body {
   height: 100vh; /* ให้ Sidebar สูงเท่าหน้าจอ */
   position: relative; /* ทำให้ Sidebar ครอบคลุมพื้นที่ */
 }
+#sidebar.hidden {
+  display: none; /* ซ่อน Sidebar */
+}
 
+#content.full-width {
+  margin-left: 0; /* ยกเลิกการเว้นที่ Sidebar */
+  width: 100%; /* ขยาย Content ให้เต็ม */
+}
 #sidebar.closed {
   width: 0;
   overflow: hidden;
@@ -110,6 +117,9 @@ header {
   #content {
     margin-left: 0 !important; /* Content จะเต็มจอเมื่อ Sidebar ปิด */
   }
+  .p-3 {
+    padding: 1rem;
+  }
 }
 
 /* ปรับการจัดระยะในหน้าจอขนาดเล็ก */
@@ -155,7 +165,7 @@ header {
 
 /* Content Card Adjustments */
 .card {
-  border-radius: 10px;
+  border-radius: 8px;
 }
 
 /* Profile Card Image */

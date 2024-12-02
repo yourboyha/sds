@@ -3,6 +3,7 @@
 session_start();
 // เชื่อมต่อกับฐานข้อมูล
 include "src/controller/connect.php";
+
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +20,7 @@ include "src/controller/connect.php";
   <!-- Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="/SDS/css/styles.css">
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
@@ -33,18 +34,24 @@ include "src/controller/connect.php";
       <?php
       // หน้าในเว็บที่สามารถเลือกได้
       $pages = [
-        'about' => 'src/public/about.php',
-        'schedule' => 'src/public/schedule.php',
-        'contact' => 'src/public/contact.php',
+        'home' => 'src/public/home.php',
+        // 'about' => 'src/public/about.php',
+        // 'schedule' => 'src/public/schedule.php',
+        // 'contact' => 'src/public/contact.php',
         'login' => 'src/public/loginPage.php',
         'submit_login' => 'src/controller/submit_login.php',
-        'register' => 'src/view/register.php',
-        'submit_register' => 'src/controller/submit_register.php',
+        // 'register' => 'src/view/register.php',
+        // 'submit_register' => 'src/controller/submit_register.php',
         'logout' => 'src/Controller/logout.php',
-        'admin' => '/SDS/src/role/Admin/index.php',
-        'Executive' => '/SDS/src/role/Executive/index.php',
-        'Academic_Staff' => '/SDS/src/role/Academic_Staff/index.php',
-        'Department_Head' => '/SDS/src/role/Department_Head/index.php'
+        'schedule' => 'src/Controller/schedule.php',
+        'teaching' => 'src/Controller/teaching.php',
+        'room' => 'src/Controller/room.php',
+        'studyplan' => 'src/Controller/studyplan.php',
+        'course' => 'src/Controller/course.php',
+        'Admin' => 'src/role/Admin/index.php',
+        'Executive' => 'src/role/Executive/index.php',
+        'AcademicStaff' => 'src/role/AcademicStaff/index.php',
+        'DepartmentHead' => 'src/role/DepartmentHead/index.php'
       ];
 
       // ตรวจสอบว่า 'page' ได้รับค่าหรือไม่ และแสดงหน้าที่เลือก

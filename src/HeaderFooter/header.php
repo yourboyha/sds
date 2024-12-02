@@ -6,7 +6,8 @@
     </button>
     <!-- Logo -->
     <img src="src/logo/logo.png" alt="Logo" class="logo">
-    <a href="/sds" class="navbar-brand text-white  ms-3">
+    <!-- <a href="https://sds.tkc.ac.th/" class="navbar-brand text-white  ms-3"> -->
+    <a href="index.php?page=home" class="navbar-brand text-white  ms-3">
       <!-- System Name -->
       ระบบสนับสนุนการตัดสินใจในการจัดตารางเรียน
     </a>
@@ -16,10 +17,11 @@
   <div id="user-section" class="d-flex align-items-center">
     <?php if (isset($_SESSION['username'])): ?>
       <div class="dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
-          aria-expanded="false">
+        <a class="nav-link dropdown-toggle border border-white rounded px-3 py-2 text-white" href="#" id="userDropdown"
+          role="button" data-bs-toggle="dropdown" aria-expanded="false">
           <?= htmlspecialchars($_SESSION['username']); ?>
         </a>
+
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
           <?php if ($_SESSION['role'] === 'admin'): ?>
             <li><a href="/careathome/src/view/admin/index.php" class="dropdown-item">แดชบอร์ดแอดมิน</a></li>

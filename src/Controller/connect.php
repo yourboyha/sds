@@ -1,9 +1,16 @@
 <?php
 // กำหนดค่าการเชื่อมต่อฐานข้อมูล
-$servername = "localhost"; // ชื่อเซิร์ฟเวอร์
-$username = "root"; // ชื่อผู้ใช้
-$password = ""; // รหัสผ่าน
-$dbname = "admin_sds"; // ชื่อฐานข้อมูล
+// xampp
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "admin_sds";
+
+// host
+// $servername = "sds.tkc.ac.th";
+// $username = "admin_sds";
+// $password = "9dKtIRqzkP";
+// $dbname = "admin_sds";
 
 // สร้างการเชื่อมต่อ
 $conn = new mysqli($servername, $username, $password, $dbname);
