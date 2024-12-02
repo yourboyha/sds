@@ -1,17 +1,25 @@
-// JavaScript for Sidebar Toggle
+// รอจน DOM โหลดเสร็จ
 document.addEventListener('DOMContentLoaded', () => {
-  const sidebar = document.getElementById('sidebar');
-  const content = document.getElementById('content');
+  // ดึงปุ่ม Toggle และ Sidebar
   const toggleButton = document.getElementById('toggleSidebar');
+  const sidebar = document.getElementById('sidebar');
+  const content = document.getElementById('content'); // หากมีการปรับขนาด Content
 
-  toggleButton.addEventListener('click', () => {
-    sidebar.classList.toggle('closed');
-    if (sidebar.classList.contains('closed')) {
-      content.classList.remove('sidebar-open');
-      content.classList.add('sidebar-closed');
-    } else {
-      content.classList.remove('sidebar-closed');
-      content.classList.add('sidebar-open');
-    }
-  });
+  // ตรวจสอบว่าปุ่มและ Sidebar มีอยู่ใน DOM
+  if (toggleButton && sidebar) {
+
+    toggleButton.addEventListener('click', () => {
+
+      // สลับคลาส hidden หรือ full-width
+      sidebar.classList.toggle('hidden');
+
+      // หากต้องการปรับ Content ให้เต็มจอเมื่อ Sidebar ถูกซ่อน
+      if (content) {
+        // console.log("full width ทำงาน");
+        content.classList.toggle('full-width');
+      }
+    });
+  } else {
+    console.error("Sidebar or Toggle button not found in DOM.");
+  }
 });

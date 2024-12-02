@@ -2,7 +2,7 @@
   <div class="d-flex align-items-center">
     <!-- Toggle Sidebar Button -->
     <button id="toggleSidebar" class="toggle-btn me-2">
-      <i class="bi bi-list"></i> <!-- Hamburger Icon -->
+      <i class="bi bi-list"></i>
     </button>
     <!-- Logo -->
     <img src="src/logo/logo.png" alt="Logo" class="logo">
@@ -12,8 +12,6 @@
       ระบบสนับสนุนการตัดสินใจในการจัดตารางเรียน
     </a>
   </div>
-
-  <!-- User Section -->
   <div id="user-section" class="d-flex align-items-center">
     <?php if (isset($_SESSION['username'])): ?>
       <div class="dropdown">
@@ -54,3 +52,33 @@
     <?php endif; ?>
   </div>
 </nav>
+
+</nav>
+<div class="d-flex">
+  <div class="row h-100">
+    <!-- Sidebar -->
+    <div id="sidebar" class="col-12 col-md-3 bg-dark p-3">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link text-white " href="?page=home">หน้าหลัก</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white " href="?page=schedule">ตารางเรียน</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white " href="?page=teaching">ตารางสอน</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white " href="?page=room">ตารางห้อง</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white " href="?page=studyplan">แผนการเรียน</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white " href="?page=course">หลักสูตร</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- User Section -->
