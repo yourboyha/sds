@@ -14,6 +14,8 @@ include "src/controller/connect.php";
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ระบบสนับสนุนการตัดสินใจในการจัดตารางเรียน</title>
   <link rel="icon" href="src/logo/logo.png" type="image/ico">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Sarabun:wght@400;600&display=swap"
+    rel="stylesheet">
 
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -48,6 +50,7 @@ include "src/controller/connect.php";
         'room' => 'src/public/room.php',
         'studyplan' => 'src/public/studyplan.php',
         'course' => 'src/public/course.php',
+        'table' => 'src/function/table.php',
         'Admin' => 'src/role/Admin/index.php',
         'Executive' => 'src/role/Executive/index.php',
         'AcademicStaff' => 'src/role/AcademicStaff/index.php',

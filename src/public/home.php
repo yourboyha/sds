@@ -1,5 +1,5 @@
    <!-- Content -->
-   <div id="content" class="col-12 col-md-9 p-3">
+   <div id="content" class="container col-12 col-md-9 p-3">
      <h5 class="text-success">ข่าวประชาสัมพันธ์</h5>
      <div class="card mb-3">
        <div class="card-body">
@@ -35,5 +35,4 @@
            ระบบสนับสนุนการตัดสินใจในการจัดตารางเรียน</p>
        </div>
      </div>
-
    </div>

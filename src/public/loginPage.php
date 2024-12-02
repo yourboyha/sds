@@ -1,5 +1,5 @@
 <div class="container-fluid vh-100 d-flex align-items-center justify-content-center">
-  <div class="col-12 col-sm-8 col-md-6 col-lg-4 bg-light rounded shadow p-4">
+  <div class=" content col-12 col-sm-8 col-md-6 col-lg-4 bg-light rounded shadow p-4">
     <div class="text-center mb-4">
       <!-- <img src="src/logo/logo.png" alt="Logo" class="mb-3" style="width: 80px;"> -->
       <h4>เข้าใช้งานระบบ</h4>

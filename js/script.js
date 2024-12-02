@@ -3,23 +3,31 @@ document.addEventListener('DOMContentLoaded', () => {
   // ดึงปุ่ม Toggle และ Sidebar
   const toggleButton = document.getElementById('toggleSidebar');
   const sidebar = document.getElementById('sidebar');
-  const content = document.getElementById('content'); // หากมีการปรับขนาด Content
+  const content = document.getElementById('content');
 
   // ตรวจสอบว่าปุ่มและ Sidebar มีอยู่ใน DOM
   if (toggleButton && sidebar) {
 
     toggleButton.addEventListener('click', () => {
-
-      // สลับคลาส hidden หรือ full-width
-      sidebar.classList.toggle('hidden');
-
-      // หากต้องการปรับ Content ให้เต็มจอเมื่อ Sidebar ถูกซ่อน
-      if (content) {
-        // console.log("full width ทำงาน");
-        content.classList.toggle('full-width');
+      console.log("กด sidebar แล้วโว้ยยยยย");
+      if (window.innerWidth > 768) {
+        sidebar.classList.toggle("hidden");
+        content.classList.toggle("full-width");
+      } else {
+        sidebar.classList.toggle("active");
       }
     });
   } else {
     console.error("Sidebar or Toggle button not found in DOM.");
   }
 });
+
+
+function toggleFullscreen() {
+  const content = document.getElementById('content');
+  if (!document.fullscreenElement) {
+    content.requestFullscreen();
+  } else {
+    document.exitFullscreen();
+  }
+}

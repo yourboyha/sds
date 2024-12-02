@@ -1,5 +1,5 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Poppins", "Sarabun", sans-serif;
   margin: 0;
   padding: 0;
   background-color: #f0f0f0;
@@ -42,24 +42,76 @@ body {
   position: fixed;
   top: 50px;
   left: 0;
-  width: 200px;
-  height: calc(100vh - 56px);
+  width: 150px;
+  height: 100%;
   background-color: #343a40;
   z-index: 1000;
-  transition: all 0.3s ease;
+  transform: translateX(0); /* แสดง Sidebar */
+  transition: transform 0.3s ease-in-out;
   overflow-y: auto;
 }
-
 #sidebar.hidden {
-  left: -200px; /* ซ่อน Sidebar */
+  transform: translateX(-200px);
+}
+/* Responsive for small screens */
+@media (max-width: 768px) {
+  #sidebar {
+    transform: translateX(-200px); /* ซ่อน Sidebar โดยค่าเริ่มต้น */
+  }
+
+  #sidebar.active {
+    transform: translateX(0); /* แสดง Sidebar เมื่อมีคลาส active */
+  }
+
+  #content {
+    margin-left: 0 !important; /* ขยาย Content เต็มจอ */
+  }
+  /* #sidebar {
+    transform: translateX(-200px); 
+    z-index: 1000;
+    height: 100vh;
+  }
+
+  #content {
+    margin-left: 0 !important;
+  }
+  .toggle-btn {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  } */
+  table {
+    min-width: 600px;
+  }
+}
+/* แสดงปุ่มในมือถือ */
+@media (max-width: 480px) {
+  #fullscreen-btn {
+    display: block;
+  }
+
+  .navbar-brand {
+    display: none;
+  }
+
+  #content {
+    margin: 0;
+    padding: 10px;
+  }
 }
 
 #content {
-  transition: margin-left 0.3s ease;
   margin-left: 200px;
-  margin-top: 56px;
-  padding: 20px;
-  transition: margin-left 0.3s ease;
+  /* margin-top: 56px; */
+  padding: 5px;
+  transition: margin-left 0.3s ease-in-out;
 }
 #content.full-width {
   margin-left: 0;
@@ -91,19 +143,6 @@ body {
   color: #ccc;
 }
 
-/* Responsive for small screens */
-@media (max-width: 768px) {
-  #sidebar {
-    position: absolute;
-    z-index: 1000;
-    height: 100vh;
-  }
-
-  #content {
-    margin-left: 0 !important;
-  }
-}
-
 /* Logo Style */
 .container-fluid {
   background-color: #f8f9fa;
@@ -122,4 +161,62 @@ body {
 .card-body img {
   object-fit: cover;
   border: 2px solid #ddd;
+}
+/* ตาราง */
+table {
+  /* background-color: #343a40; */
+  border-collapse: collapse;
+  width: 100%;
+  margin: 20px 0;
+  min-width: 800px; /* ป้องกันการบีบตาราง */
+}
+
+th,
+td {
+  text-align: center;
+  padding: 10px;
+}
+
+/* ปุ่มแสดงผลเต็มจอ */
+#fullscreen-btn {
+  display: none; /* ซ่อนปุ่มในหน้าจอขนาดใหญ่ */
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 10px auto;
+}
+
+#fullscreen-btn:hover {
+  background-color: #555;
+}
+
+.timeslot {
+  font-size: 75%; /* ลดขนาดตัวอักษรลงครึ่งหนึ่ง (สองเท่าเล็กลง) */
+}
+
+.vertical-text {
+  writing-mode: vertical-rl; /* หมุนข้อความแนวตั้งจากขวาไปซ้าย */
+  transform: rotate(180deg); /* หมุนข้อความกลับให้อ่านง่าย */
+  text-align: center; /* จัดข้อความให้อยู่ตรงกลางเซลล์ */
+  vertical-align: middle; /* จัดให้อยู่กึ่งกลางในแนวตั้ง */
+  padding: 10px; /* เพิ่มระยะห่างรอบข้อความ */
+}
+.class-slot {
+  font-size: 75%;
+}
+.class-slot:hover {
+  background-color: #ffeb3b; /* เปลี่ยนพื้นหลังเป็นสีเหลือง */
+  color: #000; /* เปลี่ยนข้อความเป็นสีดำ */
+  cursor: pointer; /* แสดงรูปเมาส์เป็น Pointer */
+  font-weight: bold; /* ข้อความตัวหนา */
+}
+.day-name {
+  white-space: nowrap; /* ป้องกันข้อความขึ้นบรรทัดใหม่ */
+  width: 1%; /* ทำให้ช่องตารางมีขนาดเล็กที่สุด */
+  text-align: center; /* จัดข้อความให้อยู่ตรงกลาง */
+  padding: 5px; /* เพิ่มระยะห่างเล็กน้อยรอบข้อความ */
 }
