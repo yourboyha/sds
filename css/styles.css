@@ -5,20 +5,17 @@ body {
   background-color: #f0f0f0;
 }
 
+.navbar {
+  padding: 0rem 1rem; /* ลด Padding แนวตั้ง */
+  height: auto; /* ปรับความสูงอัตโนมัติตามเนื้อหา */
+  display: flex;
+  align-items: center; /* จัดเนื้อหาให้อยู่กลางแนวตั้ง */
+  justify-content: space-between; /* กระจายเนื้อหา */
+}
+
 .login-container {
   display: flex;
   height: 100vh;
-}
-
-.login-left {
-  flex: 1;
-  background-color: #ff608c;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 20px;
 }
 
 .login-info h2 {
@@ -47,41 +44,122 @@ body {
   margin-bottom: 20px;
 }
 
-.login-form h2 {
-  margin-bottom: 20px;
+/* Sidebar */
+#sidebar {
+  transition: all 0.3s ease;
+  width: 200px; /* ความกว้างของ Sidebar */
+  height: 100vh; /* ให้ Sidebar สูงเท่าหน้าจอ */
+  position: relative; /* ทำให้ Sidebar ครอบคลุมพื้นที่ */
 }
 
-.login-form input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
+#sidebar.closed {
+  width: 0;
+  overflow: hidden;
 }
 
-.login-form button {
-  width: 100%;
-  padding: 10px;
-  background-color: #ff608c;
-  border: none;
-  border-radius: 4px;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
+.content {
+  transition: margin-left 0.3s ease;
 }
 
-.login-form button:hover {
-  background-color: #e0557e;
+.content.sidebar-open {
+  margin-left: 100px; /* ระยะที่เหลือให้ Sidebar */
 }
 
-.login-form a {
-  display: block;
-  margin-top: 10px;
-  color: #888;
-  text-decoration: none;
+.content.sidebar-closed {
+  margin-left: 0;
 }
 
-.login-form a:hover {
-  color: #555;
+/* Button icon style */
+#toggleSidebar i {
+  font-size: 1.5rem; /* ขนาดไอคอน */
+}
+
+header {
+  display: flex;
+  align-items: center;
+}
+
+/* Toggle Button */
+.toggle-btn {
+  background-color: transparent; /* ไม่มีพื้นหลัง */
+  border: none; /* ลบกรอบ */
+  color: white; /* สีไอคอน */
+  font-size: 1.5rem; /* ขนาดไอคอน */
+  width: 50px; /* ความกว้างของปุ่ม */
+  height: 50px; /* ความสูงของปุ่ม */
+  display: flex; /* ใช้ Flexbox */
+  align-items: center; /* จัดให้อยู่ตรงกลางแนวตั้ง */
+  justify-content: center; /* จัดให้อยู่ตรงกลางแนวนอน */
+  padding: 0; /* ลบ Padding */
+  cursor: pointer; /* เปลี่ยนเป็น pointer เมื่อ hover */
+}
+
+/* เพิ่ม Hover Effect ให้ดูตอบสนอง */
+.toggle-btn:hover {
+  color: #ccc; /* เปลี่ยนสีเมื่อ Hover */
+}
+
+/* Responsive for small screens */
+@media (max-width: 768px) {
+  #sidebar {
+    position: absolute; /* Sidebar ลอยอยู่เหนือ Content */
+    z-index: 1000; /* ซ้อนอยู่ด้านบนสุด */
+    height: 100vh;
+  }
+
+  #content {
+    margin-left: 0 !important; /* Content จะเต็มจอเมื่อ Sidebar ปิด */
+  }
+}
+
+/* ปรับการจัดระยะในหน้าจอขนาดเล็ก */
+@media (max-width: 576px) {
+  .bg-light {
+    padding: 20px; /* ลด Padding ในหน้าจอขนาดเล็ก */
+  }
+
+  .text-muted {
+    font-size: 0.875rem; /* ลดขนาดข้อความคำอธิบาย */
+  }
+
+  footer p {
+    font-size: 0.75rem; /* ลดขนาดข้อความใน Footer */
+  }
+}
+
+/* Logo Style */
+.logo {
+  height: 40px; /* ความสูงโลโก้ */
+  width: auto; /* รักษาสัดส่วนภาพ */
+  display: flex; /* ใช้ Flexbox */
+  margin-top: 15px; /* เลื่อนลงจากด้านบน 10px */
+}
+/* สำหรับการจัดกล่อง */
+.container-fluid {
+  background-color: #f8f9fa; /* สีพื้นหลังหน้าจอ (เปลี่ยนได้) */
+}
+
+.bg-light {
+  border-radius: 10px; /* มุมมน */
+}
+/* Sidebar Styling */
+#sidebar {
+  min-height: 100vh; /* Sidebar ครอบคลุมความสูงของหน้าจอ */
+}
+
+.nav-link.active {
+  font-weight: bold; /* เน้นเมนูที่เลือก */
+  background-color: #ffe5e5; /* สีพื้นหลังเมนูที่เลือก */
+  border-radius: 5px;
+}
+
+/* Content Card Adjustments */
+.card {
+  border-radius: 10px;
+}
+
+/* Profile Card Image */
+.card-body img {
+  object-fit: cover;
+  border: 2px solid #ddd;
 }
