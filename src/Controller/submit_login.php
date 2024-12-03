@@ -1,6 +1,6 @@
 <?php
+// echo "submitlogin";
 
-// ตรวจสอบว่ามีการส่งข้อมูลฟอร์มหรือไม่
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   // กรองข้อมูลที่รับจากฟอร์ม
   $username = $conn->real_escape_string($_POST['username']);

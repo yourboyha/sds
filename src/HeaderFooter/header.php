@@ -7,11 +7,12 @@
     <!-- Logo -->
     <img src="src/logo/logo.png" alt="Logo" class="logo">
     <!-- <a href="https://sds.tkc.ac.th/" class="navbar-brand text-white  ms-3"> -->
-    <a href="index.php?page=home" class="navbar-brand text-white  ms-3">
+    <a href="'.BASE_URL.'index.php?page=home" class="navbar-brand text-white  ms-3">
       <!-- System Name -->
       ระบบสนับสนุนการตัดสินใจในการจัดตารางเรียน
     </a>
   </div>
+
   <div id="user-section" class="d-flex align-items-center">
     <?php if (isset($_SESSION['username'])): ?>
       <div class="dropdown">
@@ -19,42 +20,44 @@
           role="button" data-bs-toggle="dropdown" aria-expanded="false">
           <?= htmlspecialchars($_SESSION['username']); ?>
         </a>
-        <?php
-        // echo $_SESSION['role']; 
-        ?>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
           <?php if ($_SESSION['role'] === 'admin'): ?>
-            <li><a href="/sds/index.php?page=admin" class="dropdown-item">แผงควบคุม</a></li>
-            <li><a href="/sds/index.php?page=admin-member" class="dropdown-item">จัดการผู้ใช้งาน</a></li>
-            <li><a href="/sds/index.php?page=admin-course" class="dropdown-item">จัดการหลักสูตร</a></li>
-            <li><a href="/sds/index.php?page=admin-subject" class="dropdown-item">จัดการรายวิชา</a></li>
-            <li><a href="/sds/index.php?page=admin-schedule" class="dropdown-item">จัดการตารางเรียน</a></li>
-            <li><a href="/sds/index.php?page=admin-report" class="dropdown-item">ดูรายงาน</a></li>
-          <?php elseif ($_SESSION['role'] === 'DepartmentHead'): ?>
-            <li><a href="/sds/index.php?page=depart" class="dropdown-item">แผงควบคุม</a></li>
-            <li><a href="/sds/index.php?page=depart-course" class="dropdown-item">จัดการหลักสูตร</a></li>
-            <li><a href="/sds/index.php?page=depart-subject" class="dropdown-item">จัดการรายวิชา</a></li>
-            <li><a href="/sds/index.php?page=depart-schedule" class="dropdown-item">จัดการตารางเรียน</a></li>
-            <li><a href="/sds/index.php?page=depart-report" class="dropdown-item">ดูรายงาน</a></li>
-          <?php elseif ($_SESSION['role'] === 'AcademicStaff'): ?>
-            <li><a href="/sds/index.php?page=acadamic" class="dropdown-item">แผงควบคุม</a></li>
-            <li><a href="/sds/index.php?page=acadamic-course" class="dropdown-item">จัดการหลักสูตร</a></li>
-            <li><a href="/sds/index.php?page=acadamic-subject" class="dropdown-item">จัดการรายวิชา</a></li>
-            <li><a href="/sds/index.php?page=acadamic-schedule" class="dropdown-item">จัดการตารางเรียน</a></li>
-            <li><a href="/sds/index.php?page=acadamic-report" class="dropdown-item">ดูรายงาน</a></li>
-          <?php elseif ($_SESSION['role'] === 'Executive'): ?>
-            <li><a href="/sds/index.php?page=exe-report" class="dropdown-item">ดูรายงาน</a></li>
+            <li><a href="<?php echo BASE_URL; ?>index.php?page=admin" class="dropdown-item">แผงควบคุม</a></li>
+            <li><a href="<?php echo BASE_URL; ?>index.php?page=admin-member" class="dropdown-item">จัดการผู้ใช้งาน</a></li>
+            <li><a href="<?php echo BASE_URL; ?>index.php?page=admin-course" class="dropdown-item">จัดการหลักสูตร</a></li>
+            <li><a href="<?php echo BASE_URL; ?>index.php?page=admin-subject" class="dropdown-item">จัดการรายวิชา</a></li>
+            <li><a href="<?php echo BASE_URL; ?>index.php?page=admin-schedule" class="dropdown-item">จัดการตารางเรียน</a>
+            </li>
+            <li><a href="<?php echo BASE_URL; ?>index.php?page=admin-report" class="dropdown-item">ดูรายงาน</a></li>
+          <?php elseif ($_SESSION['role'] === 'departmentHead'): ?>
+            <li><a href="<?php echo BASE_URL; ?>index.php?page=depart" class="dropdown-item">แผงควบคุม</a></li>
+            <li><a href="<?php echo BASE_URL; ?>index.php?page=depart-course" class="dropdown-item">จัดการหลักสูตร</a></li>
+            <li><a href="<?php echo BASE_URL; ?>index.php?page=depart-subject" class="dropdown-item">จัดการรายวิชา</a></li>
+            <li><a href="<?php echo BASE_URL; ?>index.php?page=depart-schedule" class="dropdown-item">จัดการตารางเรียน</a>
+            </li>
+            <li><a href="<?php echo BASE_URL; ?>index.php?page=depart-report" class="dropdown-item">ดูรายงาน</a></li>
+          <?php elseif ($_SESSION['role'] === 'academicStaff'): ?>
+            <li><a href="<?php echo BASE_URL; ?>index.php?page=acadamic" class="dropdown-item">แผงควบคุม</a></li>
+            <li><a href="<?php echo BASE_URL; ?>index.php?page=acadamic-course" class="dropdown-item">จัดการหลักสูตร</a>
+            </li>
+            <li><a href="<?php echo BASE_URL; ?>index.php?page=acadamic-subject" class="dropdown-item">จัดการรายวิชา</a>
+            </li>
+            <li><a href="<?php echo BASE_URL; ?>index.php?page=acadamic-schedule" class="dropdown-item">จัดการตารางเรียน</a>
+            </li>
+            <li><a href="<?php echo BASE_URL; ?>index.php?page=acadamic-report" class="dropdown-item">ดูรายงาน</a></li>
+          <?php elseif ($_SESSION['role'] === 'executive'): ?>
+            <li><a href="<?php echo BASE_URL; ?>index.php?page=exe-report" class="dropdown-item">ดูรายงาน</a></li>
           <?php endif; ?>
-          <li><a href="/sds/src/Controller/logout.php" class="dropdown-item">ออกจากระบบ</a></li>
+          <li><a href="<?php echo BASE_URL; ?>src/Controller/logout.php" class="dropdown-item">ออกจากระบบ</a></li>
         </ul>
       </div>
     <?php else: ?>
       <div class="auth-links">
-        <!-- <a href="index.php?page=register" class="btn btn-outline-light">สมัครสมาชิก</a> -->
-        <a href="/sds/index.php?page=login" class="btn btn-outline-light">เข้าสู่ระบบ</a>
+        <a href="<?php echo BASE_URL; ?>index.php?page=login" class="btn btn-outline-light">เข้าสู่ระบบ</a>
       </div>
     <?php endif; ?>
   </div>
+
 </nav>
 
 </nav>

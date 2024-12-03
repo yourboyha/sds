@@ -12,7 +12,7 @@
       }
       ?>
     </div>
-    <form action="?page=submit_login" method="post">
+    <form action="<?php echo BASE_URL; ?>index.php?page=submit_login" method="post">
       <div class="mb-3">
         <label for="username" class="form-label">E-Mail</label>
         <input type="text" class="form-control" id="username" name="username" placeholder="กรอก E-Mail" required>
@@ -24,7 +24,6 @@
       <button type="submit" class="btn btn-primary w-100">เข้าสู่ระบบ</button>
     </form>
     <div class="text-center mt-3">
-      <!-- <a href="#" class="text-muted">ลืมรหัสผ่านใช่หรือไม่?</a> -->
     </div>
   </div>
 </div>
