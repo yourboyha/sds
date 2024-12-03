@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     toggleButton.addEventListener('click', () => {
       console.log("กด sidebar แล้วโว้ยยยยย");
-      if (window.innerWidth > 768) {
+      if (window.innerWidth > 767) {
         sidebar.classList.toggle("hidden");
         content.classList.toggle("full-width");
       } else {

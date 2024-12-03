@@ -1,4 +1,4 @@
-<div class="container mt-5" id="content">
+<div id="content" class="container mt-5">
   <h2 class="text-center mb-2">ตารางเรียน</h2>
   <table class="table table-bordered table-striped table-hover text-center">
     <thead class="table-info">
