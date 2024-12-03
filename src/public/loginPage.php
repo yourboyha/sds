@@ -12,7 +12,7 @@
       }
       ?>
     </div>
-    <form action="<?php echo BASE_URL; ?>index.php?page=submit_login" method="post">
+    <form action="?page=submit_login" method="post">
       <div class="mb-3">
         <label for="username" class="form-label">E-Mail</label>
         <input type="text" class="form-control" id="username" name="username" placeholder="กรอก E-Mail" required>
