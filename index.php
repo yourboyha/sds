@@ -45,13 +45,18 @@ include "src/controller/connect.php";
         // 'register' => 'src/view/register.php',
         // 'submit_register' => 'src/controller/submit_register.php',
         'logout' => 'src/Controller/logout.php',
+        // เมนู sidebar
         'schedule' => 'src/public/schedule.php',
         'teaching' => 'src/public/teaching.php',
         'room' => 'src/public/room.php',
         'studyplan' => 'src/public/studyplan.php',
         'course' => 'src/public/course.php',
         'table' => 'src/function/table.php',
-        'Admin' => 'src/role/Admin/index.php',
+        // ส่วนแอดมิน
+        'Admin' => 'src/role/Admin/dashboard.php',
+
+
+
         'Executive' => 'src/role/Executive/index.php',
         'AcademicStaff' => 'src/role/AcademicStaff/index.php',
         'DepartmentHead' => 'src/role/DepartmentHead/index.php'

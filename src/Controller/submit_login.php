@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         case 'Admin':
           $redirect = "?page=admin";
           break;
-        case 'Department_head':
+        case 'DepartmentHead':
           $redirect = "?page=department_head";
           break;
         case 'AcademicStaff':

@@ -21,25 +21,27 @@
         </a>
 
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-          <?php if ($_SESSION['role'] === 'admin'): ?>
-            <li><a href="/careathome/src/view/admin/index.php" class="dropdown-item">แดชบอร์ดแอดมิน</a></li>
+          <?php if ($_SESSION['role'] === 'Admin'): ?>
+            <li><a href="/index.php?page=Admin" class="dropdown-item">แผงควบคุม</a></li>
             <li><a href="/careathome/src/view/admin/index.php?page=members" class="dropdown-item">จัดการผู้ใช้งาน</a></li>
-            <li><a href="/careathome/src/view/admin/index.php?page=package" class="dropdown-item">จัดการแพคเกจ</a></li>
-            <li><a href="/careathome/src/view/admin/index.php?page=pr" class="dropdown-item">จัดการข่าวประชาสัมพันธ์</a>
-            </li>
-            <li><a href="/careathome/src/view/admin/index.php?page=review" class="dropdown-item">จัดการรีวิว</a></li>
-            <li><a href="/careathome/src/view/admin/index.php?page=webboard" class="dropdown-item">จัดการเว็บบอร์ด</a>
-            </li>
+            <li><a href="/careathome/src/view/admin/index.php?page=package" class="dropdown-item">จัดการหลักสูตร</a></li>
+            <li><a href="/careathome/src/view/admin/index.php?page=pr" class="dropdown-item">จัดการรายวิชา</a></li>
+            <li><a href="/careathome/src/view/admin/index.php?page=review" class="dropdown-item">จัดการตารางเรียน</a></li>
             <li><a href="/careathome/src/view/admin/index.php?page=report" class="dropdown-item">ดูรายงาน</a></li>
-          <?php else: ?>
-            <li><a href="/careathome/src/view/user/index.php" class="dropdown-item">หน้าหลักผู้ใช้งาน</a></li>
-            <li><a href="/careathome/src/view/user/index.php?page=profile" class="dropdown-item">จัดการข้อมูลส่วนตัว</a>
-            </li>
-            <li><a href="/careathome/src/view/user/index.php?page=patient" class="dropdown-item">จัดการข้อมูลผู้สูงอายุ</a>
-            </li>
-            <li><a href="/careathome/src/view/user/index.php?page=package" class="dropdown-item">เลือกแพคเกจ</a></li>
-            <li><a href="/careathome/src/view/user/index.php?page=webboard" class="dropdown-item">เว็บบอร์ด</a></li>
-            <li><a href="/careathome/src/view/user/index.php?page=review" class="dropdown-item">รีวิว</a></li>
+          <?php elseif ($_SESSION['role'] === 'DepartmentHead'): ?>
+            <li><a href="/careathome/src/view/admin/index.php" class="dropdown-item">แผงควบคุม</a></li>
+            <li><a href="/careathome/src/view/admin/index.php?page=package" class="dropdown-item">จัดการหลักสูตร</a></li>
+            <li><a href="/careathome/src/view/admin/index.php?page=pr" class="dropdown-item">จัดการรายวิชา</a></li>
+            <li><a href="/careathome/src/view/admin/index.php?page=review" class="dropdown-item">จัดการตารางเรียน</a></li>
+            <li><a href="/careathome/src/view/admin/index.php?page=report" class="dropdown-item">ดูรายงาน</a></li>
+          <?php elseif ($_SESSION['role'] === 'AcademicStaff'): ?>
+            <li><a href="/careathome/src/view/admin/index.php" class="dropdown-item">แผงควบคุม</a></li>
+            <li><a href="/careathome/src/view/admin/index.php?page=package" class="dropdown-item">จัดการหลักสูตร</a></li>
+            <li><a href="/careathome/src/view/admin/index.php?page=pr" class="dropdown-item">จัดการรายวิชา</a></li>
+            <li><a href="/careathome/src/view/admin/index.php?page=review" class="dropdown-item">จัดการตารางเรียน</a></li>
+            <li><a href="/careathome/src/view/admin/index.php?page=report" class="dropdown-item">ดูรายงาน</a></li>
+          <?php elseif ($_SESSION['role'] === 'Executive'): ?>
+            <li><a href="/careathome/src/view/admin/index.php?page=report" class="dropdown-item">ดูรายงาน</a></li>
           <?php endif; ?>
           <li><a href="/sds/src/Controller/logout.php" class="dropdown-item">ออกจากระบบ</a></li>
         </ul>

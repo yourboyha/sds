@@ -1,6 +1,10 @@
-<div id="content" class="container mt-5">
+<div id="content" class="container">
+  <!-- <div class="d-flex justify-content-center mb-3">
+    <button class="btn btn-dark fullscreen-btn" onclick="toggleFullscreen()">แสดงผลเต็มจอแนวนอน</button>
+  </div> -->
   <h2 class="text-center mb-2">ตารางเรียน</h2>
-  <table class="table table-bordered table-striped table-hover text-center">
+
+  <table class="container table table-bordered table-striped table-hover text-center">
     <thead class="table-info">
       <tr>
         <th>เวลา</th>
@@ -23,7 +27,7 @@
 
       <tr>
         <td>วัน/คาบ</td>
-        <td rowspan="6" class="vertical-text">กิจกรรมหน้าเสาธง</td>
+        <td rowspan="6" class="vertical-text day-name">กิจกรรมหน้าเสาธง</td>
         <td class="timeslot">1</td>
         <td class="timeslot">2</td>
         <td class="timeslot">3</td>
@@ -116,7 +120,8 @@
       </tr>
     </tbody>
   </table>
-  <button id="fullscreen-btn" onclick="toggleFullscreen()">แสดงผลเต็มจอแนวนอน</button>
+
+
 
   <!-- รายละเอียดวิชา -->
 
@@ -134,56 +139,56 @@
     <tbody>
       <tr>
         <td class="day-name">20001-1003</td>
-        <td class="text-start ps-4">ธุรกิจเบื้องต้น</td>
+        <td class="text-start ps-3">ธุรกิจเบื้องต้น</td>
         <td>1</td>
         <td>2</td>
         <td>2</td>
       </tr>
       <tr>
         <td class="day-name">21910-1002</td>
-        <td class="text-start">วิเคราะห์ความต้องการทางธุรกิจ</td>
+        <td class="text-start ps-3">วิเคราะห์ความต้องการทางธุรกิจ</td>
         <td>1</td>
         <td>2</td>
         <td>2</td>
       </tr>
       <tr>
         <td class="day-name">21910-1003</td>
-        <td class="text-start">การเขียนโปรแกรมคอมพิวเตอร์เบื้องต้น</td>
+        <td class="text-start ps-3">การเขียนโปรแกรมคอมพิวเตอร์เบื้องต้น</td>
         <td>1</td>
         <td>2</td>
         <td>2</td>
       </tr>
       <tr>
         <td class="day-name">21910-1004</td>
-        <td class="text-start">พาณิชย์อิเล็กทรอนิกส์เบื้องต้น</td>
+        <td class="text-start ps-3">พาณิชย์อิเล็กทรอนิกส์เบื้องต้น</td>
         <td>1</td>
         <td>2</td>
         <td>2</td>
       </tr>
       <tr>
         <td class="day-name">21910-2007</td>
-        <td class="text-start">โปรแกรมกราฟิกเพื่อสร้างสื่อดิจิทัล</td>
+        <td class="text-start ps-3">โปรแกรมกราฟิกเพื่อสร้างสื่อดิจิทัล</td>
         <td>2</td>
         <td>2</td>
         <td>3</td>
       </tr>
       <tr>
         <td class="day-name">21910-2009</td>
-        <td class="text-start">คณิตศาสตร์คอมพิวเตอร์</td>
+        <td class="text-start ps-3">คณิตศาสตร์คอมพิวเตอร์</td>
         <td>1</td>
         <td>2</td>
         <td>2</td>
       </tr>
       <tr>
         <td class="day-name">21910-2010</td>
-        <td class="text-start">การเขียนโปรแกรมภาษาคอมพิวเตอร์</td>
+        <td class="text-start ps-3">การเขียนโปรแกรมภาษาคอมพิวเตอร์</td>
         <td>2</td>
         <td>2</td>
         <td>3</td>
       </tr>
       <tr>
         <td class="day-name">20000-2002</td>
-        <td class="text-start">กิจกรรมลูกเสือวิสามัญ</td>
+        <td class="text-start ps-3">กิจกรรมลูกเสือวิสามัญ</td>
         <td>2</td>
         <td>0</td>
         <td>2</td>
