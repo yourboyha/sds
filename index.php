@@ -54,12 +54,17 @@ include "src/controller/connect.php";
         'table' => 'src/function/table.php',
         // ส่วนแอดมิน
         'Admin' => 'src/role/Admin/dashboard.php',
-
-
+        'admin-member' => 'src/role/Admin/member/member.php',
+        'admin-course' => 'src/role/Admin/course/course.php',
+        'admin-subject' => 'src/role/Admin/subject/subject.php',
+        'admin-schedule' => 'src/role/Admin/schedule/schedule.php',
+        'admin-report' => 'src/role/Admin/report/report.php',
+        // ส่วนแผนกวิชา
+        'DepartmentHead' => 'src/role/DepartmentHead/index.php',
 
         'Executive' => 'src/role/Executive/index.php',
-        'AcademicStaff' => 'src/role/AcademicStaff/index.php',
-        'DepartmentHead' => 'src/role/DepartmentHead/index.php'
+        'AcademicStaff' => 'src/role/AcademicStaff/index.php'
+
       ];
 
       // ตรวจสอบว่า 'page' ได้รับค่าหรือไม่ และแสดงหน้าที่เลือก

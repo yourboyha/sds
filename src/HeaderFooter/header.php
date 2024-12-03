@@ -22,26 +22,26 @@
 
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
           <?php if ($_SESSION['role'] === 'Admin'): ?>
-            <li><a href="/index.php?page=Admin" class="dropdown-item">แผงควบคุม</a></li>
-            <li><a href="/careathome/src/view/admin/index.php?page=members" class="dropdown-item">จัดการผู้ใช้งาน</a></li>
-            <li><a href="/careathome/src/view/admin/index.php?page=package" class="dropdown-item">จัดการหลักสูตร</a></li>
-            <li><a href="/careathome/src/view/admin/index.php?page=pr" class="dropdown-item">จัดการรายวิชา</a></li>
-            <li><a href="/careathome/src/view/admin/index.php?page=review" class="dropdown-item">จัดการตารางเรียน</a></li>
-            <li><a href="/careathome/src/view/admin/index.php?page=report" class="dropdown-item">ดูรายงาน</a></li>
+            <li><a href="/sds/index.php?page=admin" class="dropdown-item">แผงควบคุม</a></li>
+            <li><a href="/sds/index.php?page=admin-member" class="dropdown-item">จัดการผู้ใช้งาน</a></li>
+            <li><a href="/sds/index.php?page=admin-course" class="dropdown-item">จัดการหลักสูตร</a></li>
+            <li><a href="/sds/index.php?page=admin-subject" class="dropdown-item">จัดการรายวิชา</a></li>
+            <li><a href="/sds/index.php?page=admin-schedule" class="dropdown-item">จัดการตารางเรียน</a></li>
+            <li><a href="/sds/index.php?page=admin-report" class="dropdown-item">ดูรายงาน</a></li>
           <?php elseif ($_SESSION['role'] === 'DepartmentHead'): ?>
-            <li><a href="/careathome/src/view/admin/index.php" class="dropdown-item">แผงควบคุม</a></li>
-            <li><a href="/careathome/src/view/admin/index.php?page=package" class="dropdown-item">จัดการหลักสูตร</a></li>
-            <li><a href="/careathome/src/view/admin/index.php?page=pr" class="dropdown-item">จัดการรายวิชา</a></li>
-            <li><a href="/careathome/src/view/admin/index.php?page=review" class="dropdown-item">จัดการตารางเรียน</a></li>
-            <li><a href="/careathome/src/view/admin/index.php?page=report" class="dropdown-item">ดูรายงาน</a></li>
+            <li><a href="/sds/index.php?page=depart" class="dropdown-item">แผงควบคุม</a></li>
+            <li><a href="/sds/index.php?page=depart-course" class="dropdown-item">จัดการหลักสูตร</a></li>
+            <li><a href="/sds/index.php?page=depart-subject" class="dropdown-item">จัดการรายวิชา</a></li>
+            <li><a href="/sds/index.php?page=depart-schedule" class="dropdown-item">จัดการตารางเรียน</a></li>
+            <li><a href="/sds/index.php?page=depart-report" class="dropdown-item">ดูรายงาน</a></li>
           <?php elseif ($_SESSION['role'] === 'AcademicStaff'): ?>
-            <li><a href="/careathome/src/view/admin/index.php" class="dropdown-item">แผงควบคุม</a></li>
-            <li><a href="/careathome/src/view/admin/index.php?page=package" class="dropdown-item">จัดการหลักสูตร</a></li>
-            <li><a href="/careathome/src/view/admin/index.php?page=pr" class="dropdown-item">จัดการรายวิชา</a></li>
-            <li><a href="/careathome/src/view/admin/index.php?page=review" class="dropdown-item">จัดการตารางเรียน</a></li>
-            <li><a href="/careathome/src/view/admin/index.php?page=report" class="dropdown-item">ดูรายงาน</a></li>
+            <li><a href="/sds/index.php?page=acadamic" class="dropdown-item">แผงควบคุม</a></li>
+            <li><a href="/sds/index.php?page=acadamic-course" class="dropdown-item">จัดการหลักสูตร</a></li>
+            <li><a href="/sds/index.php?page=acadamic-subject" class="dropdown-item">จัดการรายวิชา</a></li>
+            <li><a href="/sds/index.php?page=acadamic-schedule" class="dropdown-item">จัดการตารางเรียน</a></li>
+            <li><a href="/sds/index.php?page=acadamic-report" class="dropdown-item">ดูรายงาน</a></li>
           <?php elseif ($_SESSION['role'] === 'Executive'): ?>
-            <li><a href="/careathome/src/view/admin/index.php?page=report" class="dropdown-item">ดูรายงาน</a></li>
+            <li><a href="/sds/index.php?page=exe-report" class="dropdown-item">ดูรายงาน</a></li>
           <?php endif; ?>
           <li><a href="/sds/src/Controller/logout.php" class="dropdown-item">ออกจากระบบ</a></li>
         </ul>
@@ -49,7 +49,7 @@
     <?php else: ?>
       <div class="auth-links">
         <!-- <a href="index.php?page=register" class="btn btn-outline-light">สมัครสมาชิก</a> -->
-        <a href="index.php?page=login" class="btn btn-outline-light">เข้าสู่ระบบ</a>
+        <a href="/sds/index.php?page=login" class="btn btn-outline-light">เข้าสู่ระบบ</a>
       </div>
     <?php endif; ?>
   </div>
