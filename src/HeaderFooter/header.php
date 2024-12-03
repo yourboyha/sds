@@ -7,7 +7,7 @@
     <!-- Logo -->
     <img src="src/logo/logo.png" alt="Logo" class="logo">
     <!-- <a href="https://sds.tkc.ac.th/" class="navbar-brand text-white  ms-3"> -->
-    <a href="'.BASE_URL.'index.php?page=home" class="navbar-brand text-white  ms-3">
+    <a href="<?php BASE_URL ?>index.php?page=home" class="navbar-brand text-white  ms-3">
       <!-- System Name -->
       ระบบสนับสนุนการตัดสินใจในการจัดตารางเรียน
     </a>

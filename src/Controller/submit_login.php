@@ -1,5 +1,4 @@
 <?php
-// echo "submitlogin";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   // กรองข้อมูลที่รับจากฟอร์ม
@@ -18,6 +17,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $_SESSION['user_id'] = $row['UserID'];
       $_SESSION['username'] = $username;
       $_SESSION['role'] = strtolower($row['Role']);
+      // echo $_SESSION['user_id'];
+      // echo $_SESSION['username'];
+      // echo $_SESSION['role'];
       // ตรวจสอบ Role และกำหนดหน้า Redirect
       $redirect = "";
       switch ($_SESSION['role']) {
@@ -38,7 +40,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           break;
       }
 
-      // เปลี่ยนเส้นทางไปยังหน้าที่กำหนด
       header("Location: index.php" . $redirect);
       exit();
     } else {
