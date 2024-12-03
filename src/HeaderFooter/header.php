@@ -19,9 +19,11 @@
           role="button" data-bs-toggle="dropdown" aria-expanded="false">
           <?= htmlspecialchars($_SESSION['username']); ?>
         </a>
-
+        <?php
+        // echo $_SESSION['role']; 
+        ?>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-          <?php if ($_SESSION['role'] === 'Admin'): ?>
+          <?php if ($_SESSION['role'] === 'admin'): ?>
             <li><a href="/sds/index.php?page=admin" class="dropdown-item">แผงควบคุม</a></li>
             <li><a href="/sds/index.php?page=admin-member" class="dropdown-item">จัดการผู้ใช้งาน</a></li>
             <li><a href="/sds/index.php?page=admin-course" class="dropdown-item">จัดการหลักสูตร</a></li>

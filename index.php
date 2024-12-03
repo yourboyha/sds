@@ -53,7 +53,7 @@ include "src/controller/connect.php";
         'course' => 'src/public/course.php',
         'table' => 'src/function/table.php',
         // ส่วนแอดมิน
-        'Admin' => 'src/role/Admin/dashboard.php',
+        'admin' => 'src/role/Admin/dashboard.php',
         'admin-member' => 'src/role/Admin/member/member.php',
         'admin-course' => 'src/role/Admin/course/course.php',
         'admin-subject' => 'src/role/Admin/subject/subject.php',

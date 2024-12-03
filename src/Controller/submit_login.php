@@ -17,21 +17,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       // เก็บข้อมูลผู้ใช้ใน session
       $_SESSION['user_id'] = $row['UserID'];
       $_SESSION['username'] = $username;
-      $_SESSION['role'] = $row['Role'];
-
+      $_SESSION['role'] = strtolower($row['Role']);
       // ตรวจสอบ Role และกำหนดหน้า Redirect
       $redirect = "";
       switch ($_SESSION['role']) {
-        case 'Admin':
+        case 'admin':
           $redirect = "?page=admin";
           break;
-        case 'DepartmentHead':
+        case 'departmentHead':
           $redirect = "?page=department_head";
           break;
-        case 'AcademicStaff':
+        case 'academicStaff':
           $redirect = "?page=academic_staff";
           break;
-        case 'Executive':
+        case 'executive':
           $redirect = "?page=executive";
           break;
         default:
