@@ -2,7 +2,7 @@
 
 // เริ่มต้น session เพื่อตรวจสอบการเข้าระบบของผู้ใช้งาน
 session_start();
-require_once 'config.php';
+// require_once 'config.php';
 // เชื่อมต่อกับฐานข้อมูล
 require_once "src/controller/connect.php";
 ?>

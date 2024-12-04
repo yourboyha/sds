@@ -1,7 +1,4 @@
 <?php
-include_once __DIR__ . '/../../../../../config.php';
-loadFile('src/Controller/connect.php');
-
 
 // ตรวจสอบการเชื่อมต่อ
 if ($conn->connect_error) {
@@ -68,14 +65,14 @@ if ($result_subject->num_rows > 0) {
       echo
       "<table class='table table-striped table-hover'>
   <thead>
-                    <tr>
-                        <th>ลำดับ</th>
-                        <th>รหัสวิชา</th>
-                        <th>ชื่อวิชา</th>
-                        <th>ท</th>
-                        <th>ป</th>
-                        <th>น</th>
-                    </tr>
+    <tr>
+      <th>ลำดับ</th>
+      <th>รหัสวิชา</th>
+      <th>ชื่อวิชา</th>
+      <th>ท</th>
+      <th>ป</th>
+      <th>น</th>
+    </tr>
   </thead>
   <tbody>";
     }
