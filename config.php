@@ -15,3 +15,9 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
   define('DB_PASS', '9dKtIRqzkP');          // รหัสผ่านฐานข้อมูล
   define('DB_NAME', 'admin_sds');     // ชื่อฐานข้อมูล
 }
+
+
+function loadFile($path)
+{
+  require_once __DIR__ . '/' . $path;
+}

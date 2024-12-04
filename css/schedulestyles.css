@@ -1,35 +1,23 @@
-#hidecontent section {
-  display: none;
-  /* ซ่อนทุกส่วนเริ่มต้น */
-}
-
-#hidecontent section.active {
-  display: block;
-  /* แสดงเฉพาะส่วนที่เลือก */
-}
-/* ตั้งค่าลิงก์เริ่มต้น */
 #menu-schedule .nav-link {
-  color: #333; /* สีข้อความเริ่มต้น */
-  text-decoration: none; /* เอาเส้นใต้ข้อความออก */
-  padding: 10px 15px; /* เพิ่มระยะห่างภายใน */
-  border-radius: 50px; /* ทำให้กรอบโค้งมน */
-  transition: all 0.3s ease; /* เพิ่มเอฟเฟกต์เปลี่ยนแปลงนุ่มนวล */
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* เงาเมื่อ hover */
+  color: #333;
+  text-decoration: none;
+  padding: 10px 15px;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* เมื่อ Hover */
 #menu-schedule .nav-link:hover {
-  background-color: #f0f0f0; /* สีพื้นหลังเมื่อ hover */
-  color: #0056b3; /* สีข้อความเมื่อ hover */
-  border: 1px solid #ccc; /* เพิ่มกรอบ */
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* เงาเมื่อ hover */
+  background-color: #f0f0f0;
+  color: #0056b3;
+  border: 1px solid #ccc;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
 
-/* ลิงก์ Active */
 #menu-schedule .nav-link.active {
-  background-color: #0056b3; /* สีพื้นหลังเมื่อ active */
-  color: white !important; /* สีข้อความเป็นสีขาว */
-  border-radius: 10px; /* ทำให้โค้งมน */
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* เพิ่มเงาให้ชัดเจน */
+  background-color: #0056b3;
+  color: white !important;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }

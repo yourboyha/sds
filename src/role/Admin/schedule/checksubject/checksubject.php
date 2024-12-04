@@ -1,4 +1,7 @@
 <?php
+include_once __DIR__ . '/../../../../../config.php';
+loadFile('src/Controller/connect.php');
+
 
 // ตรวจสอบการเชื่อมต่อ
 if ($conn->connect_error) {

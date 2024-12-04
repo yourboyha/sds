@@ -34,8 +34,11 @@
   <script>
     // ฟังก์ชันสำหรับแสดงส่วนของเมนูที่เลือก
     function showSection(sectionId, filePath) {
+      console.log(sectionId);
+      // console.log('Fetching:', filePath);
       // กำหนดชื่อ Section ที่จะแสดง
       const dynamicSection = document.getElementById('dynamic-section');
+      console.log(dynamicSection);
 
       // ทำการ Fetch เนื้อหาใหม่ผ่าน AJAX
       fetch(filePath)
@@ -46,12 +49,20 @@
           return response.text();
         })
         .then(html => {
+          // console.log(html);
           // ใส่เนื้อหาใหม่ใน Dynamic Section
           dynamicSection.innerHTML = html;
 
           // เพิ่ม class "active" ให้ Section ปัจจุบัน
-          document.querySelectorAll('a.nav-link').forEach(link => link.classList.remove('active'));
-          document.querySelector(`a[onclick*="${sectionId}"]`).classList.add('active');
+          // console.log('Clearing active class from nav-links');
+          document.querySelectorAll('a.nav-link').forEach(link => {
+            // console.log('Removing active from:', link);
+            link.classList.remove('active');
+          });
+
+          const activeLink = document.querySelector(`a[onclick*="${sectionId}"]`);
+          // console.log('Adding active to:', activeLink);
+          activeLink.classList.add('active');
         })
         .catch(error => {
           console.error('Error loading section:', error);
