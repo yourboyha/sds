@@ -9,7 +9,7 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
   define('DB_NAME', 'admin_sds'); // ชื่อฐานข้อมูล
 } else {
   // สำหรับ Hosting จริง
-  define('BASE_URL', '/');
+  define('BASE_URL', 'https://sds.tkc.ac.th/');
   define('DB_HOST', 'sds.tkc.ac.th'); // เช่น mysql.host.com
   define('DB_USER', 'admin_sds');          // ชื่อผู้ใช้ฐานข้อมูล
   define('DB_PASS', '9dKtIRqzkP');          // รหัสผ่านฐานข้อมูล

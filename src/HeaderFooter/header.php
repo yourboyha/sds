@@ -26,7 +26,8 @@
             <li><a href="<?php echo BASE_URL; ?>index.php?page=admin-member" class="dropdown-item">จัดการผู้ใช้งาน</a></li>
             <li><a href="<?php echo BASE_URL; ?>index.php?page=admin-course" class="dropdown-item">จัดการหลักสูตร</a></li>
             <li><a href="<?php echo BASE_URL; ?>index.php?page=admin-subject" class="dropdown-item">จัดการรายวิชา</a></li>
-            <li><a href="<?php echo BASE_URL; ?>index.php?page=admin-schedule" class="dropdown-item">จัดการตารางเรียน</a>
+            <li><a href="<?php echo BASE_URL; ?>index.php?page=admin-menu-schedule"
+                class="dropdown-item">จัดการตารางเรียน</a>
             </li>
             <li><a href="<?php echo BASE_URL; ?>index.php?page=admin-report" class="dropdown-item">ดูรายงาน</a></li>
           <?php elseif ($_SESSION['role'] === 'departmentHead'): ?>

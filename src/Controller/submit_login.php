@@ -1,5 +1,8 @@
 <?php
-
+// echo "เรียกใช้ submit login";
+echo $_POST['username'];
+echo $_POST['password'];
+echo "<br>";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   // กรองข้อมูลที่รับจากฟอร์ม
   $username = $conn->real_escape_string($_POST['username']);
@@ -10,16 +13,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
-
+    echo "POST", $password;
+    echo "<br>";
+    echo "ROW", $row['Password'];
     // ตรวจสอบรหัสผ่านด้วย password_verify
     if (password_verify($password, $row['Password'])) {
       // เก็บข้อมูลผู้ใช้ใน session
       $_SESSION['user_id'] = $row['UserID'];
       $_SESSION['username'] = $username;
       $_SESSION['role'] = strtolower($row['Role']);
-      // echo $_SESSION['user_id'];
-      // echo $_SESSION['username'];
-      // echo $_SESSION['role'];
+      echo $_SESSION['user_id'];
+      echo $_SESSION['username'];
+      echo $_SESSION['role'];
       // ตรวจสอบ Role และกำหนดหน้า Redirect
       $redirect = "";
       switch ($_SESSION['role']) {

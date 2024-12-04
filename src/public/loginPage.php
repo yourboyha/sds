@@ -5,6 +5,8 @@
       <h4>เข้าใช้งานระบบ</h4>
       <p class="text-muted">กรุณากรอก "E-Mail" และ "รหัสผ่าน" เพื่อเข้าสู่ระบบ</p>
       <?php
+      // echo $_POST['username'];
+      // echo $_POST['password'];
       if (isset($_GET['error']) && $_GET['error'] == 'invalid_password') {
         echo "<p style='color: red; text-center'>รหัสผ่านไม่ถูกต้อง</p>";
       } else if (isset($_GET['error']) && $_GET['error'] == 'user_not_found') {
@@ -12,7 +14,8 @@
       }
       ?>
     </div>
-    <form action="?page=submit_login" method="post">
+    <form action="index.php?page=submit_login" method="post">
+      <!-- <form action="src/Controller/submit_login.php" method="post"> -->
       <div class="mb-3">
         <label for="username" class="form-label">E-Mail</label>
         <input type="text" class="form-control" id="username" name="username" placeholder="กรอก E-Mail" required>

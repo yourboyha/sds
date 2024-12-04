@@ -1,9 +1,10 @@
 <?php
-require_once 'config.php';
+
 // เริ่มต้น session เพื่อตรวจสอบการเข้าระบบของผู้ใช้งาน
 session_start();
+require_once 'config.php';
 // เชื่อมต่อกับฐานข้อมูล
-include "src/controller/connect.php";
+require_once "src/controller/connect.php";
 ?>
 
 <!DOCTYPE html>
@@ -18,11 +19,13 @@ include "src/controller/connect.php";
     rel="stylesheet">
 
   <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <!-- Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
   <!-- Custom CSS -->
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>css/styles.css">
+  <link rel="stylesheet" href="<?php echo BASE_URL; ?>css/schedulestyles.css">
 </head>
 
 <body>
@@ -33,55 +36,62 @@ include "src/controller/connect.php";
   <div class="d-flex flex-column min-vh-100">
     <!-- Content -->
     <main class="flex-fill">
+
       <?php
       // หน้าในเว็บที่สามารถเลือกได้
       $pages = [
-        'home' => BASE_URL . 'src/public/home.php',
-        'login' => BASE_URL . 'src/public/loginPage.php',
-        'submit_login' => BASE_URL . 'src/controller/submit_login.php',
-        'logout' => BASE_URL . 'src/controller/logout.php',
-        'schedule' => BASE_URL . 'src/public/schedule.php',
-        'teaching' => BASE_URL . 'src/public/teaching.php',
-        'room' => BASE_URL . 'src/public/room.php',
-        'studyplan' => BASE_URL . 'src/public/studyplan.php',
-        'course' => BASE_URL . 'src/public/course.php',
-        'table' => BASE_URL . 'src/function/table.php',
+        'home' => 'src/public/home.php',
+        'login' => 'src/public/loginPage.php',
+        'submit_login' => 'src/Controller/submit_login.php',
+        'logout' => 'src/Controller/logout.php',
+        'schedule' => 'src/public/schedule.php',
+        'teaching' => 'src/public/teaching.php',
+        'room' => 'src/public/room.php',
+        'studyplan' => 'src/public/studyplan.php',
+        'course' => 'src/public/course.php',
+        'table' => 'src/function/table.php',
         // ส่วนแอดมิน
-        'admin' => BASE_URL . 'src/role/Admin/dashboard.php',
-        'admin-member' => BASE_URL . 'src/role/Admin/member/member.php',
-        'admin-course' => BASE_URL . 'src/role/Admin/course/course.php',
-        'admin-subject' => BASE_URL . 'src/role/Admin/subject/subject.php',
-        'admin-schedule' => BASE_URL . 'src/role/Admin/schedule/schedule.php',
-        'admin-report' => BASE_URL . 'src/role/Admin/report/report.php',
+        'admin' => 'src/role/Admin/dashboard.php',
+        'admin-member' => 'src/role/Admin/member/member.php',
+        'admin-course' => 'src/role/Admin/course/course.php',
+        'admin-subject' => 'src/role/Admin/subject/subject.php',
+        'admin-menu-schedule' => 'src/role/Admin/schedule/menu_schedule.php',
+        'admin-report' => 'src/role/Admin/report/report.php',
         // ส่วนแผนกวิชา
-        'DepartmentHead' => BASE_URL . 'src/role/DepartmentHead/index.php',
-        'Executive' => BASE_URL . 'src/role/Executive/index.php',
-        'AcademicStaff' => BASE_URL . 'src/role/AcademicStaff/index.php'
+        'DepartmentHead' => 'src/role/DepartmentHead/index.php',
+        'Executive' => 'src/role/Executive/index.php',
+        'AcademicStaff' => 'src/role/AcademicStaff/index.php'
       ];
 
       // ตรวจสอบว่า 'page' ได้รับค่าหรือไม่ และแสดงหน้าที่เลือก
       $page = $_GET['page'] ?? 'home'; // หากไม่มีค่า 'page' ให้ใช้ 'home' เป็นค่าเริ่มต้น
 
       if (array_key_exists($page, $pages)) {
-        $targetPage = str_replace(BASE_URL, '', $pages[$page]); // ลบ BASE_URL ออกจาก path เพื่อการ include
+        $targetPage = $pages[$page]; // Path ของไฟล์เป้าหมายในระบบไฟล์
         if (file_exists($targetPage)) {
-          include $targetPage; // ใช้ include เมื่อเป็นไฟล์ภายใน
+          include $targetPage; // ใช้ include สำหรับไฟล์ภายใน
         } else {
-          header("Location: " . $pages[$page]); // ใช้ header เมื่อเป็นลิงก์ภายนอก
+          echo "else ใน";
+          header("Location: " . BASE_URL . "index.php?page=home");
+          exit;
         }
       } else {
-        include "src/public/home.php"; // หากไม่มีหน้าตรงกับที่เลือก ให้แสดงหน้า home
+        // echo "else นอก";
+        include "src/public/home.php";
+        // include "src/Controller/submit_login.php";
       }
       ?>
     </main>
+
     <?php
     include "src/HeaderFooter/footer.php";
     ?>
   </div>
 
   <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Custom JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+  </script> <!-- Custom JS -->
   <script src="<?php echo BASE_URL; ?>js/script.js"></script>
 </body>
 
