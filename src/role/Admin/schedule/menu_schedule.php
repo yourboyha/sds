@@ -30,7 +30,7 @@
         </li>
         <li class="nav-item">
           <a class="nav-link text-secondary"
-            onclick="showSection('manageschedule', 'src/role/Admin/schedule/manageschedule/manageschedule.php')">6.
+            onclick="showSection('manageschedule', 'src/role/Admin/schedule/manageschedule/createschedule.php')">6.
             สร้างตารางเรียน</a>
         </li>
         <li class="nav-item">

@@ -26,6 +26,7 @@ ORDER BY
 cg.ClassGroupName, sp.Term, s.SubjectCode;
 ";
 
+include '../btnsch.php';
 
 // รันคำสั่ง SQL และเก็บผลลัพธ์
 $result = $conn->query($sql);
@@ -34,7 +35,7 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
   $currentGroup = ""; // เก็บชื่อกลุ่มปัจจุบัน
   $i = 1;
-  echo '<span class="text-dark fw-bold">เลือกดูระดับชั้น :</span>';
+  echo '<span class="text-dark fw-bold">เลือกระดับชั้น :</span>';
   // สร้างเมนูลิงก์นำทางเพียงครั้งเดียว
   $menuLinks = "<ul class='nav nav-pills mb-3'>";
 

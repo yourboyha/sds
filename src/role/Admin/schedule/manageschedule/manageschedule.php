@@ -4,12 +4,10 @@ include '../../../../Controller/connect.php';
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
+include '../btnsch.php';
 ?>
 
 <div class="container content">
-  <!-- <div class="d-flex justify-content-center mb-3">
-    <button class="btn btn-dark fullscreen-btn" onclick="toggleFullscreen()">แสดงผลเต็มจอแนวนอน</button>
-  </div> -->
   <h2 class="text-center mb-2">ตารางเรียน</h2>
   <!-- <div class="table-responsive"> -->
   <table class="container table table-bordered table-striped table-hover text-center">

@@ -34,4 +34,9 @@
   max-width: 100px;
   text-align: center;
   vertical-align: middle;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.green-check {
+  color: green; /* เปลี่ยนสีเป็นสีเขียว */
 }

@@ -25,16 +25,20 @@ cg.ClassGroupName IN ('ปวช.1/1', 'ปวช.2/1', 'ปวช.3/1', 'ปว
 ORDER BY
 cg.ClassGroupName, sp.Term, s.SubjectCode;
 ";
+?>
+<div class="d-flex justify-content-center gap-3 mb-3">
+  <button class="btn btn-outline-success w-50 ">ถัดไป</button>
+</div>
 
+<?php
 
 // รันคำสั่ง SQL และเก็บผลลัพธ์
 $result = $conn->query($sql);
 
-// ตรวจสอบว่ามีข้อมูลหรือไม่
 if ($result->num_rows > 0) {
   $currentGroup = ""; // เก็บชื่อกลุ่มปัจจุบัน
   $i = 1;
-  echo "<span class='text-dark fw-bold'>เลือกดูระดับชั้น :</span>";
+  echo "<span class='text-dark fw-bold'>เลือกระดับชั้น :</span>";
   // สร้างเมนูลิงก์นำทางเพียงครั้งเดียว
   $menuLinks = "<ul class='nav nav-pills mb-3'>";
 

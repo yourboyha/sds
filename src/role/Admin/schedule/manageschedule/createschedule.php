@@ -4,17 +4,52 @@ include '../../../../Controller/connect.php';
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
+// include '../btnsch.php';
+//sql สร้างตารางรายวิชา
+$sql = "
+SELECT
+cg.ClassGroupName,
+s.SubjectCode,
+s.SubjectName,
+s.TheoryHours,
+s.PracticalHours,
+s.CreditHours,
+sp.Term
+FROM
+StudyPlans sp
+JOIN
+ClassGroup cg ON sp.ClassGroupID = cg.ClassGroupID
+JOIN
+Subjects s ON sp.SubjectID = s.SubjectID
+WHERE
+cg.ClassGroupName IN ('ปวช.1/1', 'ปวช.2/1', 'ปวช.3/1', 'ปวช.3/2', 'ปวส.1/1', 'ปวส.2/1', 'ปวส.2/2')
+ORDER BY
+cg.ClassGroupName, sp.Term, s.SubjectCode;
+";
 
+$result = $conn->query($sql);
+
+echo '<h2 class="text-center mb-2">ทดสอบสร้างตารางเรียน</h2>';
+if ($result->num_rows > 0) {
+  $currentGroup = ""; // เก็บชื่อกลุ่มปัจจุบัน
+  $i = 1;
+  echo "<span class='text-dark fw-bold'>เลือกระดับชั้น :</span>";
+  // สร้างเมนูลิงก์นำทางเพียงครั้งเดียว
+  $menuLinks = "<ul class='nav nav-pills mb-3'>";
+  $groupNames = ['ปวช.1/1', 'ปวช.2/1', 'ปวช.3/1', 'ปวช.3/2', 'ปวส.1/1', 'ปวส.2/1', 'ปวส.2/2'];
+  foreach ($groupNames as $groupName) {
+    $menuLinks .= "<li class='nav-item'>
+    <a class='nav-link btn btn-light text-dark' href='#" . urlencode($groupName) . "'>" . $groupName . "</a>
+  </li>";
+  }
+  $menuLinks .= "</ul>";
+  // แสดงเมนูนำทาง
+  echo $menuLinks;
+}
 ?>
-<div class="d-flex justify-content-center gap-3 mb-3">
-  <button class="btn btn-outline-danger w-50 ">ย้อนกลับ</button>
-  <button class="btn btn-outline-success w-50 ">บันทึกและกลับสู่หน้าหลัก</button>
-</div>
-<div class="d-flex justify-content-center gap-3 mb-3">
-  <button class="btn btn-outline-info w-50 ">Export PDF</button>
-</div>
+
+
 <div class="container content">
-  <h2 class="text-center mb-2">ตารางเรียน</h2>
   <!-- <div class="table-responsive"> -->
   <table class="container table table-bordered table-striped table-hover text-center">
     <thead class="table-info">
@@ -131,70 +166,52 @@ if ($conn->connect_error) {
   <h2 class="text-center mb-2">รายละเอียดวิชา</h2>
   <table class="table table-bordered table-striped table-hover text-center">
     <thead class="table-info">
+
       <tr>
-        <th class="day-name">รหัสวิชา</th>
-        <th>ชื่อวิชา</th>
-        <th class="day-name">ท.</th>
-        <th class="day-name">ป.</th>
-        <th class="day-name">ช.</th>
+        <th style="width: 6%;">ลำดับ</th>
+        <th style="width: 10%;">รหัสวิชา</th>
+        <th style="width: 20%;">ชื่อวิชา</th>
+        <th style="width: 4%;">ท</th>
+        <th style="width: 4%;">ป</th>
+        <th style="width: 4%;">น</th>
+        <th style="width: 6%;">แยกคาบ</th>
+        <th style="width: 6%;">ความสำคัญ</th>
+        <th style="width: 12%;">ทฤษฎี / ปฎิบัติ</th>
+        <th style="width: 12%;">ประเภทวิชา</th>
+        <th style="width: 16%;">วัสดุ/ครุภัณฑ์</th>
+        <th style="width: 16%;">ผลลัพธ์</th>
       </tr>
     </thead>
     <tbody>
       <tr>
+        <td>1</td>
         <td class="day-name">20001-1003</td>
         <td class="text-start ps-3">ธุรกิจเบื้องต้น</td>
         <td>1</td>
         <td>2</td>
         <td>2</td>
-      </tr>
-      <tr>
-        <td class="day-name">21910-1002</td>
-        <td class="text-start ps-3">วิเคราะห์ความต้องการทางธุรกิจ</td>
-        <td>1</td>
-        <td>2</td>
-        <td>2</td>
-      </tr>
-      <tr>
-        <td class="day-name">21910-1003</td>
-        <td class="text-start ps-3">การเขียนโปรแกรมคอมพิวเตอร์เบื้องต้น</td>
-        <td>1</td>
-        <td>2</td>
-        <td>2</td>
-      </tr>
-      <tr>
-        <td class="day-name">21910-1004</td>
-        <td class="text-start ps-3">พาณิชย์อิเล็กทรอนิกส์เบื้องต้น</td>
-        <td>1</td>
-        <td>2</td>
-        <td>2</td>
-      </tr>
-      <tr>
-        <td class="day-name">21910-2007</td>
-        <td class="text-start ps-3">โปรแกรมกราฟิกเพื่อสร้างสื่อดิจิทัล</td>
-        <td>2</td>
-        <td>2</td>
-        <td>3</td>
-      </tr>
-      <tr>
-        <td class="day-name">21910-2009</td>
-        <td class="text-start ps-3">คณิตศาสตร์คอมพิวเตอร์</td>
-        <td>1</td>
-        <td>2</td>
-        <td>2</td>
-      </tr>
-      <tr>
-        <td class="day-name">21910-2010</td>
-        <td class="text-start ps-3">การเขียนโปรแกรมภาษาคอมพิวเตอร์</td>
-        <td>2</td>
-        <td>2</td>
-        <td>3</td>
-      </tr>
-      <tr>
-        <td class="day-name">20000-2002</td>
-        <td class="text-start ps-3">กิจกรรมลูกเสือวิสามัญ</td>
-        <td>2</td>
-        <td>0</td>
-        <td>2</td>
+        <td>
+          <input type="checkbox" id="myCheckbox" onclick="toggleCheckbox()" checked disabled>
+        </td>
+        <td>5</td>
+        <td>ปฎิบัติ</td>
+        <td>
+          <select id="subjecttype" name="subjecttype" class="form-select" disabled>
+            <option value="1">วิชาชีพ</option>
+            <option value="2">วิชาชีพ/เรียนร่วม</option>
+            <option value="3">วิชาชีพฝึกงาน</option>
+            <option value="4">วิชาสามัญ/เรียนร่วม</option>
+            <option value="5">กิจกรรม/เรียนร่วม</option>
+          </select>
+        </td>
+        <td>
+          <select id="courseDropdown" name="courseCategory" class="form-select" disabled>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+        </td>
+        <td><i class="bi bi-check-circle-fill green-check" style="font-size: 2rem;"></i></td>
       </tr>
     </tbody>
   </table>
