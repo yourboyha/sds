@@ -1,11 +1,11 @@
 <?php
-
+include '../../../../Controller/connect.php';
 // ตรวจสอบการเชื่อมต่อ
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 //sql สร้างตารางรายวิชา
-$sql_create_subject = "
+$sql = "
 SELECT
 cg.ClassGroupName,
 s.SubjectCode,
@@ -31,7 +31,7 @@ cg.ClassGroupName, sp.Term, s.SubjectCode;
 $result = $conn->query($sql);
 
 // ตรวจสอบว่ามีข้อมูลหรือไม่
-if ($result_subject->num_rows > 0) {
+if ($result->num_rows > 0) {
   $currentGroup = ""; // เก็บชื่อกลุ่มปัจจุบัน
   $i = 1;
   echo "<span class='text-dark fw-bold'>เลือกดูระดับชั้น :</span>";
@@ -63,7 +63,7 @@ if ($result_subject->num_rows > 0) {
       $currentGroup = $row['ClassGroupName'];
       echo "<h3 id='" . urlencode($currentGroup) . "'>" . $currentGroup . "</h3>";
       echo
-      "<table class='table table-striped table-hover'>
+      "<table class='table table-striped table-hover table-bordered'>
   <thead>
     <tr>
       <th>ลำดับ</th>

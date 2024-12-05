@@ -1,0 +1,39 @@
+.priority {
+  text-align: center;
+  cursor: pointer; /* เปลี่ยน cursor เป็น pointer เมื่อ hover */
+}
+
+input[type="radio"] {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+input[type="checkbox"] {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+/* เอฟเฟกต์ hover */
+.priority:hover {
+  opacity: 0.8;
+}
+.priority-5:hover {
+  background-color: #ccffcc; /* สีเขียวเข้ม */
+  opacity: 0.8;
+}
+.priority-4:hover {
+  background-color: #e5ffcc; /* สีเขียวอ่อน */
+  opacity: 0.8;
+}
+.priority-3:hover {
+  background-color: #ffffcc; /* สีเหลืองอ่อน */
+  opacity: 0.8;
+}
+.priority-2:hover {
+  background-color: #ffe5cc; /* สีส้มอ่อน */
+  opacity: 0.8;
+}
+.priority-1:hover {
+  background-color: #ffcccc; /* สีแดงอ่อน */
+  opacity: 0.8;
+}

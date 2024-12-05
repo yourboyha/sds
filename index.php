@@ -26,6 +26,7 @@ require_once "src/controller/connect.php";
   <!-- Custom CSS -->
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>css/styles.css">
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>css/schedulestyles.css">
+  <link rel="stylesheet" href="<?php echo BASE_URL; ?>css/priority.css">
 </head>
 
 <body>

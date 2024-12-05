@@ -11,16 +11,21 @@
         <li class="nav-item">
           <a class="nav-link text-secondary"
             onclick="showSection('priority', 'src/role/Admin/schedule/priority/priority.php')">2.
-            กำหนดความสำคัญ</a>
+            ความสำคัญ</a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-secondary"
             onclick="showSection('constraints', 'src/role/Admin/schedule/constraints/constraints.php')">3.
-            กำหนดเงื่อนไข</a>
+            ประเภทวิชา</a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-secondary"
-            onclick="showSection('manageschedule', 'src/role/Admin/schedule/manageschedule/manageschedule.php')">4.
+            onclick="showSection('teachingaids', 'src/role/Admin/schedule/teachingaids/teachingaids.php')">4.
+            ครุภัณฑ์</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-secondary"
+            onclick="showSection('manageschedule', 'src/role/Admin/schedule/manageschedule/manageschedule.php')">5.
             จัดการตารางเรียน</a>
         </li>
       </ul>
