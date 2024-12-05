@@ -29,7 +29,7 @@ cg.ClassGroupName, sp.Term, s.SubjectCode;
 
 $result = $conn->query($sql);
 
-echo '<h2 class="text-center mb-2">ทดสอบสร้างตารางเรียน</h2>';
+echo '<h2 class="text-center mb-2 test111">ทดสอบสร้างตารางเรียน</h2>';
 if ($result->num_rows > 0) {
   $currentGroup = ""; // เก็บชื่อกลุ่มปัจจุบัน
   $i = 1;
@@ -211,7 +211,7 @@ if ($result->num_rows > 0) {
             <option value="3">3</option>
           </select>
         </td>
-        <td><i class="bi bi-check-circle-fill green-check" style="font-size: 2rem;"></i></td>
+        <td><i class="bi bi-check-circle-fill green-check" style="font-size: 2rem; color: green;"></i></td>
       </tr>
     </tbody>
   </table>

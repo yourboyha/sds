@@ -1,0 +1,47 @@
+ต่อไปเรียกข้อมูลที่ insert ไปออกมาแสดงบนตารางตามโครงสร้างดังนี้
+table head
+ลำดับ	รหัสวิชา	ชื่อวิชา	ท	ป	น	แยกคาบ	ความสำคัญ	ทฤษฎี / ปฎิบัติ	ประเภทวิชา	วัสดุ/ครุภัณฑ์
+
+field from Table
+$i SubjectCode SubjectName TheoryHours PracticalHours CreditHours Continuity Weight TheoryPractice SubjectType EquipmentWeight
+
+Table: subjects
+SubjectCode SubjectName TheoryHours PracticalHours CreditHours 
+
+Table: rules
+Continuity Weight TheoryPractice SubjectType EquipmentWeight
+
+td for Continuity ถ้า 1 = checked , 0 = uncheck
+<input type="checkbox" id="myCheckbox" onclick="toggleCheckbox()" checked disabled>
+
+td for Weight 
+แสดงตัวเลขปกติ
+
+TheoryHours PracticalHours
+td for TheoryPractice
+ถ้า TheoryHours>PracticalHours และ PracticalHours = 0 ==  วิชาทฤษฎี
+ถ้า TheoryHours=0 และ TheoryHours<PracticalHours  == วิชาปฎิบัติ
+ถ้าTheoryHours<PracticalHours == วิชาทฤษฎีและปฎิบัติ โดยที่มีปฏิบัติมากกว่า
+ถ้า TheoryHours=PracticalHours == วิชาทฤษฎี / ปฎิบัติ เท่ากัน
+
+td for SubjectType 
+        <select id="subjecttype" name="subjecttype" class="form-select" disabled>
+          <option value="1">วิชาชีพ</option>
+          <option value="2">วิชาชีพ/เรียนร่วม</option>
+          <option value="3">วิชาชีพฝึกงาน</option>
+          <option value="4">วิชาสามัญ/เรียนร่วม</option>
+          <option value="5">กิจกรรม/เรียนร่วม</option>
+        </select>
+td for EquipmentWeight
+        <select id="courseDropdown" name="courseCategory" class="form-select"disabled>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select>
+
+
+
+
+
+
+
