@@ -160,10 +160,6 @@ td {
   background-color: #555;
 }
 
-.timeslot {
-  font-size: 75%; /* ลดขนาดตัวอักษรลงครึ่งหนึ่ง (สองเท่าเล็กลง) */
-}
-
 .vertical-text {
   writing-mode: vertical-rl; /* หมุนข้อความแนวตั้งจากขวาไปซ้าย */
   transform: rotate(180deg); /* หมุนข้อความกลับให้อ่านง่าย */
@@ -179,16 +175,4 @@ td {
   color: #000; /* เปลี่ยนข้อความเป็นสีดำ */
   cursor: pointer; /* แสดงรูปเมาส์เป็น Pointer */
   font-weight: bold; /* ข้อความตัวหนา */
-}
-.day-name {
-  white-space: nowrap; /* ป้องกันข้อความขึ้นบรรทัดใหม่ */
-  width: 1%; /* ทำให้ช่องตารางมีขนาดเล็กที่สุด */
-  text-align: center; /* จัดข้อความให้อยู่ตรงกลาง */
-  padding: 5px; /* เพิ่มระยะห่างเล็กน้อยรอบข้อความ */
-}
-.timeslot {
-  min-width: 80px; /* กำหนดความกว้างขั้นต่ำ */
-  max-width: 100px; /* กำหนดความกว้างสูงสุด */
-  text-align: center;
-  vertical-align: middle;
 }
