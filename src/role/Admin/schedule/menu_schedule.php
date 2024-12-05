@@ -15,18 +15,28 @@
         </li>
         <li class="nav-item">
           <a class="nav-link text-secondary"
-            onclick="showSection('constraints', 'src/role/Admin/schedule/constraints/constraints.php')">3.
+            onclick="showSection('subjecttype', 'src/role/Admin/schedule/subjecttype/subjecttype.php')">3.
             ประเภทวิชา</a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-secondary"
             onclick="showSection('teachingaids', 'src/role/Admin/schedule/teachingaids/teachingaids.php')">4.
-            ครุภัณฑ์</a>
+            วัสดุ/ครุภัณฑ์</a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-secondary"
-            onclick="showSection('manageschedule', 'src/role/Admin/schedule/manageschedule/manageschedule.php')">5.
-            จัดการตารางเรียน</a>
+            onclick="showSection('summary', 'src/role/Admin/schedule/summary/summary.php')">5.
+            ตรวจสอบข้อมูล</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-secondary"
+            onclick="showSection('manageschedule', 'src/role/Admin/schedule/manageschedule/manageschedule.php')">6.
+            สร้างตารางเรียน</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-secondary"
+            onclick="showSection('saveschedule', 'src/role/Admin/schedule/saveschedule/saveschedule.php')">7.
+            บันทึกข้อมูล</a>
         </li>
       </ul>
     </nav>

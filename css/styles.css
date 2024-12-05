@@ -186,3 +186,9 @@ td {
   text-align: center; /* จัดข้อความให้อยู่ตรงกลาง */
   padding: 5px; /* เพิ่มระยะห่างเล็กน้อยรอบข้อความ */
 }
+.timeslot {
+  min-width: 80px; /* กำหนดความกว้างขั้นต่ำ */
+  max-width: 100px; /* กำหนดความกว้างสูงสุด */
+  text-align: center;
+  vertical-align: middle;
+}

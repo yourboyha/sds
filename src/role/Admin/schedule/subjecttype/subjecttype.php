@@ -66,21 +66,16 @@ if ($result->num_rows > 0) {
       '<table class="table table-striped table-hover table-bordered">
   <thead>
     <tr>
-      <th rowspan="2"style="width: 6%;">ลำดับ</th>
-      <th rowspan="2"style="width: 10%;">รหัสวิชา</th>
-      <th rowspan="2" style="width: 20%;">ชื่อวิชา</th>
-      <th rowspan="2"style="width: 4%;">ท</th>
-      <th rowspan="2"style="width: 4%;">ป</th>
-      <th rowspan="2"style="width: 4%;">น</th>
-      <th colspan="5" style="width: 50%;">ระดับความสำคัญ</th>
-    </tr>
-        <tr>
-
-      <th>5</th>
-      <th>4</th>
-      <th>3</th>
-      <th>2</th>
-      <th>1</th>
+      <th  style="width: 6%;">ลำดับ</th>
+      <th  style="width: 10%;">รหัสวิชา</th>
+      <th  style="width: 20%;">ชื่อวิชา</th>
+      <th  style="width: 4%;">ท</th>
+      <th  style="width: 4%;">ป</th>
+      <th  style="width: 4%;">น</th>
+      <th  style="width: 6%;">แยกคาบ</th>
+      <th  style="width: 5%;">ความสำคัญ</th>
+      <th  style="width: 10%;">ทฤษฎี / ปฎิบัติ</th>
+      <th  style="width: 35%;">ประเภทวิชา</th>
     </tr>
   </thead>
   <tbody>';
@@ -94,20 +89,19 @@ if ($result->num_rows > 0) {
       <td>' . $row['TheoryHours'] . '</td>
       <td>' . $row['PracticalHours'] . '</td>
       <td>' . $row['CreditHours'] . '</td>
-      <td class="priority priority-5">
-        <input type="radio" name="' . $row['SubjectCode'] . '" id="' . $row['SubjectCode'] . ',5" value="5">
+      <td>
+        <input type="checkbox" id="myCheckbox" onclick="toggleCheckbox()" checked disabled>
       </td>
-      <td class="priority priority-4">
-        <input type="radio" name="' . $row['SubjectCode'] . '" id="' . $row['SubjectCode'] . ',4" value="4">
-      </td>
-      <td class="priority priority-3">
-        <input type="radio" name="' . $row['SubjectCode'] . '" id="' . $row['SubjectCode'] . ',3" value="3">
-      </td>
-      <td class="priority priority-2">
-        <input type="radio" name="' . $row['SubjectCode'] . '" id="' . $row['SubjectCode'] . ',2" value="2">
-      </td>
-      <td class="priority priority-1">
-        <input type="radio" name="' . $row['SubjectCode'] . '" id="' . $row['SubjectCode'] . ',1" value="1">
+      <td>5</td>
+      <td>ปฎิบัติ</td>
+      <td>    
+        <select id="subjecttype" name="subjecttype" class="form-select">
+          <option value="1">วิชาชีพ</option>
+          <option value="2">วิชาชีพ/เรียนร่วม</option>
+          <option value="3">วิชาชีพฝึกงาน</option>
+          <option value="4">วิชาสามัญ/เรียนร่วม</option>
+          <option value="5">กิจกรรม/เรียนร่วม</option>
+        </select>
       </td>
     </tr>';
     $i++;
