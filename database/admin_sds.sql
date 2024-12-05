@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 05, 2024 at 04:00 AM
+-- Generation Time: Dec 05, 2024 at 04:20 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -178,10 +178,10 @@ CREATE TABLE `rules` (
   `PriorityID` int(11) NOT NULL,
   `SubjectID` int(11) NOT NULL,
   `Weight` float NOT NULL,
-  `SubjectType` enum('General','Specific','Core') NOT NULL,
-  `TheoryPractice` enum('Theory','Practice','Both') NOT NULL,
-  `EquipmentWeight` float NOT NULL,
-  `Continuity` enum('High','Medium','Low') NOT NULL
+  `SubjectType` float(10,3) NOT NULL,
+  `TheoryPractice` float(10,3) NOT NULL,
+  `EquipmentWeight` float(10,3) NOT NULL,
+  `Continuity` float(10,3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
