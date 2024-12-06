@@ -7,27 +7,52 @@ if ($conn->connect_error) {
 // include '../btnsch.php';
 //sql สร้างตารางรายวิชา
 $sql = "
-SELECT
-cg.ClassGroupName,
-s.SubjectCode,
-s.SubjectName,
-s.TheoryHours,
-s.PracticalHours,
-s.CreditHours,
-sp.Term
-FROM
-StudyPlans sp
-JOIN
-ClassGroup cg ON sp.ClassGroupID = cg.ClassGroupID
-JOIN
-Subjects s ON sp.SubjectID = s.SubjectID
-WHERE
-cg.ClassGroupName IN ('ปวช.1/1', 'ปวช.2/1', 'ปวช.3/1', 'ปวช.3/2', 'ปวส.1/1', 'ปวส.2/1', 'ปวส.2/2')
-ORDER BY
-cg.ClassGroupName, sp.Term, s.SubjectCode;
+SELECT 
+sc.TimeSlot, 
+sc.DayOfWeek, 
+s.SubjectCode, 
+r.RoomName, 
+u.FullName AS TeacherName, cg.ClassGroupName 
+FROM schedule sc JOIN subjects s ON sc.SubjectID = s.SubjectID JOIN rooms r ON sc.RoomID = r.RoomID JOIN teachers t ON sc.TeacherID = t.TeacherID JOIN users u ON t.UserID = u.UserID JOIN classgroup cg ON sc.ClassGroupID = cg.ClassGroupID WHERE s.SubjectCode = '20204-2106';
 ";
 
 $result = $conn->query($sql);
+
+// สร้างอาร์เรย์เพื่อเก็บข้อมูลตารางเรียน
+$scheduleData = [];
+
+// ฟังก์ชันแปลง TimeSlot
+function parseTimeSlot($timeSlot)
+{
+  // แยกช่วง เช่น mon1-mon4
+  $parts = explode('-', $timeSlot);
+  $day = substr($parts[0], 0, 3); // เช่น "mon"
+  $startSlot = (int)substr($parts[0], 3); // เช่น "1"
+  $endSlot = isset($parts[1]) ? (int)substr($parts[1], 3) : $startSlot; // เช่น "4"
+  return ['day' => $day, 'startSlot' => $startSlot, 'endSlot' => $endSlot];
+}
+
+// เก็บข้อมูลในรูปแบบที่เข้าถึงง่าย
+if ($result->num_rows > 0) {
+  while ($row = $result->fetch_assoc()) {
+    // แปลง TimeSlot
+    $parsedSlot = parseTimeSlot($row['TimeSlot']);
+    $day = $parsedSlot['day'];
+    $startSlot = $parsedSlot['startSlot'];
+    $endSlot = $parsedSlot['endSlot'];
+    // เก็บข้อมูลในช่วงเวลา
+    for ($slot = $startSlot; $slot <= $endSlot; $slot++) {
+      $scheduleData[$day][$slot] = [
+        'SubjectCode' => $row['SubjectCode'],
+        'RoomName' => $row['RoomName'],
+        'TeacherName' => $row['TeacherName'],
+        'ClassGroupName' => $row['ClassGroupName']
+      ];
+    }
+  }
+}
+
+// print_r($scheduleData);
 
 echo '<h2 class="text-center mb-2 test111">ทดสอบสร้างตารางเรียน</h2>';
 if ($result->num_rows > 0) {
@@ -48,10 +73,9 @@ if ($result->num_rows > 0) {
 }
 ?>
 
-
 <div class="container content">
-  <!-- <div class="table-responsive"> -->
-  <table class="container table table-bordered table-striped table-hover text-center ">
+  <h2 class="text-center mb-2">ตารางเรียน</h2>
+  <table class="container table table-bordered table-striped table-hover text-center">
     <thead class="table-info">
       <tr>
         <th>เวลา</th>
@@ -71,7 +95,6 @@ if ($result->num_rows > 0) {
       </tr>
     </thead>
     <tbody>
-
       <tr>
         <td>วัน/คาบ</td>
         <td rowspan="6" class="vertical-text day-name">กิจกรรมหน้าเสาธง</td>
@@ -79,85 +102,34 @@ if ($result->num_rows > 0) {
         <td class="timeslot"><?php echo $i; ?></td>
         <?php endfor; ?>
       </tr>
+      <?php
+      // แปลงชื่อวัน
+      $days = ['mon' => 'วันจันทร์', 'tue' => 'วันอังคาร', 'wed' => 'วันพุธ', 'thu' => 'วันพฤหัสบดี', 'fri' => 'วันศุกร์'];
+      foreach ($days as $dayCode => $dayName) {
+        echo "<tr>";
+        echo "<td>$dayName</td>";
+        for ($slot = 1; $slot <= 12; $slot++) {
+          // เพิ่ม Homeroom ในวันพฤหัส คาบที่ 6
+          if ($dayCode === 'thu' && $slot === 6) {
+            $cellContent = 'Homeroom';
+          } else {
+            $cellContent = isset($scheduleData[$dayCode][$slot])
+              ? $scheduleData[$dayCode][$slot]['SubjectCode'] . '<br>' .
+              $scheduleData[$dayCode][$slot]['RoomName'] . '<br>' .
+              $scheduleData[$dayCode][$slot]['TeacherName'] . '<br>'
+              // $scheduleData[$dayCode][$slot]['ClassGroupName']
+              : '';
+          }
+          echo "<td class='class-slot'>$cellContent</td>";
+        }
+        echo "</tr>";
+      }
 
-      <tr id="row-monday">
-        <th class="day-name">วันจันทร์</th>
-        <td id="mon1" class="class-slot"><br><br></td>
-        <td id="mon2" class="class-slot"><br><br></td>
-        <td id="mon3" class="class-slot"><br><br></td>
-        <td id="mon4" class="class-slot"><br><br></td>
-        <td id="mon5" class="class-slot"><br><br></td>
-        <td id="mon6" class="class-slot"><br><br></td>
-        <td id="mon7" class="class-slot"><br><br></td>
-        <td id="mon8" class="class-slot"><br><br></td>
-        <td id="mon9" class="class-slot"><br><br></td>
-        <td id="mon10" class="class-slot"><br><br></td>
-        <td id="mon11" class="class-slot"><br><br></td>
-        <td id="mon12" class="class-slot"><br><br></td>
-      </tr>
-
-      <tr id="row-tuesday">
-        <th class="day-name">วันอังคาร</th>
-        <td id="tue1" class="class-slot"><br><br></td>
-        <td id="tue2" class="class-slot"><br><br></td>
-        <td id="tue3" class="class-slot"><br><br></td>
-        <td id="tue4" class="class-slot"><br><br></td>
-        <td id="tue5" class="class-slot"><br><br></td>
-        <td id="tue6" class="class-slot"><br><br></td>
-        <td id="tue7" class="class-slot"><br><br></td>
-        <td id="tue8" class="class-slot"><br><br></td>
-        <td id="tue9" class="class-slot"><br><br></td>
-        <td id="tue10" class="class-slot"><br><br></td>
-        <td id="tue11" class="class-slot"><br><br></td>
-        <td id="tue12" class="class-slot"><br><br></td>
-      </tr>
-      <tr id="row-wednesday">
-        <th class="day-name">วันพุธ</th>
-        <td id="wed1" class="class-slot"><br><br></td>
-        <td id="wed2" class="class-slot"><br><br></td>
-        <td id="wed3" class="class-slot"><br><br></td>
-        <td id="wed4" class="class-slot"><br><br></td>
-        <td id="wed5" class="class-slot"><br><br></td>
-        <td id="wed6" class="class-slot"><br><br></td>
-        <td id="wed7" class="class-slot"><br><br></td>
-        <td id="wed8" class="class-slot"><br><br></td>
-        <td id="wed9" class="class-slot"><br><br></td>
-        <td id="wed10" class="class-slot"><br><br></td>
-        <td id="wed11" class="class-slot"><br><br></td>
-        <td id="wed12" class="class-slot"><br><br></td>
-      </tr>
-      <tr id="row-thursday">
-        <th class="day-name">วันพฤหัสบดี</th>
-        <td id="thu1" class="class-slot"><br><br></td>
-        <td id="thu2" class="class-slot"><br><br></td>
-        <td id="thu3" class="class-slot"><br><br></td>
-        <td id="thu4" class="class-slot"><br><br></td>
-        <td id="thu5" class="class-slot"><br><br></td>
-        <td id="thu6" class="class-slot">Home<br>room</td>
-        <td id="thu7" class="class-slot"><br><br></td>
-        <td id="thu8" class="class-slot"><br><br></td>
-        <td id="thu9" class="class-slot"><br><br></td>
-        <td id="thu10" class="class-slot"><br><br></td>
-        <td id="thu11" class="class-slot"><br><br></td>
-        <td id="thu12" class="class-slot"><br><br></td>
-      </tr>
-      <tr id="row-friday">
-        <th class="day-name">วันศุกร์</th>
-        <td id="fri1" class="class-slot"><br><br></td>
-        <td id="fri2" class="class-slot"><br><br></td>
-        <td id="fri3" class="class-slot"><br><br></td>
-        <td id="fri4" class="class-slot"><br><br></td>
-        <td id="fri5" class="class-slot"><br><br></td>
-        <td id="fri6" class="class-slot"><br><br></td>
-        <td id="fri7" class="class-slot"><br><br></td>
-        <td id="fri8" class="class-slot"><br><br></td>
-        <td id="fri9" class="class-slot"><br><br></td>
-        <td id="fri10" class="class-slot"><br><br></td>
-        <td id="fri11" class="class-slot"><br><br></td>
-        <td id="fri12" class="class-slot"><br><br></td>
-      </tr>
+      ?>
     </tbody>
   </table>
+
+
 
 
 

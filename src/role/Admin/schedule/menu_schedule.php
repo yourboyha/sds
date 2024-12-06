@@ -18,11 +18,11 @@
             onclick="showSection('subjecttype', 'src/role/Admin/schedule/subjecttype/subjecttype.php')">3.
             ประเภทวิชา</a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link text-secondary"
             onclick="showSection('teachingaids', 'src/role/Admin/schedule/teachingaids/teachingaids.php')">4.
             วัสดุ/ครุภัณฑ์</a>
-        </li>
+        </li> -->
         <li class="nav-item">
           <a class="nav-link text-secondary"
             onclick="showSection('summary', 'src/role/Admin/schedule/summary/summary.php')">5.
