@@ -37,3 +37,12 @@
   white-space: nowrap;
   overflow: hidden;
 }
+
+.subjectname {
+  width: 250px;
+}
+
+.createtable {
+  table-layout: fixed;
+  width: 100%;
+}

@@ -1,0 +1,29 @@
+SELECT 
+    SubjectID,
+    AVG(Weight) AS AvgWeight,
+    CASE
+        WHEN AVG(Weight) BETWEEN 4.50 AND 5.00 THEN 'สูงมาก'
+        WHEN AVG(Weight) BETWEEN 3.50 AND 4.49 THEN 'สูง'
+        WHEN AVG(Weight) BETWEEN 2.50 AND 3.49 THEN 'ปานกลาง'
+        WHEN AVG(Weight) BETWEEN 1.50 AND 2.49 THEN 'ต่ำ'
+        ELSE 'ต่ำมาก'
+    END AS WeightLevel,
+    AVG(SubjectType) AS AvgSubjectType,
+    CASE
+        WHEN AVG(SubjectType) BETWEEN 4.50 AND 5.00 THEN 'กิจกรรม/เรียนร่วม'
+        WHEN AVG(SubjectType) BETWEEN 3.50 AND 4.49 THEN 'วิชาสามัญ/เรียนร่วม'
+        WHEN AVG(SubjectType) BETWEEN 2.50 AND 3.49 THEN 'วิชาชีพฝึกงาน'
+        WHEN AVG(SubjectType) BETWEEN 1.50 AND 2.49 THEN 'วิชาชีพ/เรียนร่วม'
+        ELSE 'วิชาชีพ'
+    END AS SubjectTypeLevel,
+    AVG(Continuity) AS AvgContinuity,
+    CASE
+        WHEN AVG(Continuity) BETWEEN 0.50 AND 1.00 THEN 'ได้'
+        ELSE 'ไม่ได้'
+    END AS ContinuityLevel
+FROM 
+    rules
+GROUP BY 
+    SubjectID
+ORDER BY 
+    SubjectID;

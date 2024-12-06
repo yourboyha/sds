@@ -1,26 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+// 1. ข้อมูลรายวิชา
+$subjects = [
+  [
+    "name" => "ภาษาไทยเพื่ออาชีพ",
+    "weight" => 4.7,
+    "subjectType" => 3.8,
+    "theoryPractice" => 3.5,
+    "equipmentWeight" => 2.7,
+    "continuity" => 0.9
+  ],
+  [
+    "name" => "วิเคราะห์ความต้องการทางธุรกิจ",
+    "weight" => 4.2,
+    "subjectType" => 2.8,
+    "theoryPractice" => 2.4,
+    "equipmentWeight" => 1.8,
+    "continuity" => 0.4
+  ],
+  // เพิ่มข้อมูลรายวิชาอื่น ๆ
+];
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Checkmark สีเขียว</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-  <style>
-    .green-check {
-      color: green;
-      /* เปลี่ยนสีเป็นสีเขียว */
+// 2. ตารางเรียน
+$timeSlots = [
+  "Monday" => ["Morning" => null, "Afternoon" => null],
+  "Tuesday" => ["Morning" => null, "Afternoon" => null],
+  // เพิ่มวันอื่น ๆ
+];
+
+// 3. ฟังก์ชันตรวจสอบห้องเรียนที่เหมาะสม
+function findAvailableSlot($subject, &$timeSlots)
+{
+  foreach ($timeSlots as $day => $slots) {
+    foreach ($slots as $time => $currentSubject) {
+      if ($currentSubject === null) {
+        // ตรวจสอบ Continuity
+        if ($subject['continuity'] < 0.5) {
+          if (!is_null($timeSlots[$day]['Morning']) || !is_null($timeSlots[$day]['Afternoon'])) {
+            continue;
+          }
+        }
+        $timeSlots[$day][$time] = $subject['name'];
+        return true;
+      }
     }
-  </style>
-</head>
+  }
+  return false;
+}
 
-<body>
-  <div class="container text-center mt-5">
-    <!-- Check Icon -->
-    <i class="bi bi-check-circle-fill green-check" style="font-size: 2rem;"></i>
-    <p>การดำเนินการสำเร็จ</p>
-  </div>
-</body>
+// 4. การจัดตารางเรียน
+foreach ($subjects as $subject) {
+  if (!findAvailableSlot($subject, $timeSlots)) {
+    echo "Cannot find a suitable time slot for: " . $subject['name'] . "\n";
+  }
+}
 
-</html>
+// 5. แสดงตารางเรียน
+print_r($timeSlots);

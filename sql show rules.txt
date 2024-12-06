@@ -39,6 +39,29 @@ td for EquipmentWeight
           <option value="3">3</option>
         </select>
 
+ลืมบอก ให้แสดงข้อมูลแบ่งตาม ClassGroup ('ปวช.1/1', 'ปวช.2/1', 'ปวช.3/1', 'ปวช.3/2', 'ปวส.1/1', 'ปวส.2/1', 'ปวส.2/2') ดูข้อมูลจาก sql ที่ให้ไป 
+
+$sql = "
+SELECT
+cg.ClassGroupName,
+s.SubjectCode,
+s.SubjectName,
+s.TheoryHours,
+s.PracticalHours,
+s.CreditHours,
+sp.Term
+FROM
+StudyPlans sp
+JOIN
+ClassGroup cg ON sp.ClassGroupID = cg.ClassGroupID
+JOIN
+Subjects s ON sp.SubjectID = s.SubjectID
+WHERE
+cg.ClassGroupName IN ('ปวช.1/1', 'ปวช.2/1', 'ปวช.3/1', 'ปวช.3/2', 'ปวส.1/1', 'ปวส.2/1', 'ปวส.2/2')
+ORDER BY
+cg.ClassGroupName, sp.Term, s.SubjectCode;
+";
+
 
 
 

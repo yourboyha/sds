@@ -30,8 +30,13 @@
         </li>
         <li class="nav-item">
           <a class="nav-link text-secondary"
-            onclick="showSection('manageschedule', 'src/role/Admin/schedule/manageschedule/createschedule.php')">6.
+            onclick="showSection('manageschedule', 'src/role/Admin/schedule/manageschedule/manageschedule.php')">6.
             สร้างตารางเรียน</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-secondary"
+            onclick="showSection('createsschedule', 'src/role/Admin/schedule/manageschedule/createschedule.php')">6.
+            ลองสร้างตารางเรียน</a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-secondary"
@@ -47,42 +52,42 @@
 
   </div>
   <script>
-    // ฟังก์ชันสำหรับแสดงส่วนของเมนูที่เลือก
-    function showSection(sectionId, filePath) {
-      console.log(sectionId);
-      // console.log('Fetching:', filePath);
-      // กำหนดชื่อ Section ที่จะแสดง
-      const dynamicSection = document.getElementById('dynamic-section');
-      console.log(dynamicSection);
+  // ฟังก์ชันสำหรับแสดงส่วนของเมนูที่เลือก
+  function showSection(sectionId, filePath) {
+    console.log(sectionId);
+    // console.log('Fetching:', filePath);
+    // กำหนดชื่อ Section ที่จะแสดง
+    const dynamicSection = document.getElementById('dynamic-section');
+    console.log(dynamicSection);
 
-      // ทำการ Fetch เนื้อหาใหม่ผ่าน AJAX
-      fetch(filePath)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok ' + response.statusText);
-          }
-          return response.text();
-        })
-        .then(html => {
-          // console.log(html);
-          // ใส่เนื้อหาใหม่ใน Dynamic Section
-          dynamicSection.innerHTML = html;
+    // ทำการ Fetch เนื้อหาใหม่ผ่าน AJAX
+    fetch(filePath)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.text();
+      })
+      .then(html => {
+        // console.log(html);
+        // ใส่เนื้อหาใหม่ใน Dynamic Section
+        dynamicSection.innerHTML = html;
 
-          // เพิ่ม class "active" ให้ Section ปัจจุบัน
-          // console.log('Clearing active class from nav-links');
-          document.querySelectorAll('a.nav-link').forEach(link => {
-            // console.log('Removing active from:', link);
-            link.classList.remove('active');
-          });
-
-          const activeLink = document.querySelector(`a[onclick*="${sectionId}"]`);
-          // console.log('Adding active to:', activeLink);
-          activeLink.classList.add('active');
-        })
-        .catch(error => {
-          console.error('Error loading section:', error);
-          dynamicSection.innerHTML = "<div class='alert alert-danger'>ไม่สามารถโหลดข้อมูลได้</div>";
+        // เพิ่ม class "active" ให้ Section ปัจจุบัน
+        // console.log('Clearing active class from nav-links');
+        document.querySelectorAll('a.nav-link').forEach(link => {
+          // console.log('Removing active from:', link);
+          link.classList.remove('active');
         });
-    }
+
+        const activeLink = document.querySelector(`a[onclick*="${sectionId}"]`);
+        // console.log('Adding active to:', activeLink);
+        activeLink.classList.add('active');
+      })
+      .catch(error => {
+        console.error('Error loading section:', error);
+        dynamicSection.innerHTML = "<div class='alert alert-danger'>ไม่สามารถโหลดข้อมูลได้</div>";
+      });
+  }
   </script>
 </body>

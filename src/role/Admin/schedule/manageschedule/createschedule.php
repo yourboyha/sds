@@ -51,7 +51,7 @@ if ($result->num_rows > 0) {
 
 <div class="container content">
   <!-- <div class="table-responsive"> -->
-  <table class="container table table-bordered table-striped table-hover text-center">
+  <table class="container table table-bordered table-striped table-hover text-center ">
     <thead class="table-info">
       <tr>
         <th>เวลา</th>
@@ -76,85 +76,85 @@ if ($result->num_rows > 0) {
         <td>วัน/คาบ</td>
         <td rowspan="6" class="vertical-text day-name">กิจกรรมหน้าเสาธง</td>
         <?php for ($i = 1; $i <= 12; $i++) : ?>
-          <td class="timeslot"><?php echo $i; ?></td>
+        <td class="timeslot"><?php echo $i; ?></td>
         <?php endfor; ?>
       </tr>
 
       <tr id="row-monday">
         <th class="day-name">วันจันทร์</th>
-        <td id="mon-slot1" class="class-slot" colspan="3">21910-2009<br>LAB1<br>ครูคอม1</td>
-        <!-- <td id="mon-slot2" class="class-slot"></td>
-        <td id="mon-slot3" class="class-slot"></td> -->
-        <td id="mon-slot4" class="class-slot">21910-1004<br>LAB3<br>อธิตญาภรณ์</td>
-        <td id="mon-slot5" class="class-slot"></td>
-        <td id="mon-slot6" class="class-slot" colspan="2">21910-1002<br>LAB3<br>อธิตญาภรณ์</td>
-        <!-- <td id="mon-slot7" class="class-slot"></td> -->
-        <td id="mon-slot8" class="class-slot" colspan="2">21910-1002<br>LAB3<br>อธิตญาภรณ์</td>
-        <!-- <td id="mon-slot9" class="class-slot"></td> -->
-        <td id="mon-slot10" class="class-slot"></td>
-        <td id="mon-slot11" class="class-slot"></td>
-        <td id="mon-slot12" class="class-slot"></td>
+        <td id="mon1" class="class-slot"><br><br></td>
+        <td id="mon2" class="class-slot"><br><br></td>
+        <td id="mon3" class="class-slot"><br><br></td>
+        <td id="mon4" class="class-slot"><br><br></td>
+        <td id="mon5" class="class-slot"><br><br></td>
+        <td id="mon6" class="class-slot"><br><br></td>
+        <td id="mon7" class="class-slot"><br><br></td>
+        <td id="mon8" class="class-slot"><br><br></td>
+        <td id="mon9" class="class-slot"><br><br></td>
+        <td id="mon10" class="class-slot"><br><br></td>
+        <td id="mon11" class="class-slot"><br><br></td>
+        <td id="mon12" class="class-slot"><br><br></td>
       </tr>
 
       <tr id="row-tuesday">
         <th class="day-name">วันอังคาร</th>
-        <td id="tue-slot1" class="class-slot" colspan="4">21910-2010<br>LAB4<br>วุฒิพงศ์</td>
-        <!-- <td id="tue-slot2" class="class-slot"></td>
-        <td id="tue-slot3" class="class-slot"></td>
-        <td id="tue-slot4" class="class-slot"></td> -->
-        <td id="tue-slot5" class="class-slot"></td>
-        <td id="tue-slot6" class="class-slot" colspan="3">21910-1003<br>LAB4<br>วุฒิพงศ์</td>
-        <!-- <td id="tue-slot7" class="class-slot"></td> -->
-        <!-- <td id="tue-slot8" class="class-slot"></td> -->
-        <td id="tue-slot9" class="class-slot"></td>
-        <td id="tue-slot10" class="class-slot"></td>
-        <td id="tue-slot11" class="class-slot"></td>
-        <td id="tue-slot12" class="class-slot"></td>
+        <td id="tue1" class="class-slot"><br><br></td>
+        <td id="tue2" class="class-slot"><br><br></td>
+        <td id="tue3" class="class-slot"><br><br></td>
+        <td id="tue4" class="class-slot"><br><br></td>
+        <td id="tue5" class="class-slot"><br><br></td>
+        <td id="tue6" class="class-slot"><br><br></td>
+        <td id="tue7" class="class-slot"><br><br></td>
+        <td id="tue8" class="class-slot"><br><br></td>
+        <td id="tue9" class="class-slot"><br><br></td>
+        <td id="tue10" class="class-slot"><br><br></td>
+        <td id="tue11" class="class-slot"><br><br></td>
+        <td id="tue12" class="class-slot"><br><br></td>
       </tr>
       <tr id="row-wednesday">
         <th class="day-name">วันพุธ</th>
-        <td id="wed-slot1" class="class-slot" colspan="2">20000-1102<br>ห้องสมุด<br>ไกรศร</td>
-        <!-- <td id="wed-slot2" class="class-slot"></td> -->
-        <td id="wed-slot3" class="class-slot">20000-1602<br>421A<br>รุ่งสุริยา</td>
-        <td id="wed-slot4" class="class-slot"></td>
-        <td id="wed-slot5" class="class-slot"></td>
-        <td id="wed-slot6" class="class-slot" colspan="2">20000-1203<br>421B<br>ยลธิดา</td>
-        <!-- <td id="wed-slot7" class="class-slot"></td> -->
-        <td id="wed-slot8" class="class-slot" colspan="2">20000-1603<br>อาคารโดมใหญ่<br>รุ่งสุริยา</td>
-        <!-- <td id="wed-slot9" class="class-slot"></td> -->
-        <td id="wed-slot10" class="class-slot"></td>
-        <td id="wed-slot11" class="class-slot"></td>
-        <td id="wed-slot12" class="class-slot"></td>
+        <td id="wed1" class="class-slot"><br><br></td>
+        <td id="wed2" class="class-slot"><br><br></td>
+        <td id="wed3" class="class-slot"><br><br></td>
+        <td id="wed4" class="class-slot"><br><br></td>
+        <td id="wed5" class="class-slot"><br><br></td>
+        <td id="wed6" class="class-slot"><br><br></td>
+        <td id="wed7" class="class-slot"><br><br></td>
+        <td id="wed8" class="class-slot"><br><br></td>
+        <td id="wed9" class="class-slot"><br><br></td>
+        <td id="wed10" class="class-slot"><br><br></td>
+        <td id="wed11" class="class-slot"><br><br></td>
+        <td id="wed12" class="class-slot"><br><br></td>
       </tr>
       <tr id="row-thursday">
         <th class="day-name">วันพฤหัสบดี</th>
-        <td id="thu-slot1" class="class-slot" colspan="4">21910-2007<br>LAB2<br>บุญเกียรติ</td>
-        <!-- <td id="thu-slot2" class="class-slot"></td>
-        <td id="thu-slot3" class="class-slot"></td>
-        <td id="thu-slot4" class="class-slot"></td> -->
-        <td id="thu-slot5" class="class-slot"></td>
-        <td id="thu-slot6" class="class-slot">Home<br>room</td>
-        <td id="thu-slot7" class="class-slot" colspan="2">20000-2002<br>อาคารโดมใหญ่<br>บุญเกียรติ</td>
-        <!-- <td id="thu-slot8" class="class-slot"></td> -->
-        <td id="thu-slot9" class="class-slot"></td>
-        <td id="thu-slot10" class="class-slot"></td>
-        <td id="thu-slot11" class="class-slot"></td>
-        <td id="thu-slot12" class="class-slot"></td>
+        <td id="thu1" class="class-slot"><br><br></td>
+        <td id="thu2" class="class-slot"><br><br></td>
+        <td id="thu3" class="class-slot"><br><br></td>
+        <td id="thu4" class="class-slot"><br><br></td>
+        <td id="thu5" class="class-slot"><br><br></td>
+        <td id="thu6" class="class-slot">Home<br>room</td>
+        <td id="thu7" class="class-slot"><br><br></td>
+        <td id="thu8" class="class-slot"><br><br></td>
+        <td id="thu9" class="class-slot"><br><br></td>
+        <td id="thu10" class="class-slot"><br><br></td>
+        <td id="thu11" class="class-slot"><br><br></td>
+        <td id="thu12" class="class-slot"><br><br></td>
       </tr>
       <tr id="row-friday">
         <th class="day-name">วันศุกร์</th>
-        <td id="fri-slot1" class="class-slot" colspan="3">20001-1003<br>LAB3<br>ปวิตรา</td>
-        <!-- <td id="fri-slot2" class="class-slot"></td>
-        <td id="fri-slot3" class="class-slot"></td> -->
-        <td id="fri-slot4" class="class-slot">21910-1002<br>LAB3<br>อธิตญาภรณ์</td>
-        <td id="fri-slot5" class="class-slot"></td>
-        <td id="fri-slot6" class="class-slot" colspan="2">20000-1402<br>425<br>ธันยพร</td>
-        <!-- <td id="fri-slot7" class="class-slot"></td> -->
-        <td id="fri-slot8" class="class-slot"></td>
-        <td id="fri-slot9" class="class-slot"></td>
-        <td id="fri-slot10" class="class-slot"></td>
-        <td id="fri-slot11" class="class-slot"></td>
-        <td id="fri-slot12" class="class-slot"></td>
+        <td id="fri1" class="class-slot"><br><br></td>
+        <td id="fri2" class="class-slot"><br><br></td>
+        <td id="fri3" class="class-slot"><br><br></td>
+        <td id="fri4" class="class-slot"><br><br></td>
+        <td id="fri5" class="class-slot"><br><br></td>
+        <td id="fri6" class="class-slot"><br><br></td>
+        <td id="fri7" class="class-slot"><br><br></td>
+        <td id="fri8" class="class-slot"><br><br></td>
+        <td id="fri9" class="class-slot"><br><br></td>
+        <td id="fri10" class="class-slot"><br><br></td>
+        <td id="fri11" class="class-slot"><br><br></td>
+        <td id="fri12" class="class-slot"><br><br></td>
       </tr>
     </tbody>
   </table>
@@ -164,7 +164,7 @@ if ($result->num_rows > 0) {
   <!-- รายละเอียดวิชา -->
 
   <h2 class="text-center mb-2">รายละเอียดวิชา</h2>
-  <table class="table table-bordered table-striped table-hover text-center">
+  <table class="table table-bordered table-striped table-hover text-center createtable">
     <thead class="table-info">
 
       <tr>
@@ -211,7 +211,7 @@ if ($result->num_rows > 0) {
             <option value="3">3</option>
           </select>
         </td>
-        <td><i class="bi bi-check-circle-fill green-check" style="font-size: 2rem; color: green;"></i></td>
+        <td><i class="bi bi-check-circle-fill green-check" style=" color: green;"></i></td>
       </tr>
     </tbody>
   </table>
