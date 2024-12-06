@@ -1,3 +1,10 @@
+<?php
+if ($_SESSION['role'] !== 'admin') {
+  header("Location: " . BASE_URL . "index.php?page=login");
+  exit();
+}
+?>
+
 <body id="content">
 
   <div class="container">
@@ -9,27 +16,27 @@
             ตรวจสอบรายวิชา</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-secondary"
+          <a class="nav-link text-secondary disabled"
             onclick="showSection('priority', 'src/role/Admin/schedule/priority/priority.php')">2.
             ความสำคัญ</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-secondary"
+          <a class="nav-link text-secondary disabled"
             onclick="showSection('subjecttype', 'src/role/Admin/schedule/subjecttype/subjecttype.php')">3.
             ประเภทวิชา</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-secondary"
+          <a class="nav-link text-secondary disabled"
             onclick="showSection('teachingaids', 'src/role/Admin/schedule/teachingaids/teachingaids.php')">4.
             วัสดุ/ครุภัณฑ์</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-secondary"
+          <a class="nav-link text-secondary disabled"
             onclick="showSection('summary', 'src/role/Admin/schedule/summary/summary.php')">5.
             ตรวจสอบข้อมูล</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-secondary"
+          <a class="nav-link text-secondary disabled"
             onclick="showSection('manageschedule', 'src/role/Admin/schedule/manageschedule/manageschedule.php')">6.
             สร้างตารางเรียน</a>
         </li>
@@ -39,7 +46,7 @@
             ลองสร้างตารางเรียน</a>
         </li> -->
         <li class="nav-item">
-          <a class="nav-link text-secondary"
+          <a class="nav-link text-secondary disabled"
             onclick="showSection('saveschedule', 'src/role/Admin/schedule/saveschedule/saveschedule.php')">7.
             บันทึกข้อมูล</a>
         </li>

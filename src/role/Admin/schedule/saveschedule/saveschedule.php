@@ -7,8 +7,11 @@ if ($conn->connect_error) {
 
 ?>
 <div class="d-flex justify-content-center gap-3 mb-3">
-  <button class="btn btn-outline-danger w-50 ">ย้อนกลับ</button>
-  <button class="btn btn-outline-success w-50 ">บันทึกและกลับสู่หน้าหลัก</button>
+  <button class="btn btn-outline-danger w-50"
+    onclick="showSection('manageschedule', 'src/role/Admin/schedule/manageschedule/manageschedule.php')">6.
+    >ย้อนกลับ</button>
+  <a class="btn btn-outline-success w-50" href="index.php?page=home">6.
+    บันทึกและกลับสู่หน้าหลัก</a>
 </div>
 <div class="d-flex justify-content-center gap-3 mb-3">
   <button class="btn btn-outline-info w-50 ">Export PDF</button>
@@ -41,7 +44,7 @@ if ($conn->connect_error) {
         <td>วัน/คาบ</td>
         <td rowspan="6" class="vertical-text day-name">กิจกรรมหน้าเสาธง</td>
         <?php for ($i = 1; $i <= 12; $i++) : ?>
-          <td class="timeslot"><?php echo $i; ?></td>
+        <td class="timeslot"><?php echo $i; ?></td>
         <?php endfor; ?>
       </tr>
 
