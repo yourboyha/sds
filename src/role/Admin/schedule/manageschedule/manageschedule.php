@@ -5,11 +5,83 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 include '../btnsch.php';
+
+//sql สร้างตารางรายวิชา
+$sql = "
+SELECT 
+sc.TimeSlot, 
+sc.DayOfWeek, 
+s.SubjectCode, 
+r.RoomName, 
+u.FullName AS TeacherName, 
+cg.ClassGroupName 
+FROM schedule sc 
+JOIN subjects s ON sc.SubjectID = s.SubjectID 
+JOIN rooms r ON sc.RoomID = r.RoomID 
+JOIN teachers t ON sc.TeacherID = t.TeacherID 
+JOIN users u ON t.UserID = u.UserID 
+JOIN classgroup cg ON sc.ClassGroupID = cg.ClassGroupID;
+";
+$result = $conn->query($sql);
+
+// สร้างอาร์เรย์เพื่อเก็บข้อมูลตารางเรียน
+$scheduleData = [];
+
+// ฟังก์ชันแปลง TimeSlot
+function parseTimeSlot($timeSlot)
+{
+  // แยกช่วง เช่น mon1-mon4
+  $parts = explode('-', $timeSlot);
+  $day = substr($parts[0], 0, 3); // เช่น "mon"
+  $startSlot = (int)substr($parts[0], 3); // เช่น "1"
+  $endSlot = isset($parts[1]) ? (int)substr($parts[1], 3) : $startSlot; // เช่น "4"
+  return ['day' => $day, 'startSlot' => $startSlot, 'endSlot' => $endSlot];
+}
+
+// เก็บข้อมูลในรูปแบบที่เข้าถึงง่าย
+if ($result->num_rows > 0) {
+  while ($row = $result->fetch_assoc()) {
+    // แปลง TimeSlot
+    $parsedSlot = parseTimeSlot($row['TimeSlot']);
+    $day = $parsedSlot['day'];
+    $startSlot = $parsedSlot['startSlot'];
+    $endSlot = $parsedSlot['endSlot'];
+    // เก็บข้อมูลในช่วงเวลา
+    for ($slot = $startSlot; $slot <= $endSlot; $slot++) {
+      $scheduleData[$day][$slot] = [
+        'SubjectCode' => $row['SubjectCode'],
+        'RoomName' => $row['RoomName'],
+        'TeacherName' => $row['TeacherName'],
+        'ClassGroupName' => $row['ClassGroupName']
+      ];
+    }
+  }
+}
+
+// print_r($scheduleData);
+echo '<div class="d-flex justify-content-center gap-3 mb-3">';
+echo '<button class="btn btn-success w-100 ">สร้างตารางเรียน</button>';
+echo '</div>';
+if ($result->num_rows > 0) {
+  $currentGroup = ""; // เก็บชื่อกลุ่มปัจจุบัน
+  $i = 1;
+  echo "<span class='text-dark fw-bold'>แสดงตารางเรียน :</span>";
+  // สร้างเมนูลิงก์นำทางเพียงครั้งเดียว
+  $menuLinks = "<ul class='nav nav-pills mb-3'>";
+  $groupNames = ['ปวช.1/1', 'ปวช.2/1', 'ปวช.3/1', 'ปวช.3/2', 'ปวส.1/1', 'ปวส.2/1', 'ปวส.2/2'];
+  foreach ($groupNames as $groupName) {
+    $menuLinks .= "<li class='nav-item'>
+    <a class='nav-link btn btn-light text-dark' href='#" . urlencode($groupName) . "'>" . $groupName . "</a>
+  </li>";
+  }
+  $menuLinks .= "</ul>";
+  // แสดงเมนูนำทาง
+  echo $menuLinks;
+}
 ?>
 
 <div class="container content">
   <h2 class="text-center mb-2">ตารางเรียน</h2>
-  <!-- <div class="table-responsive"> -->
   <table class="container table table-bordered table-striped table-hover text-center">
     <thead class="table-info">
       <tr>
@@ -30,167 +102,111 @@ include '../btnsch.php';
       </tr>
     </thead>
     <tbody>
-
       <tr>
         <td>วัน/คาบ</td>
         <td rowspan="6" class="vertical-text day-name">กิจกรรมหน้าเสาธง</td>
         <?php for ($i = 1; $i <= 12; $i++) : ?>
-          <td class="timeslot"><?php echo $i; ?></td>
+        <td class="timeslot"><?php echo $i; ?></td>
         <?php endfor; ?>
       </tr>
+      <?php
+      // แปลงชื่อวัน
+      $days = ['mon' => 'วันจันทร์', 'tue' => 'วันอังคาร', 'wed' => 'วันพุธ', 'thu' => 'วันพฤหัสบดี', 'fri' => 'วันศุกร์'];
+      foreach ($days as $dayCode => $dayName) {
+        echo "<tr>";
+        echo "<td>$dayName</td>";
+        for ($slot = 1; $slot <= 12; $slot++) {
+          // เพิ่ม Homeroom ในวันพฤหัส คาบที่ 6
+          if ($dayCode === 'thu' && $slot === 6) {
+            $cellContent = 'Homeroom';
+          } else {
+            $cellContent = isset($scheduleData[$dayCode][$slot])
+              ? $scheduleData[$dayCode][$slot]['SubjectCode'] . '<br>' .
+              $scheduleData[$dayCode][$slot]['RoomName'] . '<br>' .
+              $scheduleData[$dayCode][$slot]['TeacherName'] . '<br>'
+              // $scheduleData[$dayCode][$slot]['ClassGroupName']
+              : '';
+          }
+          echo "<td class='class-slot'>$cellContent</td>";
+        }
+        echo "</tr>";
+      }
 
-      <tr id="row-monday">
-        <th class="day-name">วันจันทร์</th>
-        <td id="mon-slot1" class="class-slot" colspan="3">21910-2009<br>LAB1<br>ครูคอม1</td>
-        <!-- <td id="mon-slot2" class="class-slot"></td>
-        <td id="mon-slot3" class="class-slot"></td> -->
-        <td id="mon-slot4" class="class-slot">21910-1004<br>LAB3<br>อธิตญาภรณ์</td>
-        <td id="mon-slot5" class="class-slot"></td>
-        <td id="mon-slot6" class="class-slot" colspan="2">21910-1002<br>LAB3<br>อธิตญาภรณ์</td>
-        <!-- <td id="mon-slot7" class="class-slot"></td> -->
-        <td id="mon-slot8" class="class-slot" colspan="2">21910-1002<br>LAB3<br>อธิตญาภรณ์</td>
-        <!-- <td id="mon-slot9" class="class-slot"></td> -->
-        <td id="mon-slot10" class="class-slot"></td>
-        <td id="mon-slot11" class="class-slot"></td>
-        <td id="mon-slot12" class="class-slot"></td>
-      </tr>
-
-      <tr id="row-tuesday">
-        <th class="day-name">วันอังคาร</th>
-        <td id="tue-slot1" class="class-slot" colspan="4">21910-2010<br>LAB4<br>วุฒิพงศ์</td>
-        <!-- <td id="tue-slot2" class="class-slot"></td>
-        <td id="tue-slot3" class="class-slot"></td>
-        <td id="tue-slot4" class="class-slot"></td> -->
-        <td id="tue-slot5" class="class-slot"></td>
-        <td id="tue-slot6" class="class-slot" colspan="3">21910-1003<br>LAB4<br>วุฒิพงศ์</td>
-        <!-- <td id="tue-slot7" class="class-slot"></td> -->
-        <!-- <td id="tue-slot8" class="class-slot"></td> -->
-        <td id="tue-slot9" class="class-slot"></td>
-        <td id="tue-slot10" class="class-slot"></td>
-        <td id="tue-slot11" class="class-slot"></td>
-        <td id="tue-slot12" class="class-slot"></td>
-      </tr>
-      <tr id="row-wednesday">
-        <th class="day-name">วันพุธ</th>
-        <td id="wed-slot1" class="class-slot" colspan="2">20000-1102<br>ห้องสมุด<br>ไกรศร</td>
-        <!-- <td id="wed-slot2" class="class-slot"></td> -->
-        <td id="wed-slot3" class="class-slot">20000-1602<br>421A<br>รุ่งสุริยา</td>
-        <td id="wed-slot4" class="class-slot"></td>
-        <td id="wed-slot5" class="class-slot"></td>
-        <td id="wed-slot6" class="class-slot" colspan="2">20000-1203<br>421B<br>ยลธิดา</td>
-        <!-- <td id="wed-slot7" class="class-slot"></td> -->
-        <td id="wed-slot8" class="class-slot" colspan="2">20000-1603<br>อาคารโดมใหญ่<br>รุ่งสุริยา</td>
-        <!-- <td id="wed-slot9" class="class-slot"></td> -->
-        <td id="wed-slot10" class="class-slot"></td>
-        <td id="wed-slot11" class="class-slot"></td>
-        <td id="wed-slot12" class="class-slot"></td>
-      </tr>
-      <tr id="row-thursday">
-        <th class="day-name">วันพฤหัสบดี</th>
-        <td id="thu-slot1" class="class-slot" colspan="4">21910-2007<br>LAB2<br>บุญเกียรติ</td>
-        <!-- <td id="thu-slot2" class="class-slot"></td>
-        <td id="thu-slot3" class="class-slot"></td>
-        <td id="thu-slot4" class="class-slot"></td> -->
-        <td id="thu-slot5" class="class-slot"></td>
-        <td id="thu-slot6" class="class-slot">Home<br>room</td>
-        <td id="thu-slot7" class="class-slot" colspan="2">20000-2002<br>อาคารโดมใหญ่<br>บุญเกียรติ</td>
-        <!-- <td id="thu-slot8" class="class-slot"></td> -->
-        <td id="thu-slot9" class="class-slot"></td>
-        <td id="thu-slot10" class="class-slot"></td>
-        <td id="thu-slot11" class="class-slot"></td>
-        <td id="thu-slot12" class="class-slot"></td>
-      </tr>
-      <tr id="row-friday">
-        <th class="day-name">วันศุกร์</th>
-        <td id="fri-slot1" class="class-slot" colspan="3">20001-1003<br>LAB3<br>ปวิตรา</td>
-        <!-- <td id="fri-slot2" class="class-slot"></td>
-        <td id="fri-slot3" class="class-slot"></td> -->
-        <td id="fri-slot4" class="class-slot">21910-1002<br>LAB3<br>อธิตญาภรณ์</td>
-        <td id="fri-slot5" class="class-slot"></td>
-        <td id="fri-slot6" class="class-slot" colspan="2">20000-1402<br>425<br>ธันยพร</td>
-        <!-- <td id="fri-slot7" class="class-slot"></td> -->
-        <td id="fri-slot8" class="class-slot"></td>
-        <td id="fri-slot9" class="class-slot"></td>
-        <td id="fri-slot10" class="class-slot"></td>
-        <td id="fri-slot11" class="class-slot"></td>
-        <td id="fri-slot12" class="class-slot"></td>
-      </tr>
+      ?>
     </tbody>
   </table>
 
 
+  <?php
+  //sql สร้างตารางรายวิชา
+  $sql = "
+SELECT
+cg.ClassGroupName,
+s.SubjectCode,
+s.SubjectName,
+s.TheoryHours,
+s.PracticalHours,
+s.CreditHours,
+sp.Term
+FROM
+StudyPlans sp
+JOIN
+ClassGroup cg ON sp.ClassGroupID = cg.ClassGroupID
+JOIN
+Subjects s ON sp.SubjectID = s.SubjectID
+WHERE
+cg.ClassGroupName IN ('ปวช.1/1', 'ปวช.2/1', 'ปวช.3/1', 'ปวช.3/2', 'ปวส.1/1', 'ปวส.2/1', 'ปวส.2/2')
+ORDER BY
+cg.ClassGroupName, sp.Term, s.SubjectCode;
+";
 
-  <!-- รายละเอียดวิชา -->
+  // รันคำสั่ง SQL และเก็บผลลัพธ์
+  $result = $conn->query($sql);
 
-  <h2 class="text-center mb-2">รายละเอียดวิชา</h2>
-  <table class="table table-bordered table-striped table-hover text-center">
-    <thead class="table-info">
-      <tr>
-        <th class="day-name">รหัสวิชา</th>
-        <th>ชื่อวิชา</th>
-        <th class="day-name">ท.</th>
-        <th class="day-name">ป.</th>
-        <th class="day-name">ช.</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="day-name">20001-1003</td>
-        <td class="text-start ps-3">ธุรกิจเบื้องต้น</td>
-        <td>1</td>
-        <td>2</td>
-        <td>2</td>
-      </tr>
-      <tr>
-        <td class="day-name">21910-1002</td>
-        <td class="text-start ps-3">วิเคราะห์ความต้องการทางธุรกิจ</td>
-        <td>1</td>
-        <td>2</td>
-        <td>2</td>
-      </tr>
-      <tr>
-        <td class="day-name">21910-1003</td>
-        <td class="text-start ps-3">การเขียนโปรแกรมคอมพิวเตอร์เบื้องต้น</td>
-        <td>1</td>
-        <td>2</td>
-        <td>2</td>
-      </tr>
-      <tr>
-        <td class="day-name">21910-1004</td>
-        <td class="text-start ps-3">พาณิชย์อิเล็กทรอนิกส์เบื้องต้น</td>
-        <td>1</td>
-        <td>2</td>
-        <td>2</td>
-      </tr>
-      <tr>
-        <td class="day-name">21910-2007</td>
-        <td class="text-start ps-3">โปรแกรมกราฟิกเพื่อสร้างสื่อดิจิทัล</td>
-        <td>2</td>
-        <td>2</td>
-        <td>3</td>
-      </tr>
-      <tr>
-        <td class="day-name">21910-2009</td>
-        <td class="text-start ps-3">คณิตศาสตร์คอมพิวเตอร์</td>
-        <td>1</td>
-        <td>2</td>
-        <td>2</td>
-      </tr>
-      <tr>
-        <td class="day-name">21910-2010</td>
-        <td class="text-start ps-3">การเขียนโปรแกรมภาษาคอมพิวเตอร์</td>
-        <td>2</td>
-        <td>2</td>
-        <td>3</td>
-      </tr>
-      <tr>
-        <td class="day-name">20000-2002</td>
-        <td class="text-start ps-3">กิจกรรมลูกเสือวิสามัญ</td>
-        <td>2</td>
-        <td>0</td>
-        <td>2</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<!-- </div> -->
+  if ($result->num_rows > 0) {
+    // วนลูปข้อมูลเพื่อสร้างเนื้อหา
+    while ($row = $result->fetch_assoc()) {
+      // เริ่มต้นตารางใหม่หาก ClassGroupName เปลี่ยน
+      if ($currentGroup !== $row['ClassGroupName']) {
+        // ปิดตารางก่อนหน้า
+        if ($currentGroup !== "") {
+          echo "</table>";
+          $i = 1;
+        }
+        // แสดงชื่อกลุ่มใหม่
+        $currentGroup = $row['ClassGroupName'];
+        echo "<h3 id='" . urlencode($currentGroup) . "' class='text-center mb-2'>" . $currentGroup . "</h3>";
+        echo "<table class='table table-striped table-hover table-bordered'>
+  <thead>
+    <tr>
+      <th>ลำดับ</th>
+      <th>รหัสวิชา</th>
+      <th>ชื่อวิชา</th>
+      <th>ท</th>
+      <th>ป</th>
+      <th>น</th>
+      <th>ผลลัพธ์</th>
+          </tr>
+  </thead>
+  <tbody>";
+      }
+      // แสดงข้อมูลในแถวของตาราง
+      echo "<tr>
+      <td class='day-name'>" . $i . "</td>
+      <td class='day-name text-start'>" . $row['SubjectCode'] . "</td>
+      <td class='text-start'>" . $row['SubjectName'] . "</td>
+      <td class='day-name'>" . $row['TheoryHours'] . "</td>
+      <td class='day-name'>" . $row['PracticalHours'] . "</td>
+      <td class='day-name'>" . $row['CreditHours'] . "</td>
+      <td><i class='bi bi-check-circle-fill green-check' style=' color: green;'></i></td>
+    </tr>";
+      $i++;
+    }  // ปิดตารางสุดท้าย
+    echo "</tbody>
+</table>";
+  } else {
+    echo "<div class='alert alert-warning'>ไม่มีข้อมูล</div>";
+  }
+
+
+  ?>

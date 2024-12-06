@@ -18,11 +18,11 @@
             onclick="showSection('subjecttype', 'src/role/Admin/schedule/subjecttype/subjecttype.php')">3.
             ประเภทวิชา</a>
         </li>
-        <!-- <li class="nav-item">
+        <li class="nav-item">
           <a class="nav-link text-secondary"
             onclick="showSection('teachingaids', 'src/role/Admin/schedule/teachingaids/teachingaids.php')">4.
             วัสดุ/ครุภัณฑ์</a>
-        </li> -->
+        </li>
         <li class="nav-item">
           <a class="nav-link text-secondary"
             onclick="showSection('summary', 'src/role/Admin/schedule/summary/summary.php')">5.
@@ -33,11 +33,11 @@
             onclick="showSection('manageschedule', 'src/role/Admin/schedule/manageschedule/manageschedule.php')">6.
             สร้างตารางเรียน</a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link text-secondary"
             onclick="showSection('createsschedule', 'src/role/Admin/schedule/manageschedule/createschedule.php')">6.
             ลองสร้างตารางเรียน</a>
-        </li>
+        </li> -->
         <li class="nav-item">
           <a class="nav-link text-secondary"
             onclick="showSection('saveschedule', 'src/role/Admin/schedule/saveschedule/saveschedule.php')">7.

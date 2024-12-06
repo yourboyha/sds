@@ -168,7 +168,7 @@ td {
   padding: 10px; /* เพิ่มระยะห่างรอบข้อความ */
 }
 .class-slot {
-  font-size: 75%;
+  font-size: 50%;
 }
 .class-slot:hover {
   background-color: #ffeb3b; /* เปลี่ยนพื้นหลังเป็นสีเหลือง */

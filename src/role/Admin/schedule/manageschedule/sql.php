@@ -21,3 +21,22 @@ AND r.RoomName = 'LAB1'
 AND u.FullName = 'ครูคอม1' 
 AND cg.ClassGroupName = 'ปวช.1/1';
 ";
+
+// แสดงตารางเรียน
+$sql =
+  "
+SELECT 
+sc.TimeSlot, 
+sc.DayOfWeek, 
+s.SubjectCode, 
+r.RoomName, 
+u.FullName AS TeacherName, 
+cg.ClassGroupName 
+FROM schedule sc 
+JOIN subjects s ON sc.SubjectID = s.SubjectID 
+JOIN rooms r ON sc.RoomID = r.RoomID 
+JOIN teachers t ON sc.TeacherID = t.TeacherID 
+JOIN users u ON t.UserID = u.UserID 
+JOIN classgroup cg ON sc.ClassGroupID = cg.ClassGroupID 
+WHERE cg.ClassGroupName = 'ปวช.3/1';
+";
