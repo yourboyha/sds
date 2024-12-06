@@ -1,0 +1,45 @@
+START
+
+1. รับข้อมูลรายวิชา (subjects) ซึ่งประกอบด้วย:
+   - SubjectCode
+   - Weight
+   - SubjectType
+   - EquipmentWeight
+   - TheoryPractice
+   - Continuity
+
+2. รับข้อมูลช่วงเวลาว่างในตาราง (timeSlots) เช่น:
+   - days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+   - slots_per_day = ["1", "2", "3", "4", "5", "6"]
+
+3. สร้างฟังก์ชันสำหรับการประเมินวิชาที่ควรลงก่อน:
+   FUNCTION prioritizeSubjects(subjects):
+       SORT subjects BY:
+          1. Weight DESC (ความสำคัญสูงสุด)
+          2. EquipmentWeight DESC (ใช้อุปกรณ์มาก่อน)
+          3. SubjectType (จัดลำดับประเภทวิชา: วิชาชีพ > วิชาสามัญ > อื่น ๆ)
+          4. TheoryPractice (จัดตามสมดุลระหว่างทฤษฎีและปฏิบัติ)
+
+       RETURN sorted_subjects
+
+4. เรียงลำดับรายวิชา:
+   sorted_subjects = prioritizeSubjects(subjects)
+
+5. สำหรับแต่ละวิชาใน sorted_subjects:
+   FOR each subject IN sorted_subjects:
+       - ตรวจสอบว่าต้องการคาบต่อเนื่องหรือไม่:
+           IF subject.Continuity = FALSE:
+               FIND available slots in timeSlots for consecutive periods
+               ASSIGN subject to these slots
+               MARK slots as occupied
+           ELSE:
+               FIND a single available slot
+               ASSIGN subject to this slot
+               MARK the slot as occupied
+
+6. หากไม่พบช่วงเวลาที่เหมาะสม:
+   - แสดงข้อความแจ้งเตือนว่าไม่สามารถจัดตารางได้
+
+7. บันทึกตารางเรียนในรูปแบบที่ต้องการ เช่น JSON หรือฐานข้อมูล
+
+END

@@ -2,7 +2,7 @@
 
 $sql = "INSERT INTO `schedule` (`ScheduleID`, `SubjectID`, `TeacherID`, `RoomID`, `TimeSlot`, `DayOfWeek`, `ClassGroup`) VALUES (NULL, '76', '5', '1', 'Mon1-Mon3', 'Monday', '15');";
 
-$sql = "SELECT 
+$sql = "
 SELECT 
 sc.TimeSlot, 
 sc.DayOfWeek, 
