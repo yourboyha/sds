@@ -1,144 +1,111 @@
 <?php
 include '../../../../Controller/connect.php';
+
 // ตรวจสอบการเชื่อมต่อ
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
-//sql สร้างตารางรายวิชา
+
+// SQL ดึงข้อมูลรายวิชา
 $sql = "
 SELECT
-cg.ClassGroupName,
-s.SubjectCode,
-s.SubjectName,
-s.TheoryHours,
-s.PracticalHours,
-s.CreditHours,
-sp.Term
+    cg.ClassGroupName,
+    s.SubjectCode,
+    s.SubjectName,
+    s.TheoryHours,
+    s.PracticalHours,
+    s.CreditHours,
+    sp.Term
 FROM
-StudyPlans sp
+    StudyPlans sp
 JOIN
-ClassGroup cg ON sp.ClassGroupID = cg.ClassGroupID
+    ClassGroup cg ON sp.ClassGroupID = cg.ClassGroupID
 JOIN
-Subjects s ON sp.SubjectID = s.SubjectID
+    Subjects s ON sp.SubjectID = s.SubjectID
 WHERE
-cg.ClassGroupName IN ('ปวช.1/1', 'ปวช.2/1', 'ปวช.3/1', 'ปวช.3/2', 'ปวส.1/1', 'ปวส.2/1', 'ปวส.2/2')
+    cg.ClassGroupName IN ('ปวช.1/1', 'ปวช.2/1', 'ปวช.3/1', 'ปวช.3/2', 'ปวส.1/1', 'ปวส.2/1', 'ปวส.2/2')
 ORDER BY
-cg.ClassGroupName, sp.Term, s.SubjectCode;
+    cg.ClassGroupName, sp.Term, s.SubjectCode;
 ";
-include '../btnsch.php';
 
-// รันคำสั่ง SQL และเก็บผลลัพธ์
 $result = $conn->query($sql);
 
-// ตรวจสอบว่ามีข้อมูลหรือไม่
 if ($result->num_rows > 0) {
-  $currentGroup = ""; // เก็บชื่อกลุ่มปัจจุบัน
+  $currentGroup = ""; // กลุ่มเรียนปัจจุบัน
   $i = 1;
-  echo '<span class="text-dark fw-bold">เลือกระดับชั้น :</span>';
-  // สร้างเมนูลิงก์นำทางเพียงครั้งเดียว
-  $menuLinks = "<ul class='nav nav-pills mb-3'>";
 
-  $groupNames = ['ปวช.1/1', 'ปวช.2/1', 'ปวช.3/1', 'ปวช.3/2', 'ปวส.1/1', 'ปวส.2/1', 'ปวส.2/2'];
-  foreach ($groupNames as $groupName) {
-    $menuLinks .= "<li class='nav-item'>
-    <a class='nav-link btn btn-light text-dark' href='#" . urlencode($groupName) . "'>" . $groupName . "</a>
-  </li>";
-  }
-  $menuLinks .= "</ul>";
-  // แสดงเมนูนำทาง
-  echo $menuLinks;
+  echo '<div class="d-flex justify-content-center gap-3 mb-3">';
+  echo '<button class="btn btn-outline-danger w-50" onclick="showSection(\'checksubject\', \'src/role/Admin/schedule/checksubject/checksubject.php\')">ย้อนกลับ</button>';
+  echo '<button class="btn btn-outline-success w-50" onclick="showSection(\'subjecttype\', \'src/role/Admin/schedule/subjecttype/subjecttype.php\')">ถัดไป</button>';
+  echo '</div>';
 
-  // วนลูปข้อมูลเพื่อสร้างเนื้อหา
+  echo '<div class="container">';
   while ($row = $result->fetch_assoc()) {
-    // เริ่มต้นตารางใหม่หาก ClassGroupName เปลี่ยน
+    // เมื่อ ClassGroup เปลี่ยน ให้เริ่มตารางใหม่
     if ($currentGroup !== $row['ClassGroupName']) {
-      // ปิดตารางก่อนหน้า
       if ($currentGroup !== "") {
-        echo '</table>';
+        echo '</tbody></table>'; // ปิดตารางก่อนหน้า
         $i = 1;
       }
-
-      // แสดงชื่อกลุ่มใหม่
       $currentGroup = $row['ClassGroupName'];
-      echo '<h3 id="' . urlencode($currentGroup) . '">' . $currentGroup . '</h3>';
-
-      echo
-      '<table class="table table-striped table-hover table-bordered">
-  <thead>
-    <tr>
-      <th rowspan="2"style="width: 6%;">ลำดับ</th>
-      <th rowspan="2"style="width: 10%;">รหัสวิชา</th>
-      <th rowspan="2" style="width: 20%;">ชื่อวิชา</th>
-      <th rowspan="2"style="width: 4%;">ท</th>
-      <th rowspan="2"style="width: 4%;">ป</th>
-      <th rowspan="2"style="width: 4%;">น</th>
-      <th rowspan="2"style="width: 6%;">แยกคาบ</th>
-      <th colspan="5" style="width: 50%;">ระดับความสำคัญ</th>
-    </tr>
-        <tr>
-
-      <th>5</th>
-      <th>4</th>
-      <th>3</th>
-      <th>2</th>
-      <th>1</th>
-    </tr>
-  </thead>
-  <tbody>';
+      echo '<h3>' . htmlspecialchars($currentGroup) . '</h3>';
+      echo '
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>ลำดับ</th>
+                        <th>รหัสวิชา</th>
+                        <th>ชื่อวิชา</th>
+                        <th>ท</th>
+                        <th>ป</th>
+                        <th>น</th>
+                        <th>แยกคาบ</th>
+                        <th colspan="5">ระดับความสำคัญ</th>
+                    </tr>
+                    <tr>
+                        <th colspan="7"></th>
+                        <th>5</th>
+                        <th>4</th>
+                        <th>3</th>
+                        <th>2</th>
+                        <th>1</th>
+                    </tr>
+                </thead>
+                <tbody>';
     }
 
-    // แสดงข้อมูลในแถวของตาราง
+    // แสดงข้อมูลวิชาในแต่ละแถว
     echo '<tr>
-      <td>' . $i . '</td>
-      <td class="day-name text-start">' . $row['SubjectCode'] . '</td>
-      <td class="text-start">' . $row['SubjectName'] . '</td>
-      <td>' . $row['TheoryHours'] . '</td>
-      <td>' . $row['PracticalHours'] . '</td>
-      <td>' . $row['CreditHours'] . '</td>
-      <td>
-        <input type="checkbox" id="myCheckbox" onclick="toggleCheckbox()">
-      </td>
-      <td class="priority priority-5">
-        <input type="radio" name="' . $row['SubjectCode'] . '" id="' . $row['SubjectCode'] . ',5" value="5">
-      </td>
-      <td class="priority priority-4">
-        <input type="radio" name="' . $row['SubjectCode'] . '" id="' . $row['SubjectCode'] . ',4" value="4">
-      </td>
-      <td class="priority priority-3">
-        <input type="radio" name="' . $row['SubjectCode'] . '" id="' . $row['SubjectCode'] . ',3" value="3">
-      </td>
-      <td class="priority priority-2">
-        <input type="radio" name="' . $row['SubjectCode'] . '" id="' . $row['SubjectCode'] . ',2" value="2">
-      </td>
-      <td class="priority priority-1">
-        <input type="radio" name="' . $row['SubjectCode'] . '" id="' . $row['SubjectCode'] . ',1" value="1">
-      </td>
-    </tr>';
+            <td>' . $i . '</td>
+            <td>' . htmlspecialchars($row['SubjectCode']) . '</td>
+            <td>' . htmlspecialchars($row['SubjectName']) . '</td>
+            <td>' . $row['TheoryHours'] . '</td>
+            <td>' . $row['PracticalHours'] . '</td>
+            <td>' . $row['CreditHours'] . '</td>
+            <td><input type="checkbox" class="priority-checkbox" data-subject="' . htmlspecialchars($row['SubjectCode']) . '"></td>';
+
+    for ($level = 5; $level >= 1; $level--) {
+      echo '<td class="priority">
+                <input type="radio" name="priority_' . htmlspecialchars($row['SubjectCode']) . '" value="' . $level . '">
+            </td>';
+    }
+    echo '</tr>';
     $i++;
   }
-
-  // ปิดตารางสุดท้าย
-  echo '</tbody>
-</table>';
+  echo '</tbody></table>';
+  echo '</div>';
 } else {
   echo '<div class="alert alert-warning">ไม่มีข้อมูล</div>';
 }
 
-// ปิดการเชื่อมต่อฐานข้อมูล
 $conn->close();
-
 ?>
 
 <script>
-  function setValue(radio) {
-    function toggleCheckbox() {
-      const checkbox = document.getElementById("myCheckbox");
-      if (checkbox.checked) {
-        checkbox.value = 1; // Set value to 1 when checked
-      } else {
-        checkbox.value = 0; // Set value to 0 when unchecked
-      }
-      console.log("Checkbox is now:", checkbox.value);
-    }
-  }
+// ฟังก์ชันจัดการการคลิก Checkbox
+document.querySelectorAll('.priority-checkbox').forEach(checkbox => {
+  checkbox.addEventListener('change', function() {
+    console.log(`วิชา ${this.dataset.subject} ถูกเปลี่ยนสถานะ: ${this.checked ? 'เลือก' : 'ไม่เลือก'}`);
+  });
+});
 </script>

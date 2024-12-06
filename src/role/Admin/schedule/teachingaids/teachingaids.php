@@ -26,7 +26,11 @@ ORDER BY
 cg.ClassGroupName, sp.Term, s.SubjectCode;
 ";
 
-include '../btnsch.php';
+echo '<div class="d-flex justify-content-center gap-3 mb-3">';
+echo '<button class="btn btn-outline-danger w-50" onclick="showSection(\'subjecttype\', \'src/role/Admin/schedule/subjecttype/subjecttype.php\')">ย้อนกลับ</button>';
+echo '<button class="btn btn-outline-success w-50" onclick="showSection(\'summary\', \'src/role/Admin/schedule/summary/summary.php\')">ถัดไป</button>';
+echo '</div>';
+
 
 // รันคำสั่ง SQL และเก็บผลลัพธ์
 $result = $conn->query($sql);

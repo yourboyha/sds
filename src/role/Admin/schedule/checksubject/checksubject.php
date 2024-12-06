@@ -27,7 +27,8 @@ cg.ClassGroupName, sp.Term, s.SubjectCode;
 ";
 ?>
 <div class="d-flex justify-content-center gap-3 mb-3">
-  <button class="btn btn-outline-success w-50 ">ถัดไป</button>
+  <button class="btn btn-outline-success w-50"
+    onclick="showSection('priority', 'src/role/Admin/schedule/priority/priority.php')">ถัดไป</button>
 </div>
 
 <?php

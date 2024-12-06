@@ -1,3 +1,6 @@
+<!-- หยุดแปปละกันไปเพิ่มตารางดีกว่า -->
+
+
 <?php
 include '../../../../Controller/connect.php';
 // ตรวจสอบการเชื่อมต่อ
@@ -5,6 +8,36 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 include '../btnsch.php';
+
+
+$currentGroup = isset($_GET['group']) ? $_GET['group'] : 'ปวช.1/1';
+
+
+$checkGroupSql = "
+SELECT DISTINCT cg.ClassGroupName 
+FROM schedule sc 
+JOIN classgroup cg ON sc.ClassGroupID = cg.ClassGroupID 
+WHERE cg.ClassGroupName = '" . $conn->real_escape_string($currentGroup) . "';
+";
+
+$checkGroupResult = $conn->query($checkGroupSql);
+
+if ($checkGroupResult->num_rows === 0) {
+  echo "<div class='alert alert-warning text-center'>ไม่มีข้อมูลตารางเรียนสำหรับกลุ่ม: " . htmlspecialchars($currentGroup) . "</div>";
+  exit;
+}
+include 'menulink.php';
+
+
+$groupNames = ['ปวช.1/1', 'ปวช.2/1', 'ปวช.3/1', 'ปวช.3/2', 'ปวส.1/1', 'ปวส.2/1', 'ปวส.2/2'];
+echo "<ul class='nav nav-pills mb-3'>";
+foreach ($groupNames as $groupName) {
+  $activeClass = ($currentGroup === $groupName) ? 'active' : '';
+  echo "<li class='nav-item'>
+        <a class='nav-link btn btn-light text-dark $activeClass' href='?group=" . urlencode($groupName) . "'>$groupName</a>
+    </li>";
+}
+echo "</ul>";
 
 //sql สร้างตารางรายวิชา
 $sql = "
@@ -20,10 +53,11 @@ JOIN subjects s ON sc.SubjectID = s.SubjectID
 JOIN rooms r ON sc.RoomID = r.RoomID 
 JOIN teachers t ON sc.TeacherID = t.TeacherID 
 JOIN users u ON t.UserID = u.UserID 
-JOIN classgroup cg ON sc.ClassGroupID = cg.ClassGroupID;
+JOIN classgroup cg ON sc.ClassGroupID = cg.ClassGroupID 
+WHERE cg.ClassGroupName = '" . $conn->real_escape_string($currentGroup) . "';
 ";
 $result = $conn->query($sql);
-
+include 'menulink.php';
 // สร้างอาร์เรย์เพื่อเก็บข้อมูลตารางเรียน
 $scheduleData = [];
 
@@ -58,26 +92,14 @@ if ($result->num_rows > 0) {
   }
 }
 
+
+
 // print_r($scheduleData);
 echo '<div class="d-flex justify-content-center gap-3 mb-3">';
 echo '<button class="btn btn-success w-100 ">สร้างตารางเรียน</button>';
 echo '</div>';
 if ($result->num_rows > 0) {
-  $currentGroup = ""; // เก็บชื่อกลุ่มปัจจุบัน
-  $i = 1;
-  echo "<span class='text-dark fw-bold'>แสดงตารางเรียน :</span>";
-  // สร้างเมนูลิงก์นำทางเพียงครั้งเดียว
-  $menuLinks = "<ul class='nav nav-pills mb-3'>";
-  $groupNames = ['ปวช.1/1', 'ปวช.2/1', 'ปวช.3/1', 'ปวช.3/2', 'ปวส.1/1', 'ปวส.2/1', 'ปวส.2/2'];
-  foreach ($groupNames as $groupName) {
-    $menuLinks .= "<li class='nav-item'>
-    <a class='nav-link btn btn-light text-dark' href='#" . urlencode($groupName) . "'>" . $groupName . "</a>
-  </li>";
-  }
-  $menuLinks .= "</ul>";
-  // แสดงเมนูนำทาง
-  echo $menuLinks;
-}
+
 ?>
 
 <div class="container content">
@@ -110,33 +132,31 @@ if ($result->num_rows > 0) {
         <?php endfor; ?>
       </tr>
       <?php
-      // แปลงชื่อวัน
-      $days = ['mon' => 'วันจันทร์', 'tue' => 'วันอังคาร', 'wed' => 'วันพุธ', 'thu' => 'วันพฤหัสบดี', 'fri' => 'วันศุกร์'];
-      foreach ($days as $dayCode => $dayName) {
-        echo "<tr>";
-        echo "<td>$dayName</td>";
-        for ($slot = 1; $slot <= 12; $slot++) {
-          // เพิ่ม Homeroom ในวันพฤหัส คาบที่ 6
-          if ($dayCode === 'thu' && $slot === 6) {
-            $cellContent = 'Homeroom';
-          } else {
-            $cellContent = isset($scheduleData[$dayCode][$slot])
-              ? $scheduleData[$dayCode][$slot]['SubjectCode'] . '<br>' .
-              $scheduleData[$dayCode][$slot]['RoomName'] . '<br>' .
-              $scheduleData[$dayCode][$slot]['TeacherName'] . '<br>'
-              // $scheduleData[$dayCode][$slot]['ClassGroupName']
-              : '';
+        // แปลงชื่อวัน
+        $days = ['mon' => 'วันจันทร์', 'tue' => 'วันอังคาร', 'wed' => 'วันพุธ', 'thu' => 'วันพฤหัสบดี', 'fri' => 'วันศุกร์'];
+        foreach ($days as $dayCode => $dayName) {
+          echo "<tr>";
+          echo "<td>$dayName</td>";
+          for ($slot = 1; $slot <= 12; $slot++) {
+            // เพิ่ม Homeroom ในวันพฤหัส คาบที่ 6
+            if ($dayCode === 'thu' && $slot === 6) {
+              $cellContent = 'Homeroom';
+            } else {
+              $cellContent = isset($scheduleData[$dayCode][$slot])
+                ? $scheduleData[$dayCode][$slot]['SubjectCode'] . '<br>' .
+                $scheduleData[$dayCode][$slot]['RoomName'] . '<br>' .
+                $scheduleData[$dayCode][$slot]['TeacherName'] . '<br>'
+                // $scheduleData[$dayCode][$slot]['ClassGroupName']
+                : '';
+            }
+            echo "<td class='class-slot'>$cellContent</td>";
           }
-          echo "<td class='class-slot'>$cellContent</td>";
+          echo "</tr>";
         }
-        echo "</tr>";
-      }
 
-      ?>
+        ?>
     </tbody>
   </table>
-
-
   <?php
   //sql สร้างตารางรายวิชา
   $sql = "
@@ -207,6 +227,5 @@ cg.ClassGroupName, sp.Term, s.SubjectCode;
   } else {
     echo "<div class='alert alert-warning'>ไม่มีข้อมูล</div>";
   }
-
-
+}
   ?>

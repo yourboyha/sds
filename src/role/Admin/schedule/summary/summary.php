@@ -39,7 +39,10 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-
+echo '<div class="d-flex justify-content-center gap-3 mb-3">';
+echo '<button class="btn btn-outline-danger w-50" onclick="showSection(\'teachingaids\', \'src/role/Admin/schedule/teachingaids/teachingaids.php\')">ย้อนกลับ</button>';
+echo '<button class="btn btn-outline-success w-50" onclick="showSection(\'manageschedule\', \'src/role/Admin/schedule/manageschedule/manageschedule.php\')">ถัดไป</button>';
+echo '</div>';
 
 // SQL Query
 $sql = "

@@ -25,7 +25,11 @@ cg.ClassGroupName IN ('ปวช.1/1', 'ปวช.2/1', 'ปวช.3/1', 'ปว
 ORDER BY
 cg.ClassGroupName, sp.Term, s.SubjectCode;
 ";
-include '../btnsch.php';
+
+echo '<div class="d-flex justify-content-center gap-3 mb-3">';
+echo '<button class="btn btn-outline-danger w-50" onclick="showSection(\'priority\', \'src/role/Admin/schedule/priority/priority.php\')">ย้อนกลับ</button>';
+echo '<button class="btn btn-outline-success w-50" onclick="showSection(\'teachingaids\', \'src/role/Admin/schedule/teachingaids/teachingaids.php\')">ถัดไป</button>';
+echo '</div>';
 
 // รันคำสั่ง SQL และเก็บผลลัพธ์
 $result = $conn->query($sql);
