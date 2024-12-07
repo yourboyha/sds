@@ -10,7 +10,7 @@ if ($_SESSION['role'] !== 'admin') {
 ?>
 
 <body id="content">
-
+  <div id="topelement"></div>
   <div class="container">
     <nav>
       <ul class="nav nav-pills gap-3" id="menu-schedule">
@@ -69,6 +69,12 @@ if ($_SESSION['role'] !== 'admin') {
 
   </div>
   <script>
+  // เมื่อหน้าโหลดเสร็จ
+  window.addEventListener("load", function() {
+    // เลื่อนไปยังตำแหน่งบนสุด
+    window.scrollTo(0, 0);
+  });
+
   // ฟังก์ชันสำหรับแสดงส่วนของเมนูที่เลือก
   function showSection(sectionId, filePath) {
     console.log(sectionId);

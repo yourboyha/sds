@@ -31,3 +31,12 @@ function toggleFullscreen() {
     document.exitFullscreen();
   }
 }
+
+
+// เมื่อหน้าโหลดเสร็จ
+window.addEventListener("load", function () {
+  // เลื่อนไปยังตำแหน่งบนสุด
+  window.scrollTo(0, 0);
+});
+
+
