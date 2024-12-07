@@ -20,11 +20,23 @@ function renderNavigationButtons()
   </div>';
 }
 
-
+$scheduleData1 = [
+  [
+    "ScheduleID" => 52941,
+    "SubjectName" => "การเขียนโปรแกรมภาษาคอมพิวเตอร์",
+    "SubjectCode" => "21910-2010",
+    "TeacherName" => "นายวุฒิพงศ์ วิมลพัชร",
+    "RoomName" => "Lab1",
+    "TimeSlot" => "6-9",
+    "DayOfWeek" => "fri",
+    "ClassGroupName" => "ปวช.1/1",
+    "Term" => 2
+  ]
+];
 
 
 // การทำงานหลัก
 renderNavigationButtons();
 // เรียกข้อมูลจากฟังก์ชัน
 $scheduleData = getScheduleData($conn);
-renderScheduleTable($scheduleData);
+renderScheduleTable($scheduleData, 'ปวช.1/1');
