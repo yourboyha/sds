@@ -1,3 +1,7 @@
+<head>
+
+
+</head>
 <?php
 if ($_SESSION['role'] !== 'admin') {
   header("Location: " . BASE_URL . "index.php?page=login");
@@ -35,16 +39,17 @@ if ($_SESSION['role'] !== 'admin') {
             onclick="showSection('summary', 'src/role/Admin/schedule/summary/summary.php')">5.
             ตรวจสอบข้อมูล</a>
         </li>
+
         <li class="nav-item">
-          <a class="nav-link text-secondary disabled"
+          <a class="nav-link text-secondary"
             onclick="showSection('manageschedule', 'src/role/Admin/schedule/manageschedule/manageschedule.php')">6.
-            สร้างตารางเรียน</a>
+            แสดงตาราง</a>
         </li>
-        <!-- <li class="nav-item">
+        <li class="nav-item d-none">
           <a class="nav-link text-secondary"
             onclick="showSection('createsschedule', 'src/role/Admin/schedule/manageschedule/createschedule.php')">6.
             ลองสร้างตารางเรียน</a>
-        </li> -->
+        </li>
         <li class="nav-item">
           <a class="nav-link text-secondary disabled"
             onclick="showSection('saveschedule', 'src/role/Admin/schedule/saveschedule/saveschedule.php')">7.
