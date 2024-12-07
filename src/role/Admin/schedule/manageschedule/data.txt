@@ -1,0 +1,533 @@
+เรียกใช้ createschedule.php แล้ว
+จำนวนรายวิชาใน $scheduleRules: 48
+Array
+(
+    [0] => Array
+        (
+            [SubjectID] => 86
+            [SubjectCode] => 20204-2106
+            [AvgWeight] => 4.6
+            [AvgSubjectType] => 1.6
+            [AvgTheoryPractice] => 2.4
+            [AvgEquipmentWeight] => 3
+            [AvgContinuity] => 0.4
+        )
+
+    [1] => Array
+        (
+            [SubjectID] => 88
+            [SubjectCode] => 20204-2110
+            [AvgWeight] => 4.4
+            [AvgSubjectType] => 1
+            [AvgTheoryPractice] => 3
+            [AvgEquipmentWeight] => 2.4
+            [AvgContinuity] => 0.2
+        )
+
+    [2] => Array
+        (
+            [SubjectID] => 73
+            [SubjectCode] => 21910-1003
+            [AvgWeight] => 4.2
+            [AvgSubjectType] => 2.8
+            [AvgTheoryPractice] => 3.2
+            [AvgEquipmentWeight] => 2
+            [AvgContinuity] => 0.2
+        )
+
+    [3] => Array
+        (
+            [SubjectID] => 81
+            [SubjectCode] => 20204-2006
+            [AvgWeight] => 4.2
+            [AvgSubjectType] => 2.4
+            [AvgTheoryPractice] => 3.2
+            [AvgEquipmentWeight] => 2
+            [AvgContinuity] => 0.4
+        )
+
+    [4] => Array
+        (
+            [SubjectID] => 105
+            [SubjectCode] => 30204-2204
+            [AvgWeight] => 4
+            [AvgSubjectType] => 1.75
+            [AvgTheoryPractice] => 3
+            [AvgEquipmentWeight] => 3
+            [AvgContinuity] => 0
+        )
+
+    [5] => Array
+        (
+            [SubjectID] => 89
+            [SubjectCode] => 20204-2111
+            [AvgWeight] => 4
+            [AvgSubjectType] => 1.4
+            [AvgTheoryPractice] => 2.4
+            [AvgEquipmentWeight] => 2.8
+            [AvgContinuity] => 0
+        )
+
+    [6] => Array
+        (
+            [SubjectID] => 99
+            [SubjectCode] => 30204-2005
+            [AvgWeight] => 4
+            [AvgSubjectType] => 1.2
+            [AvgTheoryPractice] => 2.6
+            [AvgEquipmentWeight] => 2.8
+            [AvgContinuity] => 0.6
+        )
+
+    [7] => Array
+        (
+            [SubjectID] => 77
+            [SubjectCode] => 21910-2010
+            [AvgWeight] => 4
+            [AvgSubjectType] => 2.8
+            [AvgTheoryPractice] => 1.8
+            [AvgEquipmentWeight] => 2.4
+            [AvgContinuity] => 0
+        )
+
+    [8] => Array
+        (
+            [SubjectID] => 101
+            [SubjectCode] => 30204-2007
+            [AvgWeight] => 4
+            [AvgSubjectType] => 1.2
+            [AvgTheoryPractice] => 3
+            [AvgEquipmentWeight] => 2.4
+            [AvgContinuity] => 0.6
+        )
+
+    [9] => Array
+        (
+            [SubjectID] => 82
+            [SubjectCode] => 20204-2008
+            [AvgWeight] => 4
+            [AvgSubjectType] => 2
+            [AvgTheoryPractice] => 3.6
+            [AvgEquipmentWeight] => 2
+            [AvgContinuity] => 0
+        )
+
+    [10] => Array
+        (
+            [SubjectID] => 74
+            [SubjectCode] => 21910-1004
+            [AvgWeight] => 4
+            [AvgSubjectType] => 3
+            [AvgTheoryPractice] => 3.2
+            [AvgEquipmentWeight] => 1.8
+            [AvgContinuity] => 0.2
+        )
+
+    [11] => Array
+        (
+            [SubjectID] => 72
+            [SubjectCode] => 21910-1002
+            [AvgWeight] => 4
+            [AvgSubjectType] => 2.8
+            [AvgTheoryPractice] => 1.4
+            [AvgEquipmentWeight] => 1.8
+            [AvgContinuity] => 0.2
+        )
+
+    [12] => Array
+        (
+            [SubjectID] => 117
+            [SubjectCode] => 30000-1408
+            [AvgWeight] => 4
+            [AvgSubjectType] => 4
+            [AvgTheoryPractice] => 4
+            [AvgEquipmentWeight] => 1.5
+            [AvgContinuity] => 0.5
+        )
+
+    [13] => Array
+        (
+            [SubjectID] => 87
+            [SubjectCode] => 20204-8501
+            [AvgWeight] => 3.8
+            [AvgSubjectType] => 1.6
+            [AvgTheoryPractice] => 1.6
+            [AvgEquipmentWeight] => 2.4
+            [AvgContinuity] => 0.4
+        )
+
+    [14] => Array
+        (
+            [SubjectID] => 75
+            [SubjectCode] => 21910-2007
+            [AvgWeight] => 3.8
+            [AvgSubjectType] => 2.4
+            [AvgTheoryPractice] => 1.8
+            [AvgEquipmentWeight] => 2.2
+            [AvgContinuity] => 0.2
+        )
+
+    [15] => Array
+        (
+            [SubjectID] => 84
+            [SubjectCode] => 20204-2109
+            [AvgWeight] => 3.8
+            [AvgSubjectType] => 2
+            [AvgTheoryPractice] => 2.4
+            [AvgEquipmentWeight] => 2.2
+            [AvgContinuity] => 0.4
+        )
+
+    [16] => Array
+        (
+            [SubjectID] => 76
+            [SubjectCode] => 21910-2009
+            [AvgWeight] => 3.8
+            [AvgSubjectType] => 3
+            [AvgTheoryPractice] => 1.4
+            [AvgEquipmentWeight] => 1.6
+            [AvgContinuity] => 0.2
+        )
+
+    [17] => Array
+        (
+            [SubjectID] => 71
+            [SubjectCode] => 20001-1003
+            [AvgWeight] => 3.8
+            [AvgSubjectType] => 2.8
+            [AvgTheoryPractice] => 1.4
+            [AvgEquipmentWeight] => 1.6
+            [AvgContinuity] => 0.4
+        )
+
+    [18] => Array
+        (
+            [SubjectID] => 104
+            [SubjectCode] => 30204-2303
+            [AvgWeight] => 3.6
+            [AvgSubjectType] => 1.8
+            [AvgTheoryPractice] => 3
+            [AvgEquipmentWeight] => 2.6
+            [AvgContinuity] => 0.2
+        )
+
+    [19] => Array
+        (
+            [SubjectID] => 96
+            [SubjectCode] => 30200-1002
+            [AvgWeight] => 3.6
+            [AvgSubjectType] => 1.4
+            [AvgTheoryPractice] => 3
+            [AvgEquipmentWeight] => 2.4
+            [AvgContinuity] => 0.4
+        )
+
+    [20] => Array
+        (
+            [SubjectID] => 83
+            [SubjectCode] => 20204-2108
+            [AvgWeight] => 3.6
+            [AvgSubjectType] => 2.4
+            [AvgTheoryPractice] => 1.8
+            [AvgEquipmentWeight] => 2.2
+            [AvgContinuity] => 0.4
+        )
+
+    [21] => Array
+        (
+            [SubjectID] => 100
+            [SubjectCode] => 30204-2006
+            [AvgWeight] => 3.4
+            [AvgSubjectType] => 1.8
+            [AvgTheoryPractice] => 2.6
+            [AvgEquipmentWeight] => 2.6
+            [AvgContinuity] => 0.2
+        )
+
+    [22] => Array
+        (
+            [SubjectID] => 98
+            [SubjectCode] => 30204-2004
+            [AvgWeight] => 3.4
+            [AvgSubjectType] => 2.8
+            [AvgTheoryPractice] => 2.2
+            [AvgEquipmentWeight] => 2.4
+            [AvgContinuity] => 0.6
+        )
+
+    [23] => Array
+        (
+            [SubjectID] => 90
+            [SubjectCode] => 31910-2001
+            [AvgWeight] => 3.4
+            [AvgSubjectType] => 2
+            [AvgTheoryPractice] => 3
+            [AvgEquipmentWeight] => 2.4
+            [AvgContinuity] => 0.4
+        )
+
+    [24] => Array
+        (
+            [SubjectID] => 102
+            [SubjectCode] => 30204-8501
+            [AvgWeight] => 3.4
+            [AvgSubjectType] => 1.8
+            [AvgTheoryPractice] => 1.8
+            [AvgEquipmentWeight] => 2.4
+            [AvgContinuity] => 0
+        )
+
+    [25] => Array
+        (
+            [SubjectID] => 80
+            [SubjectCode] => 20204-2004
+            [AvgWeight] => 3.4
+            [AvgSubjectType] => 2.4
+            [AvgTheoryPractice] => 3.6
+            [AvgEquipmentWeight] => 2
+            [AvgContinuity] => 0.2
+        )
+
+    [26] => Array
+        (
+            [SubjectID] => 93
+            [SubjectCode] => 31910-2006
+            [AvgWeight] => 3.2
+            [AvgSubjectType] => 1.8
+            [AvgTheoryPractice] => 3
+            [AvgEquipmentWeight] => 2.6
+            [AvgContinuity] => 0.4
+        )
+
+    [27] => Array
+        (
+            [SubjectID] => 97
+            [SubjectCode] => 30204-2001
+            [AvgWeight] => 3.2
+            [AvgSubjectType] => 2.8
+            [AvgTheoryPractice] => 2.6
+            [AvgEquipmentWeight] => 2.2
+            [AvgContinuity] => 0.2
+        )
+
+    [28] => Array
+        (
+            [SubjectID] => 116
+            [SubjectCode] => 30000-1214
+            [AvgWeight] => 3
+            [AvgSubjectType] => 4
+            [AvgTheoryPractice] => 4
+            [AvgEquipmentWeight] => 2.5
+            [AvgContinuity] => 0.5
+        )
+
+    [29] => Array
+        (
+            [SubjectID] => 79
+            [SubjectCode] => 20001-1005
+            [AvgWeight] => 3
+            [AvgSubjectType] => 2.4
+            [AvgTheoryPractice] => 4
+            [AvgEquipmentWeight] => 2
+            [AvgContinuity] => 0.2
+        )
+
+    [30] => Array
+        (
+            [SubjectID] => 78
+            [SubjectCode] => 20000-2002
+            [AvgWeight] => 3
+            [AvgSubjectType] => 4.2
+            [AvgTheoryPractice] => 1
+            [AvgEquipmentWeight] => 1.4
+            [AvgContinuity] => 0.2
+        )
+
+    [31] => Array
+        (
+            [SubjectID] => 114
+            [SubjectCode] => 20000-1404
+            [AvgWeight] => 3
+            [AvgSubjectType] => 4
+            [AvgTheoryPractice] => 4
+            [AvgEquipmentWeight] => 1
+            [AvgContinuity] => 0
+        )
+
+    [32] => Array
+        (
+            [SubjectID] => 113
+            [SubjectCode] => 20000-1208
+            [AvgWeight] => 3
+            [AvgSubjectType] => 4
+            [AvgTheoryPractice] => 1
+            [AvgEquipmentWeight] => 1
+            [AvgContinuity] => 0
+        )
+
+    [33] => Array
+        (
+            [SubjectID] => 112
+            [SubjectCode] => 20000-1210
+            [AvgWeight] => 3
+            [AvgSubjectType] => 4
+            [AvgTheoryPractice] => 1
+            [AvgEquipmentWeight] => 1
+            [AvgContinuity] => 0
+        )
+
+    [34] => Array
+        (
+            [SubjectID] => 107
+            [SubjectCode] => 20000-1203
+            [AvgWeight] => 3
+            [AvgSubjectType] => 4
+            [AvgTheoryPractice] => 1
+            [AvgEquipmentWeight] => 1
+            [AvgContinuity] => 0
+        )
+
+    [35] => Array
+        (
+            [SubjectID] => 111
+            [SubjectCode] => 20000-1205
+            [AvgWeight] => 3
+            [AvgSubjectType] => 4
+            [AvgTheoryPractice] => 1
+            [AvgEquipmentWeight] => 1
+            [AvgContinuity] => 0
+        )
+
+    [36] => Array
+        (
+            [SubjectID] => 94
+            [SubjectCode] => 30000-2005
+            [AvgWeight] => 2.8
+            [AvgSubjectType] => 2.6
+            [AvgTheoryPractice] => 1.6
+            [AvgEquipmentWeight] => 1.8
+            [AvgContinuity] => 0.2
+        )
+
+    [37] => Array
+        (
+            [SubjectID] => 92
+            [SubjectCode] => 31910-2023
+            [AvgWeight] => 2.6
+            [AvgSubjectType] => 1.6
+            [AvgTheoryPractice] => 3.6
+            [AvgEquipmentWeight] => 1.8
+            [AvgContinuity] => 0.4
+        )
+
+    [38] => Array
+        (
+            [SubjectID] => 103
+            [SubjectCode] => 20000-2007
+            [AvgWeight] => 2.4
+            [AvgSubjectType] => 4
+            [AvgTheoryPractice] => 1.4
+            [AvgEquipmentWeight] => 1.6
+            [AvgContinuity] => 0.2
+        )
+
+    [39] => Array
+        (
+            [SubjectID] => 85
+            [SubjectCode] => 20000-2004
+            [AvgWeight] => 2.4
+            [AvgSubjectType] => 2.8
+            [AvgTheoryPractice] => 1.6
+            [AvgEquipmentWeight] => 1.2
+            [AvgContinuity] => 0.4
+        )
+
+    [40] => Array
+        (
+            [SubjectID] => 91
+            [SubjectCode] => 31910-2015
+            [AvgWeight] => 2.2
+            [AvgSubjectType] => 3.2
+            [AvgTheoryPractice] => 1.8
+            [AvgEquipmentWeight] => 2.2
+            [AvgContinuity] => 0.2
+        )
+
+    [41] => Array
+        (
+            [SubjectID] => 95
+            [SubjectCode] => 30001-1055
+            [AvgWeight] => 2.2
+            [AvgSubjectType] => 1.4
+            [AvgTheoryPractice] => 3.4
+            [AvgEquipmentWeight] => 2
+            [AvgContinuity] => 0.4
+        )
+
+    [42] => Array
+        (
+            [SubjectID] => 108
+            [SubjectCode] => 20000-1402
+            [AvgWeight] => 2
+            [AvgSubjectType] => 4
+            [AvgTheoryPractice] => 4
+            [AvgEquipmentWeight] => 1
+            [AvgContinuity] => 0
+        )
+
+    [43] => Array
+        (
+            [SubjectID] => 106
+            [SubjectCode] => 20000-1102
+            [AvgWeight] => 2
+            [AvgSubjectType] => 4
+            [AvgTheoryPractice] => 1
+            [AvgEquipmentWeight] => 1
+            [AvgContinuity] => 0
+        )
+
+    [44] => Array
+        (
+            [SubjectID] => 115
+            [SubjectCode] => 20000-1502
+            [AvgWeight] => 1
+            [AvgSubjectType] => 4
+            [AvgTheoryPractice] => 4
+            [AvgEquipmentWeight] => 1
+            [AvgContinuity] => 0
+        )
+
+    [45] => Array
+        (
+            [SubjectID] => 109
+            [SubjectCode] => 20000-1602
+            [AvgWeight] => 1
+            [AvgSubjectType] => 4
+            [AvgTheoryPractice] => 4
+            [AvgEquipmentWeight] => 1
+            [AvgContinuity] => 0
+        )
+
+    [46] => Array
+        (
+            [SubjectID] => 118
+            [SubjectCode] => 30000-1609
+            [AvgWeight] => 1
+            [AvgSubjectType] => 4
+            [AvgTheoryPractice] => 1
+            [AvgEquipmentWeight] => 1
+            [AvgContinuity] => 0
+        )
+
+    [47] => Array
+        (
+            [SubjectID] => 110
+            [SubjectCode] => 20000-1603
+            [AvgWeight] => 1
+            [AvgSubjectType] => 4
+            [AvgTheoryPractice] => 1
+            [AvgEquipmentWeight] => 1
+            [AvgContinuity] => 0
+        )
+
+)

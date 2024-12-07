@@ -40,3 +40,20 @@ JOIN users u ON t.UserID = u.UserID
 JOIN classgroup cg ON sc.ClassGroupID = cg.ClassGroupID 
 WHERE cg.ClassGroupName = 'ปวช.3/1';
 ";
+
+
+// ตรวจสอบก่อนว่ามีข้อมูลใน $scheduleRules
+if (!empty($scheduleRules)) {
+  // ใช้ usort เพื่อเรียงข้อมูลตาม SubjectID
+  usort($scheduleRules, function ($a, $b) {
+    return $a['SubjectID'] <=> $b['SubjectID'];
+  });
+
+  // แสดงผลข้อมูลหลังจากเรียง
+  echo '<pre>';
+  echo "ข้อมูล \$scheduleRules ที่เรียงตาม SubjectID:\n";
+  print_r($scheduleRules);
+  echo '</pre>';
+} else {
+  echo "ไม่มีข้อมูลใน \$scheduleRules.";
+}

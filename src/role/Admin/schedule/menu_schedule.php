@@ -51,10 +51,15 @@ if ($_SESSION['role'] !== 'admin') {
             ลองสร้างตารางเรียน</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link text-secondary "
+            onclick="showSection('preparedata.php', 'src/role/Admin/schedule/manageschedule/preparedata.php')">7.
+            ดูรายวิชา</a>
+        </li>
+        <!-- <li class="nav-item">
           <a class="nav-link text-secondary disabled"
             onclick="showSection('saveschedule', 'src/role/Admin/schedule/saveschedule/saveschedule.php')">7.
             บันทึกข้อมูล</a>
-        </li>
+        </li> -->
       </ul>
     </nav>
     <div id="hidecontent">

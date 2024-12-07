@@ -2,18 +2,9 @@
 include '../../../../Controller/connect.php'; // เชื่อมต่อฐานข้อมูล
 include 'preparedata.php'; // โหลดข้อมูล $scheduleRules
 
+$unscheduledSubjects = []; // ตัวแปรเก็บวิชาที่ยังไม่ได้บันทึก
 
-// echo '<br>';
-// echo '<pre>';
-// print_r($scheduleRules);
-// echo '</pre>';
-?>
-
-<!-- <div id="createschedule1"> -->
-<?php
-$unscheduledSubjects = []; // ตัวแปรเก็บรายวิชาที่ยังไม่ได้ลงตาราง
-
-// ฟังก์ชันตรวจสอบข้อมูลซ้ำในตาราง schedule
+// ฟังก์ชันตรวจสอบข้อมูลซ้ำ
 function isSubjectScheduled($conn, $subjectID, $classGroupID)
 {
   $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM schedule WHERE SubjectID = ? AND ClassGroupID = ?");
@@ -43,21 +34,6 @@ function isActivitySubject($subjectName)
   return strpos($subjectName, "กิจกรรม") === 0;
 }
 
-// ฟังก์ชันดึงรายวิชาที่ต้องลงเรียนจาก studyplans
-function getStudyPlanSubjects($conn, $classGroupID)
-{
-  $stmt = $conn->prepare("SELECT SubjectID FROM studyplans WHERE ClassGroupID = ?");
-  $stmt->bind_param("i", $classGroupID);
-  $stmt->execute();
-  $result = $stmt->get_result();
-  $subjects = [];
-  while ($row = $result->fetch_assoc()) {
-    $subjects[] = $row['SubjectID'];
-  }
-  $stmt->close();
-  return $subjects;
-}
-
 // ฟังก์ชันสำหรับลงตารางเรียน
 function assignSubject($conn, $subject, $classGroup, $teacher, $room, &$unscheduledSubjects)
 {
@@ -71,9 +47,8 @@ function assignSubject($conn, $subject, $classGroup, $teacher, $room, &$unschedu
 
   $assigned = false;
 
-  // ตรวจสอบข้อมูลซ้ำ
   if (isSubjectScheduled($conn, $subject['SubjectID'], $classGroup['ClassGroupID'])) {
-    return; // ข้ามรายวิชาที่ถูกบันทึกไปแล้ว
+    return; // ข้ามรายวิชานี้ถ้าถูกบันทึกแล้ว
   }
 
   // ตรวจสอบวิชากิจกรรม
@@ -107,29 +82,44 @@ function assignSubject($conn, $subject, $classGroup, $teacher, $room, &$unschedu
     }
   }
 
+  // ตรวจสอบ Continuity > 0.5
+  if (!$assigned && $subject['AvgContinuity'] > 0.5) {
+    foreach ($days as $day) {
+      foreach ($prioritySlots['continuity'] as $slot) {
+        if (isTimeSlotAvailable($conn, $day, $slot, $room['RoomID'], $classGroup['ClassGroupID'])) {
+          $stmt = $conn->prepare("INSERT INTO schedule (SubjectID, TeacherID, RoomID, TimeSlot, DayOfWeek, ClassGroupID) VALUES (?, ?, ?, ?, ?, ?)");
+          $stmt->bind_param("iiissi", $subject['SubjectID'], $teacher['TeacherID'], $room['RoomID'], $slot, $day, $classGroup['ClassGroupID']);
+          $stmt->execute();
+          $stmt->close();
+          $assigned = true;
+          break 2;
+        }
+      }
+    }
+  }
+
   if (!$assigned) {
-    $unscheduledSubjects[] = $subject; // เก็บวิชาที่ไม่สามารถลงตารางได้
-    echo "ไม่สามารถลงตารางวิชา: " . $subject['SubjectCode'] . " (" . $subject['SubjectName'] . ")\n";
+    $unscheduledSubjects[] = $subject;
   }
 }
 
-// ดึงข้อมูลกลุ่มเรียน
+// ดึงข้อมูลจากตารางที่เกี่ยวข้อง
 $classGroups = $conn->query("SELECT * FROM classgroup")->fetch_all(MYSQLI_ASSOC);
-
-// ดึงข้อมูลครูและห้องเรียน
 $teachers = $conn->query("SELECT * FROM teachers")->fetch_all(MYSQLI_ASSOC);
 $rooms = $conn->query("SELECT * FROM rooms")->fetch_all(MYSQLI_ASSOC);
 
-// วนลูปแต่ละกลุ่มเรียนเพื่อลงตาราง
-foreach ($classGroups as $classGroup) {
-  $studyPlanSubjects = getStudyPlanSubjects($conn, $classGroup['ClassGroupID']); // ดึงรายวิชาที่ต้องลงเรียน
+// ตรวจสอบข้อมูล
+echo '<pre>';
+echo "จำนวนรายวิชาใน \$scheduleRules: " . count($scheduleRules) . "\n";
+print_r($scheduleRules);
+echo '</pre>';
 
-  foreach ($scheduleRules as $subject) {
-    if (in_array($subject['SubjectID'], $studyPlanSubjects)) { // ตรวจสอบว่าวิชาอยู่ในแผนการเรียนหรือไม่
-      foreach ($teachers as $teacher) {
-        foreach ($rooms as $room) {
-          assignSubject($conn, $subject, $classGroup, $teacher, $room, $unscheduledSubjects);
-        }
+// เริ่มกระบวนการลงตารางเรียน
+foreach ($scheduleRules as $subject) {
+  foreach ($classGroups as $classGroup) {
+    foreach ($teachers as $teacher) {
+      foreach ($rooms as $room) {
+        assignSubject($conn, $subject, $classGroup, $teacher, $room, $unscheduledSubjects);
       }
     }
   }
@@ -147,9 +137,5 @@ if (!empty($unscheduledSubjects)) {
   print_r($unscheduledSubjects);
   echo '</pre>';
 } else {
-  echo "<br>";
   echo "ลงตารางเรียนสำเร็จทั้งหมด!";
 }
-
-?>
-</div>
