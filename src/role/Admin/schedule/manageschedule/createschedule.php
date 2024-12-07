@@ -2,6 +2,11 @@
 include '../../../../Controller/connect.php';
 include 'preparedata.php'; // โหลดข้อมูล $scheduleRules
 
+// แสดงข้อมูลในตัวแปร (เพื่อ Debug)
+// echo "<pre>";
+// print_r($scheduleRules);
+// echo "</pre>";
+
 $unscheduledSubjects = []; // เก็บรายวิชาที่ยังไม่สามารถลงตารางได้
 
 // ดึงข้อมูลที่จำเป็น
@@ -87,18 +92,28 @@ function assignSubject($conn, $subject, $classGroup, $teacher, $room, &$unschedu
       echo "Checking Day: $day, Slot: $slot\n";
 
       if (isTimeSlotAvailable($conn, $day, $slot, $room['RoomID'] ?? 0, $classGroup['ClassGroupID'] ?? 0)) {
-        echo "Available: $day, Slot: $slot for SubjectID: $subjectID\n";
+
+        echo "Assigning to Day: $day, Slot: $slot\n";
+        echo '<br>';
+
+        // กำหนดค่าให้แน่ใจว่าค่าเป็นประเภทที่ถูกต้อง
+        $subjectID = (int)$subject['SubjectID'];
+        $teacherID = (int)($teacher['TeacherID'] ?? 0);
+        $roomID = (int)($room['RoomID'] ?? 0);
+        $timeSlot = (string)$slot;
+        $classGroupID = (int)($classGroup['ClassGroupID'] ?? 0);
+
 
         $stmt = $conn->prepare("INSERT INTO schedule (SubjectID, TeacherID, RoomID, TimeSlot, DayOfWeek, ClassGroupID) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param(
-          "iiissi",
-          $subjectID,
-          $teacher['TeacherID'] ?? 0,
-          $room['RoomID'] ?? 0,
-          $slot,
-          $day,
-          $classGroup['ClassGroupID'] ?? 0
-        );
+        $stmt->bind_param("iiissi", $subjectID, $teacherID, $roomID, $timeSlot, $day, $classGroupID);
+
+        if ($stmt->execute()) {
+          echo "Subject Assigned: $subjectID to $day, Slot: $slot\n";
+        } else {
+          echo "Error Assigning Subject: " . $stmt->error . "\n";
+        }
+
+        // ตรวจสอบการบันทึก
         if ($stmt->execute()) {
           echo "Subject Assigned: $subjectID to $day, Slot: $slot\n";
         } else {
@@ -113,11 +128,13 @@ function assignSubject($conn, $subject, $classGroup, $teacher, $room, &$unschedu
     }
   }
 
+  // หากไม่สามารถลงตารางได้
   if (!$assigned) {
     $unscheduledSubjects[] = $subject;
     echo "Unscheduled Subject: $subjectID ($subjectName)\n";
   }
 }
+
 
 
 
@@ -155,57 +172,72 @@ foreach ($teachers as $teacher) {
 }
 echo '</pre>';
 
-// กระบวนการหลัก (Main Process)
-foreach ($classGroups as $classGroup) {
-  if (!isset($classGroup['DepartmentID'])) {
-    echo "ไม่มี DepartmentID สำหรับ ClassGroupID: " . $classGroup['ClassGroupID'] . "\n";
-    continue;
-  }
 
-  foreach ($studyPlans as $studyPlan) {
-    if ($studyPlan['ClassGroupID'] == $classGroup['ClassGroupID']) {
-      foreach ($scheduleRules as $subject) {
-        if ($studyPlan['SubjectID'] == $subject['SubjectID']) {
-          // ดึง SubjectName จาก subjects
-          $stmt = $conn->prepare("SELECT SubjectName FROM subjects WHERE SubjectID = ?");
-          $stmt->bind_param("i", $subject['SubjectID']);
+
+// กระบวนการหลัก (Main Process)
+foreach ($scheduleRules as $subject) { // เรียงตาม $scheduleRules
+  foreach ($classGroups as $classGroup) {
+    if (!isset($classGroup['DepartmentID'])) {
+      echo "ไม่มี DepartmentID สำหรับ ClassGroupID: " . $classGroup['ClassGroupID'] . "\n";
+      continue;
+    }
+
+    foreach ($studyPlans as $studyPlan) {
+      if ($studyPlan['SubjectID'] == $subject['SubjectID'] && $studyPlan['ClassGroupID'] == $classGroup['ClassGroupID']) {
+        // ดึง SubjectName จาก subjects
+        $stmt = $conn->prepare("SELECT SubjectName, DepartmentID  FROM subjects WHERE SubjectID = ?");
+        $stmt->bind_param("i", $subject['SubjectID']);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $subject['SubjectName'] = $row['SubjectName'] ?? 'ไม่ทราบชื่อวิชา';
+        $subject['DepartmentID'] = $row['DepartmentID'] ?? null;
+        $stmt->close();
+
+
+        $departmentID = $classGroup['DepartmentID'];
+        $specialization = $departmentID == 11 ? 'Samun' : 'Computer';
+
+        // ดึงข้อมูลครู (พร้อม FullName)
+        $teacher = getTeacherForSubject($teachers, $departmentID, $specialization, $conn);
+        if ($teacher) {
+          // ดึง FullName จากตาราง users
+          $stmt = $conn->prepare("SELECT FullName FROM users WHERE UserID = ?");
+          $stmt->bind_param("i", $teacher['UserID']);
           $stmt->execute();
           $result = $stmt->get_result();
-          $row = $result->fetch_assoc();
-          $subject['SubjectName'] = $row['SubjectName'] ?? 'ไม่ทราบชื่อวิชา';
+          $userRow = $result->fetch_assoc();
+          $teacher['FullName'] = $userRow['FullName'] ?? 'ไม่ทราบชื่อครู';
           $stmt->close();
-
-          $departmentID = $classGroup['DepartmentID'];
-          $specialization = $departmentID == 11 ? 'Samun' : 'Computer';
-
-          // ดึงข้อมูลครู (พร้อม FullName)
-          $teacher = getTeacherForSubject($teachers, $departmentID, $specialization, $conn);
-          $room = getRoomForSubject($rooms, $departmentID);
-
-          // echo '<pre>';
-          // echo "Subject Details:\n";
-          // print_r($subject);
-          // echo "Teacher Details:\n";
-          // print_r($teacher);
-          // echo "Room Details:\n";
-          // print_r($room);
-          // echo '</pre>';
-
-          // ถ้าหาครูหรือห้องไม่ได้ให้ข้ามไป
-          if (!$teacher || !$room) {
-            $unscheduledSubjects[] = $subject;
-            echo "หาไม่เจอนะ\n";
-            continue;
-          }
-
-          // จัดลำดับความสำคัญของ TimeSlot
-          $prioritySlots = $subject['AvgContinuity'] > 0.5 ? ['4', '9', '10-12'] : ['1-4', '6-9'];
-          assignSubject($conn, $subject, $classGroup, $teacher, $room, $unscheduledSubjects, $prioritySlots);
         }
+
+        $room = getRoomForSubject($rooms, $departmentID);
+
+        // Debugging ข้อมูล
+        echo '<pre>';
+        echo "Subject Details:\n";
+        print_r($subject);
+        echo "Teacher Details:\n";
+        print_r($teacher);
+        echo "Room Details:\n";
+        print_r($room);
+        echo '</pre>';
+
+        // ถ้าหาครูหรือห้องไม่ได้ให้ข้ามไป
+        if (!$teacher || !$room) {
+          $unscheduledSubjects[] = $subject;
+          echo "หาไม่เจอนะ: SubjectID " . $subject['SubjectID'] . "\n";
+          continue;
+        }
+
+        // จัดลำดับความสำคัญของ TimeSlot
+        $prioritySlots = $subject['AvgContinuity'] > 0.5 ? ['4', '9', '10-12'] : ['1-4', '6-9'];
+        assignSubject($conn, $subject, $classGroup, $teacher, $room, $unscheduledSubjects, $prioritySlots);
       }
     }
   }
 }
+
 
 
 echo '<pre>';

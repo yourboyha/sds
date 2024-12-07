@@ -29,7 +29,7 @@
   padding: 5px; /* เพิ่มระยะห่างเล็กน้อยรอบข้อความ */
 }
 .timeslot {
-  font-size: 75%;
+  font-size: 50%;
   min-width: 80px;
   max-width: 100px;
   text-align: center;

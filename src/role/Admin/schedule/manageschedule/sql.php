@@ -41,7 +41,29 @@ JOIN classgroup cg ON sc.ClassGroupID = cg.ClassGroupID
 WHERE cg.ClassGroupName = 'ปวช.3/1';
 ";
 
+// คำสั่งสำหรับแสดงตารางเรียน
+$sql =
+  "
+SELECT 
+    sc.ScheduleID,
+    s.SubjectName,
+    s.SubjectCode,
+    u.FullName AS TeacherName,
+    r.RoomName,
+    sc.TimeSlot,
+    sc.DayOfWeek,
+    cg.ClassGroupName,
+    sp.Term
+FROM schedule sc
+JOIN subjects s ON sc.SubjectID = s.SubjectID
+JOIN rooms r ON sc.RoomID = r.RoomID
+JOIN teachers t ON sc.TeacherID = t.TeacherID
+JOIN users u ON t.UserID = u.UserID
+JOIN classgroup cg ON sc.ClassGroupID = cg.ClassGroupID
+JOIN studyplans sp ON sc.ClassGroupID = sp.ClassGroupID AND sc.SubjectID = sp.SubjectID
+ORDER BY sc.ClassGroupID, sc.DayOfWeek, sc.TimeSlot;
 
+";
 // ตรวจสอบก่อนว่ามีข้อมูลใน $scheduleRules
 if (!empty($scheduleRules)) {
   // ใช้ usort เพื่อเรียงข้อมูลตาม SubjectID
