@@ -7,6 +7,7 @@ if ($conn->connect_error) {
 }
 
 include 'Function_schedule.php';
+include 'FunctionSubject.php';
 // แสดงปุ่มย้อนกลับและถัดไป
 function renderNavigationButtons()
 {
@@ -20,7 +21,7 @@ function renderNavigationButtons()
   </div>';
 }
 
-$scheduleData1 = [
+$scheduleDataExample = [
   [
     "ScheduleID" => 52941,
     "SubjectName" => "การเขียนโปรแกรมภาษาคอมพิวเตอร์",
@@ -40,3 +41,4 @@ renderNavigationButtons();
 // เรียกข้อมูลจากฟังก์ชัน
 $scheduleData = getScheduleData($conn);
 renderScheduleTable($scheduleData, 'ปวช.1/1');
+showSubject($conn);

@@ -49,6 +49,7 @@ $sql = "
 SELECT
     cg.ClassGroupName,
     s.SubjectCode,
+    s.SubjectID,
     s.SubjectName,
     s.TheoryHours,
     s.PracticalHours,

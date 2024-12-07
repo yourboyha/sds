@@ -73,137 +73,120 @@ function isClassGroupNameInSchedule($scheduleData, $ClassGroupName)
 // แสดงตารางเรียน
 function renderScheduleTable($scheduleData, $ClassGroupName)
 {
-  $timeSlots = [
-    "07:40<br>08:00",
-    "08:00<br>09:15",
-    "09:15<br>10:15",
-    "10:15<br>11:15",
-    "11:15<br>12:15",
-    "12:15<br>13:00",
-    "13:00<br>14:00",
-    "14:00<br>15:00",
-    "15:00<br>16:00",
-    "16:00<br>17:00",
-    "17:00<br>18:00",
-    "18:00<br>19:00",
-    "19:00<br>20:00",
-  ];
+  require_once __DIR__ . '/table.php';
+  // $timeSlots = [
+  //   "07:40<br>08:00",
+  //   "08:00<br>09:15",
+  //   "09:15<br>10:15",
+  //   "10:15<br>11:15",
+  //   "11:15<br>12:15",
+  //   "12:15<br>13:00",
+  //   "13:00<br>14:00",
+  //   "14:00<br>15:00",
+  //   "15:00<br>16:00",
+  //   "16:00<br>17:00",
+  //   "17:00<br>18:00",
+  //   "18:00<br>19:00",
+  //   "19:00<br>20:00",
+  // ];
 
-  $days = ['mon' => 'วันจันทร์', 'tue' => 'วันอังคาร', 'wed' => 'วันพุธ', 'thu' => 'วันพฤหัสบดี', 'fri' => 'วันศุกร์'];
-  if (isClassGroupNameInSchedule($scheduleData, $ClassGroupName)) {
-    echo '<div class="container content">';
-    echo "<h2 class='text-center mb-2'>ตารางเรียน: $ClassGroupName</h2>";
-    // echo "<pre>";
-    // print_r($scheduleData);
-    // echo "</pre>";
-    echo '<table class="container table table-bordered table-striped table-hover text-center">';
-    echo '<thead class="table-info">
-          <tr>
-            <th>เวลา</th>';
+  // $days = ['mon' => 'วันจันทร์', 'tue' => 'วันอังคาร', 'wed' => 'วันพุธ', 'thu' => 'วันพฤหัสบดี', 'fri' => 'วันศุกร์'];
+  // if (isClassGroupNameInSchedule($scheduleData, $ClassGroupName)) {
+  //   echo '<div class="container content">';
+  //   echo "<h2 class='text-center mb-2'>ตารางเรียน: $ClassGroupName</h2>";
+  //   // echo "<pre>";
+  //   // print_r($scheduleData);
+  //   // echo "</pre>";
+  //   echo '<table class="container table table-bordered table-striped table-hover text-center">';
+  //   echo '<thead class="table-info">
+  //         <tr>
+  //           <th>เวลา</th>';
 
-    // ใช้การวนลูปแสดงช่วงเวลา
-    foreach ($timeSlots as $slot) {
-      echo "<th class='timeslot'>$slot</th>";
-    }
-    echo '</tr>
-        </thead>
-        <tbody>';
+  //   // ใช้การวนลูปแสดงช่วงเวลา
+  //   foreach ($timeSlots as $slot) {
+  //     echo "<th class='timeslot'>$slot</th>";
+  //   }
+  //   echo '</tr>
+  //       </thead>
+  //       <tbody>';
 
-    echo "<tr>";
-    echo "<td>วัน/คาบ</td>";
-    echo '<td rowspan="6" class="vertical-text day-name">กิจกรรมหน้าเสาธง</td>';
-    for ($slot = 1; $slot <= 12; $slot++) {
-      echo "<td class='timeslot'>คาบที่ $slot</td>";
-    }
-    echo "</tr>";
+  //   echo "<tr>";
+  //   echo "<td>วัน/คาบ</td>";
+  //   echo '<td rowspan="6" class="vertical-text day-name">กิจกรรมหน้าเสาธง</td>';
+  //   for ($slot = 1; $slot <= 12; $slot++) {
+  //     echo "<td class='timeslot'>คาบที่ $slot</td>";
+  //   }
+  //   echo "</tr>";
 
-    // วนลูปแต่ละวัน
-    foreach ($days as $dayCode => $dayName) {
-      echo "<tr>
-              <td class='day-name'>$dayName</td>";
+  //   // วนลูปแต่ละวัน
+  //   foreach ($days as $dayCode => $dayName) {
+  //     echo "<tr>
+  //             <td class='day-name'>$dayName</td>";
 
-      $skipSlots = 0; // ตัวแปรช่วยข้ามช่องที่อยู่ในช่วงเดียวกัน
+  //     $skipSlots = 0; // ตัวแปรช่วยข้ามช่องที่อยู่ในช่วงเดียวกัน
 
-      // วนลูปแต่ละคาบ
-      for ($slot = 1; $slot <= 12; $slot++) {
-        if ($skipSlots > 0) {
-          $skipSlots--;
-          continue;
-        }
-        $cellContent = '';
-        $colspan = 1;
+  //     // วนลูปแต่ละคาบ
+  //     for ($slot = 1; $slot <= 12; $slot++) {
+  //       if ($skipSlots > 0) {
+  //         $skipSlots--;
+  //         continue;
+  //       }
+  //       $cellContent = '';
+  //       $colspan = 1;
 
-        // กรองเฉพาะข้อมูลของ ClassGroupName
-        foreach ($scheduleData as $data) {
-          // echo "<pre>";
-          // print_r($data);
-          // echo "</pre>";
-          // echo 'data[ClassGroupName]: ' . $data['ClassGroupName'];
-          // echo '<br>';
-          // echo 'ClassGroupName: ' . $ClassGroupName;
-          // echo '<br>';
-          // echo  'data[DayOfWeek]: ' . $data['DayOfWeek'];
-          // echo '<br>';
-          // echo   'dayCode: ' . $dayCode;
-          // echo '<br>';
-          // echo  'data[TimeSlot]: ' . $data['TimeSlot'];
-          // echo '<br>';
-          // echo 'slot: ' . (string) $slot;
-          // echo '<br>';
-          if ($data['ClassGroupName'] === $ClassGroupName && $data['DayOfWeek'] === $dayCode) {
-            echo "ตรงแล้ววจ้าาาา";
-            // แยก TimeSlot เป็นช่วงเวลา (start-stop)
-            if (strpos($data['TimeSlot'], '-') !== false) {
-              [$start, $stop] = explode('-', $data['TimeSlot']);
-              $start = (int) $start;
-              $stop = (int) $stop;
-              $slot = (int) $slot;
-              // echo '<br>';
-              // echo 'start: ' . $start . '<br>';
-              // echo 'stop: ' . $stop;
-              // echo '<br>';
+  //       // กรองเฉพาะข้อมูลของ ClassGroupName
+  //       foreach ($scheduleData as $data) {
 
-              if ($slot === $start) {
-                echo '<br>';
-                echo 'slot: ' . $slot . '<br>';
-                echo 'start: ' . $stop;
-                echo '<br>';
+  //         if ($data['ClassGroupName'] === $ClassGroupName && $data['DayOfWeek'] === $dayCode) {
+  //           // แยก TimeSlot เป็นช่วงเวลา (start-stop)
+  //           if (strpos($data['TimeSlot'], '-') !== false) {
+  //             [$start, $stop] = explode('-', $data['TimeSlot']);
+  //             $start = (int) $start;
+  //             $stop = (int) $stop;
+  //             $slot = (int) $slot;
 
-                $cellContent = $data['SubjectCode'] . '<br>' .
-                  $data['RoomName'] . '<br>' .
-                  $data['TeacherName'];
-                $colspan = $stop - $start + 1; // คำนวณ colspan
-                $skipSlots = $colspan - 1; // ข้ามช่องถัดไปตาม colspan
-                break;
-              } elseif ((int) $data['TimeSlot'] === $slot) {
-                // กรณี TimeSlot ไม่ใช่ช่วง
-                $cellContent = $data['SubjectCode'] . '<br>' .
-                  $data['RoomName'] . '<br>' .
-                  $data['TeacherName'];
-                break;
-              }
-            }
-          }
 
-          // กรณีเฉพาะ Homeroom สำหรับวันพฤหัสบดี คาบที่ 6
-          if ($dayCode === 'thu' && $slot === 6) {
-            $cellContent = 'Home<br>room';
-          }
-          // echo $colspan;
-          // แสดงข้อมูลในช่อง
-          if ($colspan > 1) {
-            echo "<td id='{$dayCode}-slot{$slot}' class='class-slot' colspan='$colspan'>$cellContent</td>";
-          } else {
-            echo "<td id='{$dayCode}-slot{$slot}' class='class-slot'>$cellContent</td>";
-          }
-        }
+  //             if ($slot === $start) {
+  //               echo '<br>';
+  //               echo 'slot: ' . $slot . '<br>';
+  //               echo 'start: ' . $stop;
+  //               echo '<br>';
 
-        echo "</tr>";
-      }
-      echo '</tbody></table></div>';
-      // echo "<pre>";
-      // print_r($scheduleData);
-      // echo "</pre>";
-    }
-  }
+  //               $cellContent = $data['SubjectCode'] . '<br>' .
+  //                 $data['RoomName'] . '<br>' .
+  //                 $data['TeacherName'];
+  //               $colspan = $stop - $start + 1; // คำนวณ colspan
+  //               $skipSlots = $colspan - 1; // ข้ามช่องถัดไปตาม colspan
+  //               break;
+  //             } elseif ((int) $data['TimeSlot'] === $slot) {
+  //               // กรณี TimeSlot ไม่ใช่ช่วง
+  //               $cellContent = $data['SubjectCode'] . '<br>' .
+  //                 $data['RoomName'] . '<br>' .
+  //                 $data['TeacherName'];
+  //               break;
+  //             }
+  //           }
+  //         }
+
+  //         // กรณีเฉพาะ Homeroom สำหรับวันพฤหัสบดี คาบที่ 6
+  //         if ($dayCode === 'thu' && $slot === 6) {
+  //           $cellContent = 'Home<br>room';
+  //         }
+  //         // echo $colspan;
+  //         // แสดงข้อมูลในช่อง
+  //         if ($colspan > 1) {
+  //           echo "<td id='{$dayCode}-slot{$slot}' class='class-slot' colspan='$colspan'>$cellContent</td>";
+  //         } else {
+  //           echo "<td id='{$dayCode}-slot{$slot}' class='class-slot'>$cellContent</td>";
+  //         }
+  //       }
+
+  //       echo "</tr>";
+  //     }
+  //     echo '</tbody></table></div>';
+  //     // echo "<pre>";
+  //     // print_r($scheduleData);
+  //     // echo "</pre>";
+  //   }
+  // }
 }
