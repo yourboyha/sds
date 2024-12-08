@@ -1,5 +1,9 @@
 <div id="content">
   <?php
+  if ($_SESSION['role'] !== 'admin') {
+    header("Location: /sds/index.php?page=login");
+    exit();
+  }
   // ตรวจสอบการเชื่อมต่อฐานข้อมูล
   if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);

@@ -29,7 +29,7 @@ ob_start();
           <?php if ($_SESSION['role'] === 'admin'): ?>
             <li><a href="index.php?page=admin" class="dropdown-item">แผงควบคุม</a></li>
             <li><a href="index.php?page=admin-member" class="dropdown-item">จัดการผู้ใช้งาน</a></li>
-            <li><a href="index.php?page=admin-course" class="dropdown-item">จัดการหลักสูตร</a></li>
+            <li><a href="index.php?page=admin-studyplan" class="dropdown-item">จัดการแผนการเรียน</a></li>
             <li><a href="index.php?page=admin-subject" class="dropdown-item">จัดการรายวิชา</a></li>
             <li><a href="index.php?page=admin-menu-schedule" class="dropdown-item">จัดการตารางเรียน</a>
             </li>
