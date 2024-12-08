@@ -15,7 +15,7 @@ if ($_SESSION['role'] !== 'admin') {
   <div id="topelement"></div>
   <nav>
     <div class="container">
-      <h5>เริ่มต้นจัดตารางเรียน</h5>
+      <h5>เริ่มต้นจัดตารางเรียน ภาคเรียนที่ 1/2567</h5>
       <ul class="nav nav-pills gap-3" id="menu-schedule">
 
         <li class="nav-item">
