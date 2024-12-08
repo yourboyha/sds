@@ -53,10 +53,23 @@ require_once "src/controller/connect.php";
         'table' => 'src/function/table.php',
         // ส่วนแอดมิน
         'admin' => 'src/role/Admin/dashboard.php',
+        // member
         'admin-member' => 'src/role/Admin/member/member.php',
-        'admin-course' => 'src/role/Admin/course/course.php',
+        'admin-add-member' => 'src/role/Admin/member/add_member.php',
+        'admin-edit-member' => 'src/role/Admin/member/edit_member.php',
+        'admin-delete-member' => 'src/role/Admin/member/delete_member.php',
+        // course
+        'admin-studyplan' => 'src/role/Admin/studyplan/studyplan.php',
+        'admin-add-studyplan' => 'src/role/Admin/studyplan/add_studyplan.php',
+        'admin-edit-studyplan' => 'src/role/Admin/studyplan/edit_studyplan.php',
+        'admin-delete-studyplan' => 'src/role/Admin/studyplan/delete_studyplan.php',
+        // subject
         'admin-subject' => 'src/role/Admin/subject/subject.php',
+        // schedule
         'admin-menu-schedule' => 'src/role/Admin/schedule/menu_schedule.php',
+        // room
+        'admin-room' => 'src/role/Admin/subject/subject.php',
+        // report
         'admin-report' => 'src/role/Admin/report/report.php',
         // ส่วนแผนกวิชา
         'DepartmentHead' => 'src/role/DepartmentHead/index.php',

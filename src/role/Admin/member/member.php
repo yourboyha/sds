@@ -1,40 +1,52 @@
 <div id="content">
   <?php
+  // ตรวจสอบการเชื่อมต่อฐานข้อมูล
+  if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+  }
 
-  include 'chkadmin.php';
-
-
-  // ฟังก์ชันค้นหาข้อมูลผู้ใช้
+  // กำหนดค่าเริ่มต้นสำหรับการค้นหา
   $searchTerm = '';
-  $roleFilter = 'all'; // ตัวแปรสำหรับจัดเก็บบทบาทที่เลือก
+  $roleFilter = 'all';
 
+  // ตรวจสอบและรับค่าจากฟอร์มการค้นหา
   if (isset($_POST['search'])) {
-    $searchTerm = htmlspecialchars($_POST['search_term']); // ป้องกัน XSS
+    $searchTerm = trim($_POST['search_term']); // ลบช่องว่างด้านหน้าและหลัง
+    $searchTerm = htmlspecialchars($searchTerm, ENT_QUOTES, 'UTF-8'); // ป้องกัน XSS
   }
 
+  // ตรวจสอบและรับค่าจากฟอร์มตัวกรองบทบาท
   if (isset($_POST['role'])) {
-    $roleFilter = $_POST['role'];
+    $roleFilter = htmlspecialchars($_POST['role'], ENT_QUOTES, 'UTF-8'); // ป้องกัน XSS
   }
 
-  // ดึงข้อมูลผู้ใช้งานจากฐานข้อมูลตามบทบาท
-  $sql = "SELECT * FROM users WHERE (username LIKE ? OR fullname LIKE ? OR email LIKE ?)";
-
+  // สร้างคำสั่ง SQL
+  $sql = "SELECT * FROM users WHERE (FullName LIKE ? OR Email LIKE ?)";
   if ($roleFilter !== 'all') {
     $sql .= " AND role = ?";
   }
 
+  // เตรียมคำสั่ง SQL
   $stmt = $conn->prepare($sql);
-
-  // Bind parameters
-  $searchTermWildcard = "%" . $searchTerm . "%";
-  if ($roleFilter !== 'all') {
-    $stmt->bind_param("ssss", $searchTermWildcard, $searchTermWildcard, $searchTermWildcard, $roleFilter);
-  } else {
-    $stmt->bind_param("sss", $searchTermWildcard, $searchTermWildcard, $searchTermWildcard);
+  if (!$stmt) {
+    die("SQL Error: " . $conn->error); // ถ้าเกิดข้อผิดพลาดในการเตรียมคำสั่ง SQL
   }
 
+  // Bind Parameters
+  $searchTermWildcard = "%" . $searchTerm . "%"; // เพิ่มเครื่องหมาย % สำหรับ LIKE
+
+  if ($roleFilter !== 'all') {
+    // ถ้ามีการกรอกบทบาทเพิ่มเติม
+    $stmt->bind_param("sss", $searchTermWildcard, $searchTermWildcard, $roleFilter);
+  } else {
+    // ถ้าไม่มีการกรอกบทบาท
+    $stmt->bind_param("ss", $searchTermWildcard, $searchTermWildcard);
+  }
+
+  // Execute และรับผลลัพธ์
   $stmt->execute();
   $result = $stmt->get_result();
+
   ?>
 
   <div class="container mt-5">
@@ -52,15 +64,19 @@
         <label for="role" class="form-label">เลือกบทบาท:</label>
         <select class="form-select" name="role" id="role">
           <option value="all" <?= $roleFilter == 'all' ? 'selected' : '' ?>>ทั้งหมด</option>
-          <option value="admin" <?= $roleFilter == 'admin' ? 'selected' : '' ?>>Admin</option>
-          <option value="user" <?= $roleFilter == 'user' ? 'selected' : '' ?>>User</option>
+          <option value="admin" <?= $roleFilter == 'admin' ? 'selected' : '' ?>>แอดมิน</option>
+          <option value="departmenthead" <?= $roleFilter == 'departmenthead' ? 'selected' : '' ?>>หัวหน้าแผนก</option>
+          <option value="teacher" <?= $roleFilter == 'teacher' ? 'selected' : '' ?>>ครู</option>
+          <option value="academicstaff" <?= $roleFilter == 'academicstaff' ? 'selected' : '' ?>>เจ้าหน้าที่วิชาการ
+          </option>
+          <option value="executive" <?= $roleFilter == 'executive' ? 'selected' : '' ?>>ผู้บริหาร</option>
         </select>
         <button class="btn btn-info mt-2" type="submit">แสดงผล</button>
       </div>
     </form>
 
     <!-- ปุ่มเพิ่มสมาชิก -->
-    <a href="?page=add_member" class="btn btn-success mb-3">เพิ่มสมาชิกใหม่</a>
+    <a href="?page=admin-add-member" class="btn btn-success mb-3">เพิ่มสมาชิกใหม่</a>
 
     <!-- แสดงตารางข้อมูลผู้ใช้ -->
     <table class="table table-bordered table-striped">
@@ -75,15 +91,18 @@
       </thead>
       <tbody>
         <?php
+        // ตรวจสอบผลลัพธ์จากการค้นหา
         if ($result->num_rows > 0) {
           while ($row = $result->fetch_assoc()) {
+            // แสดงผลข้อมูลแต่ละแถว
             echo "<tr>";
-            echo "<td>" . htmlspecialchars($row['user_id']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['username']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['email']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['role']) . "</td>";
-            echo "<td class='text-center'><a href='?page=edit_member&id=" . $row['user_id'] . "' class='btn btn-warning'>แก้ไข</a></td>";
-            echo "<td class='text-center'><a href='?page=delete_member&id=" . $row['user_id'] . "' class='btn btn-danger' onclick='return confirm(\"คุณแน่ใจว่าต้องการลบสมาชิกนี้?\");'>ลบ</a></td>";
+            echo "<td>" . (isset($row['UserID']) ? htmlspecialchars($row['UserID']) : 'ไม่มีข้อมูล') . "</td>";
+            echo "<td class='text-start'>" . (isset($row['FullName']) ? htmlspecialchars($row['FullName']) : 'ไม่มีข้อมูล') . "</td>";
+            echo "<td class='text-start'>" . (isset($row['Email']) ? htmlspecialchars($row['Email']) : 'ไม่มีข้อมูล') . "</td>";
+            echo "<td class='text-start'>" . (isset($row['Role']) ? htmlspecialchars($row['Role']) : 'ไม่มีข้อมูล') . "</td>";
+            // แสดงปุ่มแก้ไขและลบ
+            echo "<td class='text-center'><a href='?page=admin-edit-member&id=" . (isset($row['UserID']) ? $row['UserID'] : '') . "' class='btn btn-warning'>แก้ไข</a></td>";
+            echo "<td class='text-center'><a href='?page=admin-delete-member&id=" . (isset($row['UserID']) ? $row['UserID'] : '') . "' class='btn btn-danger' onclick='return confirm(\"คุณแน่ใจว่าต้องการลบสมาชิกนี้?\");'>ลบ</a></td>";
             echo "</tr>";
           }
         } else {
@@ -93,6 +112,3 @@
       </tbody>
     </table>
   </div>
-
-  ?>
-</div>
