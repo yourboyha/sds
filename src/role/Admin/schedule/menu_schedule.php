@@ -13,9 +13,11 @@ if ($_SESSION['role'] !== 'admin') {
 <body id="content">
 
   <div id="topelement"></div>
-  <div class="container">
-    <nav>
+  <nav>
+    <div class="container">
+      <h5>เริ่มต้นจัดตารางเรียน</h5>
       <ul class="nav nav-pills gap-3" id="menu-schedule">
+
         <li class="nav-item">
           <a class="nav-link text-secondary"
             onclick="showSection('checksubject', 'src/role/Admin/schedule/checksubject/checksubject.php')">1.
@@ -98,12 +100,14 @@ if ($_SESSION['role'] !== 'admin') {
             บันทึกข้อมูล</a>
         </li> -->
       </ul>
-    </nav>
 
-    <div id="hidecontent">
-      <!-- ส่วนเนื้อหา Dynamic -->
-      <section id="dynamic-section" class="mt-4"></section>
-    </div>
+  </nav>
+
+
+  <div id="hidecontent">
+    <!-- ส่วนเนื้อหา Dynamic -->
+    <section id="dynamic-section" class="mt-4"></section>
+  </div>
 
   </div>
   <script>
