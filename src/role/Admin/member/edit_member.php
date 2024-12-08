@@ -23,18 +23,18 @@
 
   // ถ้าฟอร์มถูกส่ง
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $data = ['email', 'role', 'fullname', 'ContactInfo'];
+    $data = ['Email ', 'Role', 'FullName', 'ContactInfo'];
     $userData = [];
     foreach ($data as $field) $userData[$field] = $_POST[$field];
 
     // อัพเดตข้อมูลใน users
-    $updateSql = "UPDATE users SET email = ?, role = ?, fullname = ?,ContactInfo = ? WHERE UserID = ?";
+    $updateSql = "UPDATE users SET Email  = ?, Role = ?, FullName = ?,ContactInfo = ? WHERE UserID = ?";
     $stmt = $conn->prepare($updateSql);
     $stmt->bind_param(
       "ssssi",
-      $userData['email'],
-      $userData['role'],
-      $userData['fullname'],
+      $userData['Email '],
+      $userData['Role'],
+      $userData['FullName'],
       $userData['ContactInfo'],
       $UserID
     );
@@ -51,26 +51,29 @@
     <form method="POST">
       <div class="mb-3">
         <div class="mb-3">
-          <label for="email" class="form-label">Email</label>
-          <input type="email" class="form-control" name="email" value="<?= htmlspecialchars($user['Email']) ?>"
+          <label for="FullName" class="form-label">FullName</label>
+          <input type="text" class="form-control" name="FullName" value="<?= htmlspecialchars($user['FullName']) ?>"
+            required>
+        </div>
+        <div class="mb-3">
+          <label for="Email " class="form-label">Email </label>
+          <input type="Email " class="form-control" name="Email " value="<?= htmlspecialchars($user['Email']) ?>"
             readonly>
         </div>
         <div class="mb-3">
-          <label for="role" class="form-label">Role</label>
-          <select class="form-control" name="role" required>
+          <label for="Role" class="form-label">Role</label>
+          <select class="form-control" name="Role" required>
             <option value="">เลือกบทบาท</option>
-            <option value="admin">แอดมิน</option>
-            <option value="DepartmentHead">หัวหน้าแผนก</option>
-            <option value="Teacher">ครู</option>
-            <option value="AcademicStaff">เจ้าหน้าที่วิชาการ</option>
-            <option value="Executive">ผู้บริหาร</option>
+            <option value="admin" <?= $user['Role'] == 'Admin' ? 'selected' : '' ?>>แอดมิน</option>
+            <option value="DepartmentHead" <?= $user['Role'] == 'DepartmentHead' ? 'selected' : '' ?>>หัวหน้าแผนก
+            </option>
+            <option value="Teacher" <?= $user['Role'] == 'Teacher' ? 'selected' : '' ?>>ครู</option>
+            <option value="AcademicStaff" <?= $user['Role'] == 'AcademicStaff' ? 'selected' : '' ?>>เจ้าหน้าที่วิชาการ
+            </option>
+            <option value="Executive" <?= $user['Role'] == 'Executive' ? 'selected' : '' ?>>ผู้บริหาร</option>
           </select>
         </div>
-        <div class="mb-3">
-          <label for="fullname" class="form-label">Fullname</label>
-          <input type="text" class="form-control" name="fullname" value="<?= htmlspecialchars($user['FullName']) ?>"
-            required>
-        </div>
+
         <div class="mb-3">
           <label for="ContactInfo" class="form-label">ContactInfo</label>
           <input type="text" class="form-control" name="ContactInfo"
@@ -81,7 +84,7 @@
 
         <div class="text-center">
           <button type="submit" class="btn btn-primary">บันทึกข้อมูล</button>
-          <a href="?page=members" class="btn btn-secondary">กลับ</a>
+          <a href="?page=admin-member" class="btn btn-secondary">กลับ</a>
         </div>
     </form>
   </div>
