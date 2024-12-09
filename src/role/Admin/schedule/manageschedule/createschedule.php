@@ -1,56 +1,281 @@
 <?php
 
+$daysOfWeek = ['mon', 'tue', 'wed', 'thu', 'fri'];
+$teacherStartID = 1;
+$roomStartID = 1;
+$timeSlots = range(1, 12);
+
 // แสดงข้อมูลในตัวแปร (เพื่อ Debug)
 // echo "<pre>";
 // print_r($scheduleRules);
 // echo "</pre>";
 
 // ดึงข้อมูล ClassGroup
-$classGroups = [];
-$sql = "SELECT * FROM classgroup";
-$result = $conn->query($sql);
+function callClassGroup($conn)
+{
+  $classGroups = [];
+  $sql = "SELECT * FROM classgroup";
+  $result = $conn->query($sql);
 
-if ($result->num_rows > 0) {
-  while ($row = $result->fetch_assoc()) {
-    $classGroups[] = $row;
+  if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+      $classGroups[] = $row;
+    }
+  } else {
+    echo "No class groups found.";
+    exit;
   }
-} else {
-  echo "No class groups found.";
-  exit;
+  return $classGroups;
+
+  // echo "<pre>";
+  // print_r($classGroups);
+  // echo "</pre>";
 }
 
-function testtable($conn) {}
 
 
-function prepare_table()
+function callSchedule($conn)
 {
-  echo '
-    <h2 class="text-center mb-2">ตารางเรียน</h2>
+  $schedules = []; // กำหนดตัวแปร $schedules เป็น array เปล่าเพื่อป้องกันข้อผิดพลาด
+  $sql = "SELECT * FROM schedule";
+  $result = $conn->query($sql);
 
-  <table class="container table table-bordered table-striped table-hover text-center">
-    <thead class="table-info">
-      <tr>
-        <th>เวลา</th>
-        <th class="timeslot">07:40<br>08:00</th>
-        <th class="timeslot">08:00<br>09:15</th>
-        <th class="timeslot">09:15<br>10:15</th>
-        <th class="timeslot">10:15<br>11:15</th>
-        <th class="timeslot">11:15<br>12:15</th>
-        <th class="timeslot">12:15<br>13:00</th>
-        <th class="timeslot">13:00<br>14:00</th>
-        <th class="timeslot">14:00<br>15:00</th>
-        <th class="timeslot">15:00<br>16:00</th>
-        <th class="timeslot">16:00<br>17:00</th>
-        <th class="timeslot">17:00<br>18:00</th>
-        <th class="timeslot">18:00<br>19:00</th>
-        <th class="timeslot">19:00<br>20:00</th>
-      </tr>
-    </thead>
-    <tbody>
+  if ($result && $result->num_rows > 0) {
+    // เก็บผลลัพธ์ใน array
+    while ($row = $result->fetch_assoc()) {
+      $schedules[] = $row;
+    }
+    echo "<pre>";
+    print_r($schedules);
+    echo "</pre>";
+  } else {
+    if (!$result) {
+      echo "ข้อผิดพลาดในการดึงข้อมูล: " . $conn->error; // ตรวจสอบข้อผิดพลาดของ SQL Query
+    } else {
+      // echo "ไม่พบข้อมูลในตาราง schedule<br>"; 
 
-      <tr>
+    }
+  }
+
+  return $schedules; // คืนค่าผลลัพธ์ (array เปล่าหากไม่มีข้อมูล)
+}
+
+function prepare_table($conn, $classGroups, $scheduleRules)
+{
+  foreach ($classGroups as $classGroup) {
+    $tableId = htmlspecialchars($classGroup['ClassGroupName'], ENT_QUOTES, 'UTF-8');
+
+    // กำหนดข้อมูลตารางสำหรับแต่ละ tableId
+    if ($tableId === "ปวช.1/1") {
+      $scheduleData = [
+        'วันจันทร์' => [
+          '1-4' => 0,
+          '6-9' => 1,
+        ],
+        'วันอังคาร' => [
+          '1-4' => 2,
+          '6-8' => 3,
+        ],
+        'วันพุธ' => [
+          '1-3' => 4,
+          '6-7' => 5,
+          '8-9' => 6,
+        ],
+        'วันพฤหัสบดี' => [
+          '1-3' => 7,
+          // '6' => 'HomeRoom',
+          '7-8' => 11,
+        ],
+        'วันศุกร์' => [
+          '1-3' => 8,
+          '6-7' => 9,
+          '8-9' => 10,
+        ],
+      ];
+
+      $days = [];
+
+      foreach ($scheduleData as $day => $timeSlots) {
+        foreach ($timeSlots as $timeRange => $ruleIndex) {
+          $days[$day][$timeRange] = $scheduleRules[$ruleIndex]['SubjectCode'] . '<br>' . $scheduleRules[$ruleIndex]['SubjectName'];
+        }
+      }
+    } else if ($tableId === "ปวช.2/1") {
+      $scheduleData = [
+        'วันจันทร์' => [
+          '1-4' => 12,
+          '6-9' => 13,
+        ],
+        'วันอังคาร' => [
+          '1-4' => 14,
+          '6-9' => 15,
+        ],
+        'วันพุธ' => [
+          '1-3' => 16,
+          '6-7' => 17,
+          '8-9' => 18,
+        ],
+        'วันพฤหัสบดี' => [
+          '1-2' => 19,
+          // '6' => 'HomeRoom',
+          '7-8' => 20,
+        ],
+        'วันศุกร์' => [],
+      ];
+
+      $days = [];
+
+      foreach ($scheduleData as $day => $timeSlots) {
+        foreach ($timeSlots as $timeRange => $ruleIndex) {
+          $days[$day][$timeRange] = $scheduleRules[$ruleIndex]['SubjectCode'] . '<br>' . $scheduleRules[$ruleIndex]['SubjectName'];
+        }
+      }
+    } else if ($tableId === "ปวช.3/1") {
+      $scheduleData = [
+        'วันจันทร์' => [
+          '1-3' => 21,
+        ],
+        'วันพฤหัสบดี' => [
+          // '6' => 'HomeRoom',
+          '7-8' => 22,
+        ],
+        'วันศุกร์' => [],
+      ];
+
+      $days = [];
+
+      foreach ($scheduleData as $day => $timeSlots) {
+        foreach ($timeSlots as $timeRange => $ruleIndex) {
+          $days[$day][$timeRange] = $scheduleRules[$ruleIndex]['SubjectCode'] . '<br>' . $scheduleRules[$ruleIndex]['SubjectName'];
+        }
+      }
+    } else if ($tableId === "ปวช.3/2") {
+      $scheduleData = [
+        'วันจันทร์' => [
+          '1-3' => 23,
+        ],
+        'วันพฤหัสบดี' => [
+          // '6' => 'HomeRoom',
+          '7-8' => 24,
+        ],
+        'วันศุกร์' => [],
+      ];
+
+      $days = [];
+
+      foreach ($scheduleData as $day => $timeSlots) {
+        foreach ($timeSlots as $timeRange => $ruleIndex) {
+          $days[$day][$timeRange] = $scheduleRules[$ruleIndex]['SubjectCode'] . '<br>' . $scheduleRules[$ruleIndex]['SubjectName'];
+        }
+      }
+    } else if ($tableId === "ปวส.1/1") {
+      $scheduleData = [
+        'วันจันทร์' => [
+          '1-4' => 25,
+          '6-9' => 26,
+          '10-12' => 36,
+        ],
+        'วันอังคาร' => [
+          '1-4' => 27,
+          '6-9' => 28,
+        ],
+        'วันพุธ' => [
+          '1-4' => 29,
+          '6-9' => 30,
+        ],
+        'วันพฤหัสบดี' => [
+          '1-3' => 31,
+          '4-4' => 34,
+          '7-8' => 37,
+          '9-10' => 34,
+        ],
+        'วันศุกร์' => [
+          '1-3' => 32,
+          '4-4' => 35,
+          '6-9' => 33,
+          '10-12' => 35
+        ],
+      ];
+
+      $days = [];
+
+      foreach ($scheduleData as $day => $timeSlots) {
+        foreach ($timeSlots as $timeRange => $ruleIndex) {
+          $days[$day][$timeRange] = $scheduleRules[$ruleIndex]['SubjectCode'] . '<br>' . $scheduleRules[$ruleIndex]['SubjectName'];
+        }
+      }
+    } else if ($tableId === "ปวส.2/1") {
+      $scheduleData = [
+        'วันจันทร์' => [
+          '1-3' => 39,
+          '6-8' => 40,
+        ],
+        'วันอังคาร' => [
+          '1-3' => 41,
+        ],
+        'วันพฤหัสบดี' => [
+          // '6' => 'HomeRoom',
+          '7-8' => 38,
+        ],
+        'วันศุกร์' => [],
+      ];
+
+      $days = [];
+
+      foreach ($scheduleData as $day => $timeSlots) {
+        foreach ($timeSlots as $timeRange => $ruleIndex) {
+          $days[$day][$timeRange] = $scheduleRules[$ruleIndex]['SubjectCode'] . '<br>' . $scheduleRules[$ruleIndex]['SubjectName'];
+        }
+      }
+    } else if ($tableId === "ปวส.2/2") {
+      $scheduleData = [
+        'วันจันทร์' => [
+          '1-3' => 43,
+          '6-8' => 44,
+
+        ],
+        'วันพฤหัสบดี' => [
+
+          // '6' => 'HomeRoom',
+          '7-8' => 42,
+        ],
+        'วันศุกร์' => [],
+      ];
+
+      $days = [];
+
+      foreach ($scheduleData as $day => $timeSlots) {
+        foreach ($timeSlots as $timeRange => $ruleIndex) {
+          $days[$day][$timeRange] = $scheduleRules[$ruleIndex]['SubjectCode'] . '<br>' . $scheduleRules[$ruleIndex]['SubjectName'];
+        }
+      }
+    } else {
+      continue; // ถ้า tableId ไม่ตรงกับกรณีใดเลย
+    }
+
+    // แสดงผลตาราง
+    echo '
+            <h2 class="text-center mb-2">ตารางเรียน ' . $tableId . '</h2>
+            <table id="' . $tableId . '" class="container table table-bordered table-striped table-hover text-center">
+              <thead class="table-info">
+                <tr>
+                  <th>เวลา</th>
+                  <th class="timeslot">08:00<br>09:15</th>
+                  <th class="timeslot">09:15<br>10:15</th>
+                  <th class="timeslot">10:15<br>11:15</th>
+                  <th class="timeslot">11:15<br>12:15</th>
+                  <th class="timeslot">12:15<br>13:00</th>
+                  <th class="timeslot">13:00<br>14:00</th>
+                  <th class="timeslot">14:00<br>15:00</th>
+                  <th class="timeslot">15:00<br>16:00</th>
+                  <th class="timeslot">16:00<br>17:00</th>
+                  <th class="timeslot">17:00<br>18:00</th>
+                  <th class="timeslot">18:00<br>19:00</th>
+                  <th class="timeslot">19:00<br>20:00</th>
+                </tr>
+                      <tr>
         <td>วัน/คาบ</td>
-        <td rowspan="6" class="vertical-text day-name">กิจกรรมหน้าเสาธง</td>
+      
         <td class="timeslot">1</td>
         <td class="timeslot">2</td>
         <td class="timeslot">3</td>
@@ -64,87 +289,63 @@ function prepare_table()
         <td class="timeslot">11</td>
         <td class="timeslot">12</td>
       </tr>
+              </thead>
+              <tbody>';
 
-      <tr id="row-monday">
-        <th class="day-name">วันจันทร์</th>
-        <td id="mon-slot1" class="class-slot"></td>
-        <td id="mon-slot2" class="class-slot"></td>
-        <td id="mon-slot3" class="class-slot"></td>
-        <td id="mon-slot4" class="class-slot"></td>
-        <td id="mon-slot5" class="class-slot"></td>
-        <td id="mon-slot6" class="class-slot"></td>
-        <td id="mon-slot7" class="class-slot"></td>
-        <td id="mon-slot8" class="class-slot"></td>
-        <td id="mon-slot9" class="class-slot"></td>
-        <td id="mon-slot10" class="class-slot"></td>
-        <td id="mon-slot11" class="class-slot"></td>
-        <td id="mon-slot12" class="class-slot"></td>
-      </tr>
+    foreach ($days as $dayName => $timeSlots) {
+      echo '<tr><th class="day-name">' . $dayName . '</th>';
 
-      <tr id="row-tuesday">
-        <th class="day-name">วันอังคาร</th>
-        <td id="tue-slot1" class="class-slot"></td>
-        <td id="tue-slot2" class="class-slot"></td>
-        <td id="tue-slot3" class="class-slot"></td>
-        <td id="tue-slot4" class="class-slot"></td>
-        <td id="tue-slot5" class="class-slot"></td>
-        <td id="tue-slot6" class="class-slot"></td>
-        <td id="tue-slot7" class="class-slot"></td>
-        <td id="tue-slot8" class="class-slot"></td>
-        <td id="tue-slot9" class="class-slot"></td>
-        <td id="tue-slot10" class="class-slot"></td>
-        <td id="tue-slot11" class="class-slot"></td>
-        <td id="tue-slot12" class="class-slot"></td>
-      </tr>
-      <tr id="row-wednesday">
-        <th class="day-name">วันพุธ</th>
-        <td id="wed-slot1" class="class-slot"></td>
-        <td id="wed-slot2" class="class-slot"></td>
-        <td id="wed-slot3" class="class-slot"></td>
-        <td id="wed-slot4" class="class-slot"></td>
-        <td id="wed-slot5" class="class-slot"></td>
-        <td id="wed-slot6" class="class-slot"></td>
-        <td id="wed-slot7" class="class-slot"></td>
-        <td id="wed-slot8" class="class-slot"></td>
-        <td id="wed-slot9" class="class-slot"></td>
-        <td id="wed-slot10" class="class-slot"></td>
-        <td id="wed-slot11" class="class-slot"></td>
-        <td id="wed-slot12" class="class-slot"></td>
-      </tr>
-      <tr id="row-thursday">
-        <th class="day-name">วันพฤหัสบดี</th>
-        <td id="thu-slot1" class="class-slot"></td>
-        <td id="thu-slot2" class="class-slot"></td>
-        <td id="thu-slot3" class="class-slot"></td>
-        <td id="thu-slot4" class="class-slot"></td>
-        <td id="thu-slot5" class="class-slot"></td>
-        <td id="thu-slot6" class="class-slot">Home<br>room</td>
-        <td id="thu-slot7" class="class-slot"></td>
-        <td id="thu-slot8" class="class-slot"></td>
-        <td id="thu-slot9" class="class-slot"></td>
-        <td id="thu-slot10" class="class-slot"></td>
-        <td id="thu-slot11" class="class-slot"></td>
-        <td id="thu-slot12" class="class-slot"></td>
-      </tr>
-      <tr id="row-friday">
-        <th class="day-name">วันศุกร์</th>
-        <td id="fri-slot1" class="class-slot"></td>
-        <td id="fri-slot2" class="class-slot"></td>
-        <td id="fri-slot3" class="class-slot"></td>
-        <td id="fri-slot4" class="class-slot"></td>
-        <td id="fri-slot5" class="class-slot"></td>
-        <td id="fri-slot6" class="class-slot"></td>
-        <td id="fri-slot7" class="class-slot"></td>
-        <td id="fri-slot8" class="class-slot"></td>
-        <td id="fri-slot9" class="class-slot"></td>
-        <td id="fri-slot10" class="class-slot"></td>
-        <td id="fri-slot11" class="class-slot"></td>
-        <td id="fri-slot12" class="class-slot"></td>
-      </tr>
-    </tbody>
-  </table>
-';
+      $occupiedSlots = [];
+      for ($slot = 1; $slot <= 12; $slot++) {
+        if (in_array($slot, $occupiedSlots)) {
+          continue; // ข้ามคาบที่ถูกครอบด้วย colspan แล้ว
+        }
+
+        $content = '';
+        $colspan = 1;
+
+        foreach ($timeSlots as $range => $text) {
+          list($start, $end) = explode('-', $range);
+          if ($slot == $start) {
+            $colspan = $end - $start + 1;
+            $content = $text;
+            $occupiedSlots = range($start, $end);
+            break;
+          }
+        }
+        if ($content) {
+          echo '<td class="class-slot" colspan="' . $colspan . '">' . $content . '</td>';
+        } else {
+          echo '<td class="class-slot"></td>';
+        }
+      }
+
+      echo '</tr>';
+    }
+
+    echo '
+              </tbody>
+            </table>';
+  }
 }
 
 
-function showtable($scheduleRules) {}
+
+
+
+
+
+
+$classGroups = callClassGroup($conn);
+// showscheduleRules($scheduleRules);
+// $schedules  = เก็บข้อมูลตารางเรียน
+// $scheduleRules = ข้อมูลที่จะบันทึกลงตารางเรียน
+$schedules = callSchedule($conn);
+// if (empty($schedules)) {
+//   echo "No schedules";
+// } else {
+//   echo "<pre>";
+//   print_r($schedules);
+//   echo "</pre>";
+// }
+prepare_table($conn, $classGroups, $scheduleRules);

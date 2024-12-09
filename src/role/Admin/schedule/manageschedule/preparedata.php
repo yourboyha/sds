@@ -44,11 +44,13 @@ GROUP BY
     sp.Term, 
     sp.Year
 ORDER BY 
+    cg.ClassGroupName ASC,
     AvgWeight DESC,          -- ลำดับที่ 1: ความสำคัญของวิชามากที่สุด
     AvgEquipmentWeight DESC, -- ลำดับที่ 2: อุปกรณ์สำคัญที่สุด
     AvgSubjectType DESC,     -- ลำดับที่ 3: ประเภทวิชาที่สำคัญ
     AvgTheoryPractice DESC,  -- ลำดับที่ 4: ความสมดุลทฤษฎีและปฏิบัติ
     AvgContinuity DESC;      -- ลำดับที่ 5: แยกคาบได้ดีที่สุด
+    
 
 ";
 
