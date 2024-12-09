@@ -2,6 +2,30 @@
 
 $sql = "INSERT INTO `schedule` (`ScheduleID`, `SubjectID`, `TeacherID`, `RoomID`, `TimeSlot`, `DayOfWeek`, `ClassGroup`) VALUES (NULL, '76', '5', '1', 'Mon1-Mon3', 'Monday', '15');";
 
+// เรียกทุกตารางออกมาแสดง 
+
+$sql = "SELECT 
+    cg.ClassGroupName,
+    d.DepartmentName,
+    r.RoomName,
+    r.Location,
+    rt.RoomTypeName,
+    s.SubjectName,
+    t.Specialization,
+    u.UserName
+FROM 
+    classgroup cg
+INNER JOIN departments d ON cg.DepartmentID = d.DepartmentID
+LEFT JOIN rooms r ON r.DepartmentID = d.DepartmentID
+LEFT JOIN roomtypes rt ON r.RoomTypeID = rt.RoomTypeID
+LEFT JOIN studyplans sp ON sp.ClassGroupID = cg.ClassGroupID
+LEFT JOIN subjects s ON sp.SubjectID = s.SubjectID
+LEFT JOIN teachers t ON t.DepartmentID = d.DepartmentID
+LEFT JOIN users u ON t.UserID = u.UserID;
+";
+
+
+
 $sql = "
 SELECT 
 sc.TimeSlot, 

@@ -6,8 +6,8 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-include 'Function_schedule.php';
-include 'FunctionSubject.php';
+include 'preparedata.php';
+include 'createschedule.php';
 $ClassGroupName = ['ปวช.1/1', 'ปวช.2/1', 'ปวช.3/1', 'ปวช.3/2', 'ปวส.1/1', 'ปวส.2/1', 'ปวส.2/2'];
 // แสดงปุ่มย้อนกลับและถัดไป
 function renderNavigationButtons()
@@ -23,28 +23,37 @@ function renderNavigationButtons()
 }
 
 
+// echo "<pre>";
+// print_r($scheduleRules);
+// echo "</pre>";
 
-
-
-// $scheduleData = '';
+$scheduleData = '';
 $scheduleDataExample = [
   [
-    "ScheduleID" => 52941,
-    "SubjectName" => "การเขียนโปรแกรมภาษาคอมพิวเตอร์",
-    "SubjectCode" => "21910-2010",
-    "TeacherName" => "นายวุฒิพงศ์ วิมลพัชร",
-    "RoomName" => "Lab1",
-    "TimeSlot" => "6-9",
-    "DayOfWeek" => "fri",
-    "ClassGroupName" => "ปวช.1/1",
-    "Term" => 2
+    "SubjectID" => "151",
+    "SubjectCode" => "31910-2003",
+    "SubjectName" => "วิเคราะห์และออกแบบระบบเชิงวัตถุ",
+    "ClassGroupName" => "ปวส.1/1",
+    "TheoryHours" => "2",
+    "PracticalHours" => "2",
+    "CreditHours" => "3",
+    "DepartmentName" => "แผนกวิชาเทคโนโลยีธุรกิจดิจิทัล",
+    "HeadCount" => "13",
+    "Term" => "1",
+    "Year" => "2567",
+    "AvgWeight" => "5",
+    "AvgSubjectType" => "1",
+    "AvgTheoryPractice" => "3",
+    "AvgEquipmentWeight" => "3",
+    "AvgContinuity" => "0.8"
   ]
 ];
 
 
 // การทำงานหลัก
+
 renderNavigationButtons();
-// เรียกข้อมูลจากฟังก์ชัน
-// $scheduleData = getScheduleData($conn);
-renderScheduleTable($scheduleData, $ClassGroupName);
-showSubject($conn);
+// showscheduleRules($scheduleRules);
+testtable($conn);
+// prepare_table();
+// showtable($scheduleRules);

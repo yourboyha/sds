@@ -170,6 +170,9 @@ td {
 .class-slot {
   font-size: 50%;
 }
+.class-slot75 {
+  font-size: 75%;
+}
 .class-slot:hover {
   background-color: #ffeb3b; /* เปลี่ยนพื้นหลังเป็นสีเหลือง */
   color: #000; /* เปลี่ยนข้อความเป็นสีดำ */

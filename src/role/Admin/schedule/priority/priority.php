@@ -29,16 +29,13 @@ ORDER BY
 ";
 
 $result = $conn->query($sql);
-
+echo '<div class="d-flex justify-content-center gap-3 mb-3">';
+echo '<button class="btn btn-outline-danger w-50" onclick="showSection(\'checksubject\', \'src/role/Admin/schedule/checksubject/checksubject.php\')">ย้อนกลับ</button>';
+echo '<button class="btn btn-outline-success w-50" onclick="showSection(\'subjecttype\', \'src/role/Admin/schedule/subjecttype/subjecttype.php\')">ถัดไป</button>';
+echo '</div>';
 if ($result->num_rows > 0) {
   $currentGroup = ""; // กลุ่มเรียนปัจจุบัน
   $i = 1;
-
-  echo '<div class="d-flex justify-content-center gap-3 mb-3">';
-  echo '<button class="btn btn-outline-danger w-50" onclick="showSection(\'checksubject\', \'src/role/Admin/schedule/checksubject/checksubject.php\')">ย้อนกลับ</button>';
-  echo '<button class="btn btn-outline-success w-50" onclick="showSection(\'subjecttype\', \'src/role/Admin/schedule/subjecttype/subjecttype.php\')">ถัดไป</button>';
-  echo '</div>';
-
   echo '<div class="container">';
   while ($row = $result->fetch_assoc()) {
     // เมื่อ ClassGroup เปลี่ยน ให้เริ่มตารางใหม่
@@ -102,10 +99,10 @@ $conn->close();
 ?>
 
 <script>
-// ฟังก์ชันจัดการการคลิก Checkbox
-document.querySelectorAll('.priority-checkbox').forEach(checkbox => {
-  checkbox.addEventListener('change', function() {
-    console.log(`วิชา ${this.dataset.subject} ถูกเปลี่ยนสถานะ: ${this.checked ? 'เลือก' : 'ไม่เลือก'}`);
+  // ฟังก์ชันจัดการการคลิก Checkbox
+  document.querySelectorAll('.priority-checkbox').forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+      console.log(`วิชา ${this.dataset.subject} ถูกเปลี่ยนสถานะ: ${this.checked ? 'เลือก' : 'ไม่เลือก'}`);
+    });
   });
-});
 </script>
