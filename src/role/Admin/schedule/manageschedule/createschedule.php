@@ -135,6 +135,8 @@ function prepare_table($conn, $classGroups, $scheduleRules)
         'วันจันทร์' => [
           '1-3' => 21,
         ],
+        'วันอังคาร' => [],
+        'วันพุธ' => [],
         'วันพฤหัสบดี' => [
           // '6' => 'HomeRoom',
           '7-8' => 22,
@@ -154,6 +156,8 @@ function prepare_table($conn, $classGroups, $scheduleRules)
         'วันจันทร์' => [
           '1-3' => 23,
         ],
+        'วันอังคาร' => [],
+        'วันพุธ' => [],
         'วันพฤหัสบดี' => [
           // '6' => 'HomeRoom',
           '7-8' => 24,
@@ -213,6 +217,7 @@ function prepare_table($conn, $classGroups, $scheduleRules)
         'วันอังคาร' => [
           '1-3' => 41,
         ],
+        'วันพุธ' => [],
         'วันพฤหัสบดี' => [
           // '6' => 'HomeRoom',
           '7-8' => 38,
@@ -232,8 +237,9 @@ function prepare_table($conn, $classGroups, $scheduleRules)
         'วันจันทร์' => [
           '1-3' => 43,
           '6-8' => 44,
-
         ],
+        'วันอังคาร' => [],
+        'วันพุธ' => [],
         'วันพฤหัสบดี' => [
 
           // '6' => 'HomeRoom',
@@ -292,7 +298,7 @@ function prepare_table($conn, $classGroups, $scheduleRules)
               </thead>
               <tbody>';
 
-    foreach ($days as $dayName => $timeSlots) {
+    foreach ($scheduleData as $dayName => $timeSlots) {
       echo '<tr><th class="day-name">' . $dayName . '</th>';
 
       $occupiedSlots = [];
@@ -304,24 +310,28 @@ function prepare_table($conn, $classGroups, $scheduleRules)
         $content = '';
         $colspan = 1;
 
-        foreach ($timeSlots as $range => $text) {
-          list($start, $end) = explode('-', $range);
-          if ($slot == $start) {
-            $colspan = $end - $start + 1;
-            $content = $text;
-            $occupiedSlots = range($start, $end);
-            break;
+        if (!empty($timeSlots)) {
+          foreach ($timeSlots as $range => $text) {
+            list($start, $end) = explode('-', $range);
+            if ($slot == $start) {
+              $colspan = $end - $start + 1;
+              $content = isset($scheduleRules[$text]) ? $scheduleRules[$text]['SubjectCode'] . '<br>' . $scheduleRules[$text]['SubjectName'] : 'N/A';
+              $occupiedSlots = range($start, $end);
+              break;
+            }
           }
         }
+
         if ($content) {
           echo '<td class="class-slot" colspan="' . $colspan . '">' . $content . '</td>';
         } else {
-          echo '<td class="class-slot"></td>';
+          echo '<td class="class-slot"></td>'; // ช่องว่างถ้าไม่มีคาบเรียน
         }
       }
 
       echo '</tr>';
     }
+
 
     echo '
               </tbody>
