@@ -50,8 +50,6 @@ ORDER BY
     AvgSubjectType DESC,     -- ลำดับที่ 3: ประเภทวิชาที่สำคัญ
     AvgTheoryPractice DESC,  -- ลำดับที่ 4: ความสมดุลทฤษฎีและปฏิบัติ
     AvgContinuity DESC;      -- ลำดับที่ 5: แยกคาบได้ดีที่สุด
-    
-
 ";
 
 // ดึงข้อมูลจากฐานข้อมูล
