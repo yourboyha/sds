@@ -79,7 +79,7 @@ if ($_SESSION['role'] !== 'admin') {
             ตารางที่ 7 </a>
         </li>
 
-        <li class="nav-item d-none">
+        <li class="nav-item">
           <a class="nav-link text-secondary"
             onclick="showSection('manageschedule', 'src/role/Admin/schedule/manageschedule/manageschedule.php')">6.
             แสดงตาราง</a>
